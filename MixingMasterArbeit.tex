@@ -1,0 +1,171 @@
+\documentclass[	pdftex, 
+								a4paper,
+								11pt, DIV11, BCOR5mm,
+								parskip,
+								%openany,
+								]{scrreprt}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{comment}
+\usepackage[ngerman]{babel}
+\usepackage[nonumberlist,toc,acronym]{glossaries}
+
+\usepackage{fancyhdr}
+\usepackage[section]{placeins}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[german]{babelbib}
+
+\usepackage{varwidth}
+\usepackage{float}
+
+\usepackage{epstopdf}
+\usepackage{textpos}
+\usepackage{changepage}
+\usepackage{theorem}
+\usepackage{caption}
+\usepackage{framed}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,arrows,positioning,trees,calc,fit,shapes}
+\usepackage[noend]{algorithmic}
+\usepackage{algorithm}
+\usepackage{environ}
+\usepackage{ulem}
+
+%Kopfzeile hinzufuegen
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}} % set the \leftmark
+
+\fancypagestyle{plain}{
+    
+    \fancyhead[R]{\leftmark}
+    \fancyhead[L]{\myauthor}
+    \renewcommand{\headrulewidth}{1pt}
+    %\fancyfoot[R]{\thepage}
+}
+
+\pagestyle{fancy}
+
+%Literaturverzeichnis hinzufuegen
+\bibliographystyle{babplain}
+
+% Glossar hinzufuegen
+\makeglossaries
+\newacronym{usda} {USDA}{US Department of Agriculture}
+\newacronym{fdc}{FDC}{FoodData Central}
+\newacronym{rest}{REST}{Representational state transfer}
+\newacronym{dge}{DGE}{Deutsche Gesellschaft für Ernährung}
+\newacronym{pal}{PAL-Value}{physical activity level-Value}
+\newacronym{json}{JSON}{JavaScript Object Notation}
+\newacronym{iri}{IRI}{International Resource Identifier}
+\newacronym{http}{HTTP}{HyperText Transfer Protocol}
+\newacronym{xml}{XML}{Extensible Markup Language}
+\newacronym{cdno}{CDNO}{Compositional Dietary Nutrition Ontology}
+\newacronym{obo}{OBO}{Open Biological and Biomedical Ontology}
+\newacronym{sparql}{SPARQL}{SPARQL Protocol And RDF Query Language}
+\newacronym{sql}{SQL}{Structured Query Language}
+\newacronym{uri}{URI}{Uniform Resource Identifier}
+\newacronym{gi}{GI}{Glykämischer Index}
+\newacronym{bmi}{BMI}{Body-Mass-Index}
+
+
+
+\begin{document}
+\setcounter{page}{-2}
+\pagestyle{empty}
+\pagenumbering{none}
+\newcommand{\firstreviewer}{Prof. Michael Beetz PhD}
+\newcommand{\secondreviewer}{}
+\newcommand{\supervisor}{Michaela Kümpel}
+\newcommand{\thesistype}{Master Thesis}
+\newcommand{\myauthor}{Naser Azizi, Sorin Arion}
+\newcommand{\mymaintitle}{A Knowledgebase with which you can generate robot plan for multiple mixing actions}
+\newcommand{\mysubtitle}{A nutrition ontology with web interface for customer specific dietary \newline recommendations} 
+\newcommand{\mytitle}{\centering {\Huge \mymaintitle}\\[.3in] 
+    {\Large \mysubtitle}}
+\newcommand{\pdftitle}{\mymaintitle - \mysubtitle}
+\newcommand{\formattedfronttitle}{{\mytitle}}
+\newcommand{\formattedinnertitle}{{\mytitle}}
+
+\begin{titlepage}
+	\vspace*{-2.2cm}
+	\begin{adjustwidth}{-0cm}{-2.3cm}
+	\thispagestyle{empty}
+        \begin{figure}
+            \begin{minipage}{.4\linewidth}
+	\begin{flushleft}
+		\includegraphics[height=1.5cm]{Graphics/unilogo-transp.pdf}
+	\end{flushleft}
+    \end{minipage}
+    \hspace{.2\linewidth}
+            \begin{minipage}{.4\linewidth}
+	\begin{flushright}
+		\includegraphics[height=3.0cm]{Graphics/logo-ai-small.pdf}
+	\end{flushright}
+    \end{minipage}
+\end{figure}
+	  \vfill
+	  %\scalebox{0.95}{
+    	  %\begin{minipage}{1.2\textwidth}
+    	  %{
+    		%\formattedfronttitle 
+    	  %}
+    	  %\end{minipage}
+	  %}
+	\begin{center}
+	  {\huge \mymaintitle}\\
+	  
+	  \vfill
+	  {\Large \thesistype}\\[2.5ex]
+	  {\Large\em \myauthor}
+	  \vfill
+	{  
+      \renewcommand\arraystretch{1.5}
+      \begin{tabular}{l@{\hspace{2em}}r@{\hspace{1ex}}p{7cm}}
+     Pr\"ufer der \thesistype: & 1. & \firstreviewer\\
+                                 & 2. & \secondreviewer\\
+	Supervisor		    &   & \supervisor\\
+   \end{tabular}
+  }
+	\end{center}
+	\end{adjustwidth}
+
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
+	\pagestyle{plain}
+	%\addcontentsline{toc}{chapter}{Eidesstaatliche Erkl\"arung}
+	\chapter*{Eidesstattliche Erkl\"arung}
+	
+	Hiermit erkl\"aren wir, dass die vorliegende Arbeit selbstst\"andig angefertigt,
+	nicht anderweitig zu Pr\"ufungszwecken vorgelegt und keine anderen als die
+	angegebenen Hilfsmittel verwendet habe. S\"amtliche wissentlich verwendete
+	Textausschnitte, Zitate oder Inhalte anderer Verfasser wurden ausdr\"ucklich als
+	solche gekennzeichnet.
+	
+	Bremen, den \makeatletter\@date\makeatother
+	
+	\vspace*{1em}
+	\rule{15em}{0.16667pt}\\
+	\author{Naser Azizi, Sorin Arion}
+	\makeatletter\@author\makeatother
+	
+	
+	\normalem
+	%Abstrakt
+	%\addcontentsline{toc}{chapter}{Abstract}
+	\chapter*{Introduction}
+	\chapter*{Motivation}
+	\chapter*{Related Work}
+	\chapter*{How does the robot works, parameters, used tools, etc}
+	\chapter*{Data acquisition}
+	\chapter*{Data representation}
+	\chapter*{Implementation}
+	\chapter*{Simulation}
+	\chapter*{Evaluation}
+	\chapter*{Summary / Fazit}
+\end{titlepage}
+avc
+\end{document}
+
