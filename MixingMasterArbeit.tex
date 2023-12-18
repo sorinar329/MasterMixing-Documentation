@@ -131,7 +131,7 @@
   }
 	\end{center}
 	\end{adjustwidth}
-
+\end{titlepage}
 	\pagenumbering{arabic}
 	\setcounter{page}{1}
 	\pagestyle{plain}
@@ -155,17 +155,32 @@
 	\normalem
 	%Abstrakt
 	%\addcontentsline{toc}{chapter}{Abstract}
-	\chapter*{Introduction}
+
 
 	\chapter*{Motivation}
+	
+	Although industrial robots have been considered standard for many years, the widespread adoption of AI-based autonomous household robots is still far from being anticipated in every household.
+	Obstacles such as unfamiliar surroundings and a limited knowledge base can significantly hinder the ability of an autonomous robot to effectively respond in a given situation, hence, the robot must precisely plan for every minor detail, even those that might appear trivial to us humans.
+	To achieve the defined objectives, a proficient and comprehensive robotic system including Control, Perception, Navigation, and Knowledge is necessary.
+	An illustrative goal could be cooking. To execute this task, the robot must possess various capabilities, including placing items, grasping objects, pouring liquids, cutting ingredients, and mixing components.	Those things seem trivial to us humans, but for the robots it requires a lot of Implementation and information.
+	In this thesis, we aim to introduce an approach detailing how a robotic system can execute mixing actions effectively.	
+	The challenges arise from the diverse methods of mixing, which further vary based on the specific ingredients being combined. Additionally, the consideration of compatible Mixing Tools and Mixing Containers is crucial, as not every tool can be utilized with every container.
+	Through the incorporation of a knowledge graph containing rules related to to various actions, we aim to empower the robotic system to make informed decisions on the appropriate motions to employ. This decision-making process will take into account the specific task at hand and the involved ingredients.
+	By incorporating this knowledge graph, we aim to advance towards autonomous robots capable of engaging in cooking activities.
+
+	\chapter*{Introduction}
+	First, we intend to analyze existing research, particularly examining studies that delve into diverse mixing motions and exploring related systems that contain a queryable knowledge graph.
+	In the following section, we will introduce the reader with the frameworks employed to accomplish our objectives.	
+	Subsequently, we will present our approach to data acquisition and data representation.
+	In this chapter, we aim to explain the mixing tasks under consideration and articulate our methodology for representing this data to enable effective querying.
+	In the subsequent section, we will illustrate the implementation of our rules, with the ultimate aim of determining the appropriate motion to be employed.
+	To validate our concept, we have opted to simulate various scenarios and assess their outcomes, demonstrating the efficacy of our implemented system.
+	Finally, we will delve into the discussion of our results and draw conclusions to wrap up our work.
+	\chapter*{Related Work}
 	\begin{itemize}
-		\item Households Robots
-		\item the big dream
-		\item robotic Knowledgebase can be compared to the brain
-		\item by implementing the knowledge about mixing actions we reach one step further to be able to execute recipe actions.
+		\item https://fluidlab2023.github.io/
 		\item 
 	\end{itemize}
-	\chapter*{Related Work}
 
 	\chapter*{How does the robot works / plans, parameters, used tools, etc}
 	\begin{itemize}
@@ -203,14 +218,8 @@
 		\item Quering the knowledge base
 		\item Inferring the parameters in the Simulation
 		\item Task execution with multiple sequential Motions
-		\item 
 	\end{itemize}
-	\chapter*{Evaluation}
-	\begin{itemize}
-		\item Evaluation of multiple motions multiple times
-		\item Results of that
-	\end{itemize}
-	\chapter*{Simulation to RealWorld gap}
+	\section*{Simulation to RealWorld gap}
 	\begin{itemize}
 		\item Big Problem: Uncertaininty
 		\item Perception Solution as first approach: RoboKudo
@@ -218,8 +227,12 @@
 		\item Model Training: YoloV8
 		\item Results showing the real world Perception.
 	\end{itemize}
+	\chapter*{Evaluation}
+	\begin{itemize}
+		\item Evaluation of multiple motions multiple times
+		\item Results of that
+	\end{itemize}
 	\chapter*{Summary / Fazit}
-\end{titlepage}
 avc
 \end{document}
 
