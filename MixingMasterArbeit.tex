@@ -176,6 +176,7 @@
 	In the subsequent section, we will illustrate the implementation of our rules, with the ultimate aim of determining the appropriate motion to be employed.
 	To validate our concept, we have opted to simulate various scenarios and assess their outcomes, demonstrating the efficacy of our implemented system.
 	Finally, we will delve into the discussion of our results and draw conclusions to wrap up our work.
+	
 	\chapter*{Related Work}
 	\begin{itemize}
 		\item https://fluidlab2023.github.io/
@@ -183,17 +184,67 @@
 	\end{itemize}
 
 	\chapter*{How does the robot works / plans, parameters, used tools, etc}
+	In this chapter we want to introduce the reader to the frameworks and libraries we are using, also we want to briefly present the robot that should be able to perform the implemented tasks.
+	\section*{Pr2}
+	Introduced in 2010 by Willow Garage (https://robotsguide.com/robots/pr2), the PR2 stands as an advanced research robot. Boasting multiple joints and 20 degrees of freedom, this robot excels in autonomous navigation and the manipulation of a diverse array of objects, making it an ideal choice for our specific needs. Additionally, it is equipped with a HeadStereoCamera that can be used to perceive the surroundings.
+	\section*{PyCram}
+	Robotic systems are complex, comprising various components such as Knowledgebase, Perception, Manipulation/Control, Navigation, and more. Managing these diverse elements can pose challenges and requires multiple interfaces between them. One potential strategy is to integrate all these interfaces into a unified framework. An example of such a comprehensive framework is PyCram(https://github.com/cram2/pycram).
+	Implemented in Python3, the PyCram framework incorporates ROS for robot communication. Utilizing PyCram, we can execute High-Level plans on the PR2 to evaluate our implementation.
+	\section*{Ontology}
+	Ontologies are structured frameworks that provide a formal representation of knowledge within a specific domain. They play a crucial role in knowledge representation, facilitating the organization and sharing of information in a way that is both machine-readable and understandable by humans. 
+
+	Key components of ontologies include:
+
 	\begin{itemize}
-		\item PyCram
-		\item Pr2
-		\item Ontology
-		\item OWLReady
-		\item SWRL
-		\item 
+		\item Concepts/Classes: These represent abstract or concrete entities within a domain. For example, in a medical ontology, "Patient" and "Disease" might be classes.
+		\item Properties/Roles: These define the relationships between concepts. For instance, in a social network ontology, "FriendOf" could be a property connecting individuals.
+		\item Instances/Individuals: These are specific members or examples of a class. In a geographical ontology, "New York City" and "Paris" could be instances of the class "City."
+		\item Axioms: These are statements that describe the properties and relationships of the entities within the ontology. Axioms help define the logic and rules governing the domain.
+		\item Hierarchy: Ontologies often organize concepts into a hierarchy, with more general concepts at the top and more specific ones below. This hierarchical structure aids in categorization and understanding.
+		\item Inference Rules: These rules define how new information can be derived from existing information in the ontology. Inferences help systems reason and make deductions based on the knowledge encoded in the ontology.
 	\end{itemize}
+	We utilize ontologies in knowledge representation and reasoning systems to empower the robot with the ability to comprehend and handle information in a structured fashion for our specific objectives.
+	\section*{OWLReady}
+	One important library used for our Implementation is OWLReady. "OWLReady" is a Python library designed for ontology-oriented programming. It facilitates the development, manipulation, and querying of ontologies using the Web Ontology Language (OWL), a standard for representing knowledge in a machine-readable format. OWLReady simplifies ontology-related tasks by providing a convenient and object-oriented interface for working with OWL ontologies in Python.
+
+	Key features of the OWLReady library include:
+
+	\begin{itemize}
+		\item Object-Oriented Programming (OOP): OWLReady adopts an object-oriented approach, allowing users to interact with ontology entities as Python objects. This makes it more intuitive for developers familiar with Python's OOP principles.
+		\item Ontology Loading and Parsing: The library supports the loading and parsing of OWL ontologies, making it easy to access and manipulate ontology data within Python scripts or applications.
+		\item Class and Individual Manipulation: OWLReady provides functionality for creating, modifying, and querying classes and individuals within an ontology. This allows for dynamic and programmatic management of ontology content.
+		\item Reasoning Support: Depending on the version and features, OWLReady may offer support for reasoning tasks. Reasoning involves deducing implicit information based on the logical relationships defined in the ontology.
+		\item Integration with RDFLib: OWLReady may integrate with RDFLib, another Python library commonly used for working with Resource Description Framework (RDF) data. This integration enhances the capabilities of handling semantic data.
+	\end{itemize}
+
+	\section*{SWRL}
+	SWRL, which stands for Semantic Web Rule Language, is a rule language that allows users to define rules about the relationships between classes and individuals in ontologies represented in the Web Ontology Language (OWL). SWRL is part of the W3C's Semantic Web technology stack and is designed to be used in conjunction with OWL to express complex relationships and infer new information based on existing knowledge.
+
+	SWRL Rules have a specific syntax and consist of two main components:
+	\begin{itemize}
+		\item Antecedent (Body): This part of the rule specifies the conditions or constraints that must be satisfied for the rule to be applicable. It describes the current state of the ontology that triggers the rule.
+		\item Consequent (Head): This part defines the actions or inferences that should be taken if the conditions specified in the antecedent are satisfied. It describes the changes or additional information that should be inferred when the rule is triggered.
+	\end{itemize}
+	SWRL supports various built-in predicates and functions, and users can create their own custom rules to suit their specific ontology. Some common elements in SWRL rules include:
+	\begin{itemize}
+		\item Individuals: Refers to specific instances of classes in the ontology.
+		\item Class and Property Relationships: Describes relationships between classes and properties in the ontology.
+		\item Built-in Predicates and Functions: Includes operations such as arithmetic, string manipulation, and comparison functions that can be used in the rule conditions.
+	\end{itemize}
+	Here's a simple example of a SWRL rule:
+	\newline
+	$Person(?x) ^ hasChild(?x, ?y) -> Grandparent(?x, ?z) ^ hasChild(?y, ?z)$
+	\newline
+	In this example:
+
+	If an individual (?x) is a Person and has a child (?y),
+	
+	Then, infer that the individual (?x) is a Grandparent of another individual (?z), and the child (?y) is the parent of (?z).
+	
+	SWRL rules are useful for expressing complex relationships and constraints within ontologies, enabling automated reasoning systems to make inferences and derive new knowledge from existing data.
+
 	\chapter*{Data acquisition}
 	\begin{itemize}
-		\item WikiHow Hyponyms
 		\item Video analysis
 		\item Structured the required parameters for the knowledge base
 	\end{itemize}
