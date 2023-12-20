@@ -1,0 +1,26 @@
+\chapter*{Related Work}
+
+There are multiple approaches for mixing tasks in the kitchen domain. From high level symbolic to low level motions and 
+learning approaches, these different approaches, tries to tackle the challenge of solving mixing in the kitchen environment.
+
+FoodCutting aims to equip robotic agents with necessary information about how to 
+execute  cutting tasks in unknown environments for the household domain. From high level plans FoodCutting breaks down 
+the cutting task, part of some robot plan, into executable motions regarding cutting fruits and vegetables. These motions are parameterized 
+by some technique and repetitions to achieve the agents objective. 
+FoodCutting does not require fully available knowledge
+about the agents environment, instead the robot should be capable of recognizing certain objects for cutting 
+operations. 
+
+BakeBot realised on the PR2 robotics platform attempts to achieve baking cookies. An implementation of locating relevant things for MixingTasks
+like a bowl and ingredients has been realised for semi-structured environments. An algorithm to perform mixing motions has been implemented as well, to mix 
+ingredients with different characteristics into an uniform dough. These motions are limited to a simple circular and linear mixing motion.
+The authors follow an bottom-up approach which is inherently motion driven rather than a
+symbolic one which attempts to break down high level tasks into executable low level motions. 
+
+FluidLab is a simulation environment for different kinds of manipulation tasks regarding liquids. Its underlying engine uses differentiable physics 
+enabling reinforcement learning and optimization techniques in manipulation to utilize the engine, to achieve several tasks 
+including liquids and solids, like mixing tasks. 
+
+Our mixing approach will be most similar to the FoodCutting approach, in which we model symbolic knowledge about how to perform
+mixing tasks, which technique should be used and infering parameters for the execution of the underlying motion.
+
