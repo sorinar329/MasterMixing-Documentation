@@ -17,6 +17,7 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage[german]{babelbib}
+\usepackage{array}
 
 \usepackage{varwidth}
 \usepackage{float}
@@ -244,50 +245,7 @@
 	
 	SWRL rules are useful for expressing complex relationships and constraints within ontologies, enabling automated reasoning systems to make inferences and derive new knowledge from existing data.
 
-	\chapter*{Data acquisition}
-	\begin{itemize}
-		\item Video analysis
-		\item Structured the required parameters for the knowledge base
-	\end{itemize}
-	The first step in acquiring the needed data, was to acknowledge which task varations of mixing are actually important. So we had to analyze the word "Mixing" and its hyponyms. 
-	hyponyms are subordered words of a given word, for example one hyponym of mixing could be beating. By looking on different websites like "framenet, Wordnet" , we created a list of possible hyponyms, that could be taken under consideration.
-	For all those hyponyms, we delegated a WikiHow extraction search which should show us, how many times one of these words occur, in the context of cooking.
-	In the table below the results can be seen.
-	
-	HIER TABELLE
-
-	From this table one can see that many hyponyms have a low occurance and will be therefore not considered.
-	We consider the words: Mixing, Stiring, Beating, Combining, Whiping, Whisking and Folding. Though Blending achieved a moderate occurance, we decided upon not considering it, because it involves a lot of electronic mixing machines, which the robot could not handle.
-	From now on we will refer to these words also as Tasks.
-	After deciding upon which tasks we consider, we have to analyze every task execution and define a structure.
-	We started by analyzing different videos on WikiHow that included at least one of our choosen task and divided the information by:
-	
-	Task, used Tools, used Container, Ingredients, Motion.
-
-	\begin{itemize}
-		\item Tasks: The tasks can differ in its execution, like the tasks Beating (Mixing can be gentle or vigorous, while beating involves a more forceful and rapid action) and Folding (To maintain a light and fluffy texture in a cake, folding is often used to add dry ingredients without overmixing), which will ultimately lead to a decision upon which Motion should be used in the specific use case.
-		\item Tools: Different Tools are used for different tasks, which also has a correlation with the choosen Container.
-		\item Container: Most Mixing Tasks use a mixing bowl for container, but also container like Pot and Pan when considering cooking in boiling water.
-		\item Ingredients: Besides Tasks, the ingredients are the most important component of our knowledgebase regarding the decision making upon motions. We divide the Ingredients in 4 subcategories: Dry/Powder, Wet, Liquid and Solid.
-		\item Motions: The motions used in the analyzed videos will help us upon creating a knowledgebase from which the robot should be able to infer which motions he will use in different situations.
-	\end{itemize}
-
-	In the following we want to present our analysis results regarding the videos from WikiHow, but also from well known cooks, like Jamie Oliver:
-
-	HIER TABELLE
-
-	From this videos we extracted informations about the executed motions. The following motions were defined:
-	\begin{itemize}
-		\item Circular
-		\item Whirlstorm
-		\item Folding
-		\item Diagonal
-		\item etc
-	\end{itemize}
-
-	By analyzing the videos we concluded that the motion decision is based on the task and Ingredients. Upon this thoughts we decided to design a decision tree regarding how the motions will be choosen by the robot.
-
-	HIER DECISION tree
+	\include{sections/data_acquisition}
 
 
 	\chapter*{Data representation}
