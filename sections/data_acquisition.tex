@@ -98,6 +98,30 @@
 	\end{itemize}
 
 	By analyzing the videos we concluded that the motion decision is based on the task and Ingredients. Upon this thoughts we decided to design a decision tree regarding how the motions will be choosen by the robot.
+\newpage
+\section*{Decision Trees}
+In this section we want to illustrate the decision tree for the ellaborated tasks, starting with the Mixing task.
+This trees should decide which motion is used for given Task and Ingredients combinations, as well as which Tool and Container would be preffered.
+For example if we regard the combination of: \newline Task: Mixing + Ingredients: Wet and Liquid -> WhirlstormMotion. The preffered Container would be the bowl, and the preffered tools would be the spoon and whisk.
+Some Tasks do not contain every possible Ingredients combinations, so the Decision Trees might be uncompleted. We also regard the Combining task eqully to the Mixing task.
 
-\section*{Mixing}
-\includegraphics[scale=0.5]{Graphics/MasterMixingParameter.pdf}
+\subsection*{Mixing}
+\begin{figure}[H]
+\includegraphics[scale=0.5]{Graphics/MixingDT.pdf}
+\end{figure}
+
+\subsection*{Stiring}
+\begin{figure}[H]
+\includegraphics[scale=0.4]{Graphics/StirringDT.jpg}
+\end{figure}
+
+
+\subsection*{Beating}
+\begin{figure}[H]
+\includegraphics[scale=0.3]{Graphics/BeatingDT.jpg}
+\end{figure}
+
+\subsection*{Whisking}
+\begin{figure}[H]
+\includegraphics[scale=0.3]{Graphics/WhiskingDT.jpg}
+\end{figure}
