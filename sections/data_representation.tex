@@ -1,0 +1,34 @@
+\chapter*{Data Representation}
+\begin{itemize}
+    \item Ingredients, Tools, etc.
+    \item Different Tasks/Actions maps on different Motions
+    \item Motion dependencies
+    \item Fobidden Tools with Containers
+    \item How is an action defined
+    \item Examples of using the knowledge graph
+\end{itemize}
+
+In this chapter we want to introduce our main ideology behind the Data Representation. Our main goal is to determine different motions for different given scenarios, while keeping it as simplified as possible.
+The main idea behind simplifying the decisions, is motivated through given situations in which the robot would be to dependent on multiple parameters in order to suceed and execute its motion.
+By simplifying these scenarios the robots decision will rely on less parameters thus the succes rate on making decisions will rise.
+
+\section*{The Knowledgebase}
+We designed a Ontology in which we illustrated our needed classes. 
+The Knowledgebase is divided upon the superclasses Ingredient, Tools, Tasks, Motions and Container.
+\subsection*{Ingredients}
+The Ingredient has 4 subclasses: WetIngredients, SolidIngredients, LiquidIngredients and PowderIngredients.
+The WetIngredients are all the ingredients that can not be considered liquids but also not considered dry and solid, like (melted) butter or eggyolk. 
+Liquid ingredients consists of liquids such as water and milk. Powder ingredients are the ingredients which are dry but also consists of small particles like sugar, salt and flour.
+Last we have the solid ingredients which consists of ingredients with solid material like vegetables, fruits and meat.
+
+\subsection*{Tools and containers}
+The tools can be also divided in multiple categories. Cutlery consists of Fork and Spoon, while Spoon also has subclasses like a wooden spoon and tea spoon.
+Then we have kitchen tools where we can find different types of mixers and whisks. Last we got the superclass Crockery in which our containers we will be saved, like different bowls, pot and mugs.
+
+\subsection*{Tasks}
+Different Tasks will be saved under the Task superclass. On this date the tasks are:
+Beating, Whisking, Stirring and Mixing.
+
+\subsection*{Motions}
+The subclasses of this superclass are the defined motions which the robot should perform.
+
