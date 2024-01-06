@@ -1,0 +1,49 @@
+\chapter*{Motions}
+
+In this chapter we'll describe on an abstract level how the motions are implemented in pycram2.
+To simplify the implementation of motions, we hold the following assumptions about the motions which are performed on containers.
+Firstly we assume, the container is symmetric in the x,y direction. We don't consider the descent of the container, we keep the height for the tool
+constant over the performed motion. We don't have collision detection.
+
+\subsection*{Circular Motion}
+Be $container\_center = (container\_center\_x, container\_center\_y)$
+Generating points lying on a circle:
+$x\_coordinates = container\_center + radius\_bounds * cos(radian)$
+$y\_coordinates = container\_center + radius\_bounds * sin(radian)$
+Where an array of angle values is created and converted to radian values. 
+
+INSERT Plot
+
+\subsection{Folding Motion}
+Be l an array of x,y coordinates lying on a line, where the starting point of the line is not the center of the container but rather its endpoint.
+The line is turned via 2D transformation via the rotation matrix: 
+\[R(\theta) = \begin{bmatrix}
+   \cos(\theta) & -\sin(\theta) \\
+   \sin(\theta) & \cos(\theta)
+    \end{bmatrix}
+\]
+
+The transformation $\begin{bmatrix} x' \\ y' \end{bmatrix} = R(\theta) * \begin{bmatrix} x \\ y \end{bmatrix}$, where 
+$\theta=90$ in degrees. 
+
+This results in the tool being moved 90 degrees from the containers center point, to perform on another area inside the container.
+The folding motion is repeated 4 times. 
+
+Afterwards we transform the line  $\begin{bmatrix} x' \\ y' \end{bmatrix} = R(\theta) * \begin{bmatrix} x \\ y \end{bmatrix}$, where 
+$\theta=22.5$ in degrees, to cover a similar area of the container. 
+
+INSERT Plot
+
+\subsubsection{Vertical Circular Motion}
+The vertical circular motion is implemented in the following way.
+By using the formular to compute points on a circle, we adjust the radius for 
+x,y, where one of the values is set to 0.01, the other one is sampled evenly from the interval $semi\_major\_radius = (radius\_upper\_bound,radius\_upper\_bound / 2 ).$
+We take the maximum sampled radius which fulfills the following condition. 
+$\sqrt{(x\_{i} - center\_x)^2 + (y\_{i} - center\_y)^2} < radius_upper_bound$
+Additionally we decrement and increment y coordinates. If the condition: $\sqrt{(y\_{i} - center\_y)^2} > radius_upper_bound$
+is met we change from decrementing to incrementing and vice versa until this condition is fulfilled again.
+
+\subsection*{Whirlstorm Motion}
+
+Using the formular to generate coordinates lying inside a circle we sample radiuses from the interval $radiuses = (radius\_upper\_bound, radius\_lower\_bound)$
+This causes the motion to go from outer part of the container to the inner. 
