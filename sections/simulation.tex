@@ -1,9 +1,30 @@
 \chapter*{Simulation}
-- Simulationsumgebung vorstellen: PyCram/Bulletworld, Pr2. \newline
-- Einige Beispiele von Actions die in PyCram definiert sind. \newline
-- Query aus der Wissensbasis um Parameter für die Simulation zu inferrieren.\newline
-- Dann einmal die Motions vorstellen mit Bild von der Motion geometrisch und Bild aus der Simulation. \newline
-	
+
+In diesem Kapitel stellen wir die Simulation vor, indem der Agent die definierten Motions ausführen kann und dadurch als Proof of Concept dient. 
+Zunächst werden wir die Simulationsumgebung Bulletworld vorstellen, gefolgt von einigen Beispielsaktionen die dort ausgeführt werden können.
+Anschließend zeigen wir, wie die Parameter über Queries inferriert werden und mit der Visulasierung der Motions zeigen wir, dass die von uns definierten Motions + Parameter vom Roboter in der Simulation ausgeführt werden können.
+
+\section*{Simulation Environment}
+
+Die Simulationsumgebung ist Bulletworld, welche als Simulationsumgebung für das Framework PyCram dient. Dies ist sehr günstig, denn somit können die in PyCram definierten Aktionen direkt simuliert werden und müssen nicht extra geportet werden. Als Schnittstelle zu den Roboter wird ROS1 genutzt, um mit den Joints zu kommunizieren. Dies geschieht über RosNodes, darüber kann man Informationen über den Zustand der Joints (oder andere Komponente) erhalten, sowie mit diesen Komponenten kommunizieren um Aktionen zu befehlen.
+
+Der für unsere Zwecken genutzten Roboter ist der PR2, dieser ist als Modell schon in der Bulletworld implementiert und ist für unser Fall geeignet, da für die Motions, 2 Arme benötigt werden, eins um die jeweiligen Container zu halten und den anderen Arm, um das Tool, welches für die Aktionen genutzt wird, bewegt wird.
+
+Die Umgebung, welche für unsere definierten Aktionen genutzt wird, ist eine Küche, die Möbel besteht aus einem Tisch, worauf die genutzten Container platziert werden und die Motions dementsprechend ausgeführt werden, sowie weitere Küchenmöbel, welche für unsere Fälle nicht relevant sind.
+BILDER KÜCHESIMULATION
+
+Die von uns genutzten Objekte sind:
+\begin{itemize}
+	\item Container: Bowl (klein und groß), Pfanne, Topf und Tasse. BILDER
+	\item Tools: Whisk, Löffel (klein und groß), Holzlöffel. BILDER
+\end{itemize}
+
+PyCram bietet schon eine betrachtliche Anzahl an implementierten Aktionen, womit der Roboter manevriert werden kann. Unter diesen Aktionen befinden sich notwendige Navigationaktionen, sowie manipulative Aktionen wie Greifen und Platzieren. Außerdem bietet PyCram schon Schnittstellen bereit womit die Joints des Roboters bewegt werden können, diese Funktionen heißen dann zum Beispiel moveTorso().
+BILDER CODE FUNKtIONEN
+
+\section*{HIER STELLEN WIR UNSERE MOTIONS VOR}
+Hier Vanessa fragen, wie wir ihre Motion referenzieren sollen, einfahc sagen es war vorhanden oder es detaillierten angeben?
+
 \section*{Simulation to RealWorld gap}
 \begin{itemize}
 	\item Big Problem: Uncertaininty
