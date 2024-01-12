@@ -12,49 +12,83 @@ A part of this master's thesis involves creating a knowledge base that includes 
   \subsection*{Mixing hyponyms analysis} 
 	Hyponyms are subordered words of a given word, for example one hyponym of mixing could be beating. 
   To conduct this analysis, one can utilize tools from various websites, such as FrameNet and WordNet. These platforms provide users with the ability to search for specific words and obtain various associations for those words, including synonyms, acronyms, or, crucial for our case, hyponyms.	
+  \subsubsection*{WikiHow extraction}
   For all those hyponyms, we delegated a WikiHow extraction search which should show us, how many times one of these words occur, in the context of cooking.
-	In the table below the results can be seen.
-	
+	Damit wir die Suche ausführen können definieren wir eine neue Klasse "MixingVerb", welche das Verb Mix, sowie die von uns gefundenen hyponyme und Synonyme enthält.
+  \begin{figure}[H]
+    \includegraphics[scale=0.3]{Graphics/MixingVerbClass.png}
+    \end{figure}
+    IN DEM BILD FEHLT STIRRING
+  Da wir nun die gewünschten Verben, wonach wir letzendlich suchen möchten definiert haben, passen wir einige Suchparameter für die Suche an.
+  Die wichtigen Parameter sind das Filtern der Kategorien, in unserem Fall möchten wir uns auf das Mixen in dem Kochbereich fokussieren, deshalb filtern wir alle Artikel, welche nicht in dem Bereich Food and Entertaining existieren, aus.
+  \subsubsection*{Hyponyms occurance}
+  Für jedes definierte Verb, wird eine Suche gestartet, wie oft dieses Verb in den WikiHow Artikeln vorkommt, dadurch wollen wir in Erfahrung bringen, welche Verben letzendlich für unsere Implentierung relevant sind und welche wir ausschließen können, da sie selten vorkommen im alltäglichen Gebrauch.
+  In the table below the results can be seen.
     \begin{table}[H]
         \centering
         \begin{tabular}{|c|c|}
           \hline
           \textbf{Hyponym} & \textbf{Occurance}  \\
           \hline
-          Mixing & 5300 \\
-          \hline
-          Combining & 3700  \\
-          \hline
-          Stirring & 6810 \\
-          \hline
-          Folding & 970 \\
-          \hline
-          Merging & 7 \\
-          \hline
-          Beating & 1200 \\
-          \hline
-          Whipping & 1000 \\
-          \hline
-          Join & 57 \\
-          \hline
-          Coalesce & 1 \\
+          Mix & 5300 \\
           \hline
           Amalgamate & 0 \\
           \hline
-          Pair & 57 \\
+          Beat & 956 \\
           \hline
-          Blending & 1400 \\
+          Blend & 1041 \\
           \hline
+          Coalesce & 1 \\
+          \hline
+          Combining & 3591  \\
+          \hline
+          Coommingle & 0 \\
+          \hline
+          Compound & 0 \\
+          \hline
+          Conflate & 0 \\
+          \hline
+          Folding & 821 \\
+          \hline
+          Fuse & 17 \\
+          \hline
+          Intermix & 0 \\
+          \hline
+          Join & 53 \\
+          \hline
+          Jumble & 0 \\
+          \hline
+          Lump & 7 \\
+          \hline
+          Merge & 6 \\
+          \hline
+          Pair & 352 \\
+          \hline
+          Stir & 6027 \\
+          \hline
+          Unify & 2 \\
+          \hline
+          Unite & 2 \\
+          \hline
+          Whip & 863 \\
+          \hline
+          Whisk & 2267 \\
+          \hline
+          
     
         \end{tabular}
-        \caption{Example Table}
+        \caption{Mix synoyms/hyponyms occurance}
         \label{tab:example}
       \end{table}
       
+  \subsubsection*{Further examination and conclusion}
+  Diese Suche soll uns letzendlich Auskunft darüber geben, welche Verben wir in der Wissensbasis repräsentieren wollen, daher entscheiden wir uns für gewisse Verben unter 2 Bedingungen, Häufigkeit und Ausführbarkeit. Die erste Bedingung ist leicht zu verstehen, Verben die gar nicht oder so gut wie gar nicht vorkommen, werden nicht in Betracht gezogen. Die zweite Bedingung bezieht sich auf die Ausführbarkeit des Verbs im Kontext von Roboternbewegungen. Außerdem werden einige Verben mit relativ hoher Häufigkeit auch etwas genauer untersucht, da im Englischen der past tense auch als adjektiv benutzt wird unter gewissen Umständen.
+  Unter Berücksichtigung der ersten Bedingung werden folgende Verben nicht in Betracht gezogen: Amalgamate, Coalesce, Comingle, Compound, Conflate, Fuse, Intermix, Join, Jumble, Lump, Merge, Unify und Unite.
+  Die zweite Bedingung schließt ein weiteres Verb aus: Blend. Blend wird meistens nur im Kontext mit einer Blendmaschine benutzt, welches vom Roboter nicht gehandhabt wird. Ohne diese Maschine kann die Blend-Ausführung nicht richtig durchgeführt werden und somit ist für uns dieses Verb ausgeschlossen.
+  Unter genauer Betrachtung werden wir auch das Verb Whip nicht in Betracht ziehen, da dieses meist als adjektiv von Zutaten genutzt wird, wie zum Beispiel whipped Cream. Dies stellt heraus, dass nur das Verb Whip eine relativ gerine Häufigkeit hat. Das selbe gilt für pair, wo das past tense dazu genutzt wird eine Verbindung von verschiedenen Zutaten zu beschreiben, Wine paired with cheese.
 
-	From this table one can see that many hyponyms have a low occurance and will be therefore not considered.
-	We consider the words: Mixing, Stiring, Beating, Combining, Whiping, Whisking and Folding. Though Blending achieved a moderate occurance, we decided upon not considering it, because it involves a lot of electronic mixing machines, which the robot could not handle.
-	From now on we will refer to these words also as Tasks.
+  Somit sind die von uns in Betracht gezogenen Verben: Mix, Combine, Beat, Fold, Stir und Whisk.
+  
 
   \section*{Task definitions}
   After selecting our tasks, we need to analyze the context in which they are used. To achieve this, we primarily analyzed WikiHow and various (cooking) videos that include at least one of the tasks we selected. The analysis revealed that the various tasks are primarily used in different contexts, leading to different motions. Additionally, we could conclude that each action involves the following components:	
