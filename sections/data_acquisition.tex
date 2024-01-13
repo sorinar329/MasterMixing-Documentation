@@ -1,4 +1,11 @@
 \chapter*{Data acquisition}
+ToDo:
+\begin{itemize}
+  \item Aus deutsch ins englische übersetzen.
+  \item Beim vorletzten Punkt, die Zutaten Tools und Container besser beschreiben.
+  \item Tabelle der Videos vervollständigen.
+  \item Code Bild um Stir vervollständigen. 
+\end{itemize}
 A part of this master's thesis involves creating a knowledge base that includes certain queryable parameters, allowing the robot to perform specific actions. The initial step in building the knowledge base is to gather data. In this chapter, we elaborate on our data acquisition strategy.
 \section*{Task variations}
 	As our main focus is to represent the knowledge about mixing, first we had to acquire the different types and variations of mixing in order to create a complete Knowldegerepresentation. The first step in acquiring the needed data, was to acknowledge which task varations of mixing are actually important. 
@@ -90,47 +97,57 @@ A part of this master's thesis involves creating a knowledge base that includes 
   Somit sind die von uns in Betracht gezogenen Verben: Mix, Combine, Beat, Fold, Stir und Whisk.
   
 
-  \section*{Task definitions}
-  After selecting our tasks, we need to analyze the context in which they are used. To achieve this, we primarily analyzed WikiHow and various (cooking) videos that include at least one of the tasks we selected. The analysis revealed that the various tasks are primarily used in different contexts, leading to different motions. Additionally, we could conclude that each action involves the following components:	
-	\begin{itemize}
-		\item Tasks: The tasks can differ in its execution, like the tasks Beating (Mixing can be gentle or vigorous, while beating involves a more forceful and rapid action) and Folding (To maintain a light and fluffy texture in a cake, folding is often used to add dry ingredients without overmixing), which will ultimately lead to a decision upon which Motion should be used in the specific use case.
-		\item Tools: Different Tools are used for different tasks, which also has a correlation with the choosen Container.
-		\item Container: Most Mixing Tasks use a mixing bowl for container, but also container like Pot and Pan when considering cooking in boiling water.
-		\item Ingredients: Besides Tasks, the ingredients are the most important component of our knowledgebase regarding the decision making upon motions. We divide the Ingredients in 4 subcategories: Dry/Powder, Wet, Liquid and Solid.
-		\item Motions: The motions used in the analyzed videos will help us upon creating a knowledgebase from which the robot should be able to infer which motions he will use in different situations.
-	\end{itemize}
-  \subsection*{Concluded Motions from video analysis}
-	In the following we want to present our analysis results regarding the videos from WikiHow, but also from well known cooks, like Jamie Oliver:
+  \section*{Task analysis and defintion}
+  Da wir nun die Tasks ausgewählt haben, müssen diese Tasks anaylsiert werden und geschaut werden in welchem Kontext sie letzendlich genutzt werden. Unser Ziel ist es, dass der Roboter diese Tasks so ausführen kann, wie ein Mensch es tun würde. Um dies zu bewerkstelligen müssen wir im nächsten Schritt diese Tasks näher untersuchen. Dazu empfiehlt es sich Videos auf WikiHow oder andere Quellen zu analysieren, wo diese Tasks als Aufgabe vorkommen. Die Analyse besteht daraus zu gucken mit welchen Bewegungen die Tasks in Verbindung gebracht werden. Diese Analysen stellen wir tabellarisch im Folgenden dar. Untersucht wird die Task an sich, die jeweiligen Zutaten die verarbeitet werden, die Tools die dafür genutzt werden, sowie der Behälter worin die Task ausgeführt wird. 
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|p{4,5cm}|p{4,5cm}|}
+        \hline
+        \textbf{Task} & \textbf{Tool} & \textbf{Container} & \textbf{Ingredients} & \textbf{Description} \\
+        \hline
+        Beating & Whisk & Bowl & Egg yolk (Wet ingredient) & circular, swirling wildly around the bowl \\
+        \hline
+        Stirring & Whisk & Bowl & Beaten Egg Yolk (Wet), Parmesan(Powder) and Pepper (Powder) & Circular, from the inside to the outside. \\
+        \hline
+        Stirring & Tongs & Pan & Wet Mixture, Pasta (Solid) and Bacon (Solid) & Diving motions, circular but also straight lines. \\
+        \hline
+        Whisk & Fork & Bowl & Eggs (Wet) & Circular but also straight, wildly motion. \\
+        \hline
+        Mixing & Spatula & Pan & Eggs, melted butter (Wet) & Circular, from the inside to the outside, also diving. \\
+        \hline
+        Folding & Spatula & Pan & cooked eggs in melted butter (Wet) & Gently motion from the outisde to the inside straight, then moving about 90 degree before going to the inside again. \\
+        \hline
+        Mixing & Spoon & Cup & Dry yeast(Powder), Water (Liquid) & Circular \\
+        \hline
+        Mixing & Spoon & Bowl & Dry yeast, Water, Flour (Powder), Salt(Powder) & Whirlstorm-like motion. \\
+        \hline 
+    \end{tabular}
+    \caption{Video analysis}
+    \label{tab:example}
+  \end{table}
+NOCH UNVOLLSTÄDNIG
 
+Nach einer genauen Analyse der Videos und der in den Videos bereitgestellten Informationen, schlussfolgern wir, dass die ausgeführte Bewegung nicht nur im Zusammenhang mit dem Task steht, sondern auch mit den genutzten Zutaten. Einige Tasks sind allerdings determinierend, im Sinne dass sie schon ohne unbedingt auf die Zutaten zu achten, die Bewegung zwingend ausgeführt wird.
+Im Folgenden wollen wir extrahierten Informationen aus den Videos strukturieren und unsere Ergebnisse vorstellen
+\subsection*{Video analysis conclusion and results}
 
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{|c|c|c|p{4,5cm}|p{4,5cm}|}
-            \hline
-            \textbf{Task} & \textbf{Tool} & \textbf{Container} & \textbf{Ingredients} & \textbf{Description} \\
-            \hline
-            Beating & Whisk & Bowl & Egg yolk (Wet ingredient) & circular, swirling wildly around the bowl \\
-            \hline
-            Stirring & Whisk & Bowl & Beaten Egg Yolk (Wet), Parmesan(Powder) and Pepper (Powder) & Circular, from the inside to the outside. \\
-            \hline
-            Stirring & Tongs & Pan & Wet Mixture, Pasta (Solid) and Bacon (Solid) & Diving motions, circular but also straight lines. \\
-            \hline
-            Whisk & Fork & Bowl & Eggs (Wet) & Circular but also straight, wildly motion. \\
-            \hline
-            Mixing & Spatula & Pan & Eggs, melted butter (Wet) & Circular, from the inside to the outside, also diving. \\
-            \hline
-            Folding & Spatula & Pan & cooked eggs in melted butter (Wet) & Gently motion from the outisde to the inside straight, then moving about 90 degree before going to the inside again. \\
-            \hline
-            Mixing & Spoon & Cup & Dry yeast(Powder), Water (Liquid) & Circular \\
-            \hline
-            Mixing & Spoon & Bowl & Dry yeast, Water, Flour (Powder), Salt(Powder) & Whirlstorm-like motion. \\
-            \hline 
-        \end{tabular}
-        \caption{Example Table}
-        \label{tab:example}
-      \end{table}
-      
+Basierend auf den extrahierten Informaitonen schlussfolgern wir dass für unsere Ziele folgende Aspekte, neben der Task, wichtig sind und weiter betrachtet werden:
+\begin{itemize}
+  \item Ingredients: Die Zutaten spielen bei der Bewegungsentscheidung im Zusammenhang mit den Tasks eine wichtige Rolle und werden genauer definiert.
+  \item Tools: Die Tools die genutzt werden sind bei der Bewegungsentscheidung nicht unbedingt ausschlaggebend, diese sind jedoch wichtig für die Paramter des Roboters????
+  \item Container: Das selbe wie oben.
+  \item Motions: Die Motions stellen letzendlich die Bewegung des Roboters für unsere Implentierung dar. Diese Bewegungen werden aus den Videos extrahiert und auf Roboternbewegungen abstimmend definiert.
+\end{itemize}
 
+\subsubsection*{Ingredients}
+Durch die Videoanalyse gelangen wir zu der Schlussfolgerung, dass die Zutaten wichtig sind gegeben dessen Art. Wir unterscheiden bei den Zutaten zwischen 4 Arten:
+Wet, Solid, Dry/Powder und Liquid. Somit ist letzendlich nicht die Zutat an sich wichtig sondern dessen Art.
+Hier eventuell die WhatToMake Ontology nehmen und subClassOf machen?
+
+\subsubsection*{Tools and Container}
+Das kommt von Soma, muss man schauen wie man das beschreiben möchten
+
+\subsubsection*{Motions}
 	From this videos we extracted informations about the executed motions. The following motions can be defined:
 	\begin{itemize}
 		\item \textbf{Circular}: Moving the tool in a defined circular movement in the container, not changing the radius during execution
@@ -140,7 +157,12 @@ A part of this master's thesis involves creating a knowledge base that includes 
 		\item \textbf{CircularDivingToInner}: Starting from the outerside, moving the tool in the container arround its edge for about 270 degrees, before diving to the middle of the container. This motion is used by Tasks where is required to turn the Ingredients over.
 	\end{itemize}
 
-	By analyzing the videos we concluded that the motion decision is based on the task and Ingredients. Upon this thoughts we decided to design a decision tree regarding how the motions will be choosen by the robot.
+\section*{Data Acquision Conclusion}
+
+Bei der Datenacquise fokussierten wir uns darauf eine Grundlage der benötigen Daten und Informationen zu erschaffen, welche für einen Roboter benötigt werden verschiedene Mixing Tasks auszuführen.
+Nach der Feststellung der Tasks, konnten wir Videos analysieren um die Bewegungen zu untersuchen die in Zusammenhang mit den jeweiligen Tasks stehen. Dabei sind wir zu dem Entschluss gekommen, dass nicht nur die Task ausschlaggebend für die Bewegung sei, sondern auch die Zutatenauswahl.
+Die Zutaten werden in 4 verschiedenen Kategorien unterteilt und wir konnten 5 Motions definieren, welche vom Roboter so ausgeführt werden sollen, wie es im Alltag gebräuchlich ist.
+Im nächsten Kapitel wollen wir vorstellen, wie wir dieses Wissen nun repräsentieren und ein System erstellen, wodurch der Roboter in der Lage ist zu Wissen welche Bewegung es ausführen soll basierend auf einer gegebenen Task und Zutaten.
 \newpage
 \section*{Decision Trees}
 In this section we want to illustrate the decision tree for the ellaborated tasks, starting with the Mixing task.
