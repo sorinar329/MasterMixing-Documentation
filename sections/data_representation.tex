@@ -46,4 +46,47 @@ The rules can be thoguht was if conditions, which will then result in a motion. 
 The inference can be illustrated with decision trees which will be shown in the next images for every task and ingredient type combination available. 
 Hier die decision trees?.
 
+\subsection*{Mixing}
+\begin{figure}[H]
+\includegraphics[scale=0.18]{Graphics/MixingDecisionTree.jpg}
+\end{figure}
+\textbf{Definition:} In the context of baking or cooking, a mixing task refers to the process of combining multiple ingredients thoroughly to create a homogeneous mixture. The goal is to distribute the ingredients evenly, ensuring that each component contributes to the overall texture, flavor, and consistency of the final dish or baked good. Mixing is a fundamental step in many recipes and is essential for achieving a balanced and cohesive result.
+
+
+Wie man anhand der Abbildung erkennen kann, kann die Mixing Task hauptsächlich auf die Whirlstormmotion abgebildet werden. Dies wundert letzendlich nicht, wenn man sich die Definion anschaut, denn diese Motion führt dazu, dass alle Zutaten in dem Behälter gleichmäßig verteilt werden.
+
+\subsection*{Stirring}
+\begin{figure}[H]
+    \includegraphics[scale=0.18]{Graphics/StirringDeisionTree.jpg}
+    \end{figure}
+\textbf{Definition:}
+In the context of baking or cooking, a stirring task involves using a utensil, such as a spoon, spatula, or whisk, to agitate and circulate the ingredients within a mixture. The purpose of stirring is to achieve a uniform distribution of ingredients
+
+Im Vergleich zu Mixing bildet die Stirring Task abhängig von den Zutaten auf eine breitere Anzahl von Motions ab. Neben der Whirlstormmotion wird hier zum ersten Mal die CircularMotion genutzt. Diese ist besonders wichtig in Anbetracht der Stirring Task mit dem Ingredienttyp Liquid, da man nicht möchte, wie bei der Whirlstormmotion der Fall wäre, dass die Zutaten "aufgerührt" werden, sondern ledigilich umgerührt.
+
+\subsection*{Beating}
+\begin{figure}[H]
+    \includegraphics[scale=0.18]{Graphics/BeatingDecisionTree.jpg}
+    \end{figure}
+\textbf{Definition:}
+In the context of baking and cooking, a "beating" task refers to the process of vigorously stirring or mixing ingredients to achieve a specific texture or consistency. Beating is often done to incorporate air into the mixture, create smooth and uniform blends, or alter the physical properties of certain ingredients.
+
+Neben der WhirlstormMotion prädominiert hier auch die VerticalCircular Motion, dies ist auch aus der Definition abzuleiten, da diese Motion eine willkürliche Art des Mixen erfordert, worauf die VerticalCircular Motion passt.
+
+\subsection*{Whisking}
+\begin{figure}[H]
+    \includegraphics[scale=0.18]{Graphics/WhiskingDecisionTree.jpg}
+    \end{figure}
+\textbf{Definion:}In the context of baking and cooking, a "whisking" task involves using a kitchen utensil called a whisk to mix, blend, or beat ingredients. A whisk typically consists of wire loops or a coil attached to a handle, and it is designed to incorporate air into mixtures, break up clumps, and create a smooth and uniform texture.
+
+\subsection*{Folding}
+\begin{figure}[H]
+    \includegraphics[scale=0.18]{Graphics/FoldingDecisionTree.jpg}
+    \end{figure}
+\textbf{Definition:}
+In the context of baking and cooking, a "folding" task refers to a gentle mixing technique used to incorporate ingredients without deflating or destroying the air bubbles that have been created. Folding is often employed when combining a lighter mixture (such as whipped cream or beaten egg whites) with a denser one (such as a batter or a heavier mixture). The goal is to maintain the desired texture, lightness, or fluffiness in the final dish.
+
+Theoretisch müssten wir die Folding Task nicht grafisch darstellen, da jede Task und Ingredients Kombination auf eine einzige Motion abbildet, die FoldingMotion. Die Grafik wurde trotzdem der vervollstädnigkeitshalber eingefügt.
+Die FoldingTask erfodert eine spezifische Bewegung, die die Luft in der Mixtur nicht entfernt, wobei jede andere Bewegung scheitern würde.
+
 \section*{How to expand the Knowledgebase}
