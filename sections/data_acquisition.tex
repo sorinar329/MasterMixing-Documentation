@@ -140,9 +140,37 @@ Basierend auf den extrahierten Informaitonen schlussfolgern wir dass für unsere
 \end{itemize}
 
 \subsubsection*{Ingredients}
-Durch die Videoanalyse gelangen wir zu der Schlussfolgerung, dass die Zutaten wichtig sind gegeben dessen Art. Wir unterscheiden bei den Zutaten zwischen 4 Arten:
-Wet, Solid, Dry/Powder und Liquid. Somit ist letzendlich nicht die Zutat an sich wichtig sondern dessen Art.
-Hier eventuell die WhatToMake Ontology nehmen und subClassOf machen?
+Quellen:
+\begin{itemize}
+  \item https://ceur-ws.org/Vol-2028/paper28.pdf
+  \item https://www.freshfarm.org/app/uploads/2020/05/Mixing-Measuring-Wet-and-Dry-Ingredients.pdf
+  \item https://www.cookingforengineers.com/article/280/Analyzing-a-Baking-Recipe/print
+\end{itemize}
+Durch die Videoanalyse gelangen wir zu der Schlussfolgerung, dass die Zutaten wichtig sind gegeben dessen Art. 
+Hauptsächlich können Zutaten in zwei Hauptkategorien unterteilt werden, Dry and Wet. Diese Unterteilung wird auch wichtig hinsichtlich der Messung der Mengen der gegebenen Zutatenart. 
+Für unseren Fall ist eine etwas feinere Art der Unterteilung der Zutaten notwendig, um die verschiedenen Bewegungen vernünftig auf die gegebenen Arten abzubilden.
+Wir abstrahieren neben der Wet Ingredients, eine neue Art: Liquid, diese entspricht den Zutaten, die unter den Wet Ingredients fallen, aber dessen Aggregatzustand flüssig ist, wie Milch, Wasser und Öl.
+Dies ist wichtig, da einige Bewegungen sich unterscheiden, wenn die gegebenen Zutaten Wet oder Liquid sind.
+Eine weitere Kategorie, die wir einfügen ist die Solid Kategorie. Diese unterscheidet sich zu der Dry Kategorie, darin, dass sie aus festen Komponenten besteht, während wir die Dry Kategorie so definieren, dass dort Pulverartige Substanzen unterklassifiziert werden.
+Die Solid Kategorie beinhaltet Nahrung wie Gemüse, Obst, Fleisch.
+Durch diese Unterscheidungen können wir eine Definition erstellen, wobei die Ingredientkategorien etwas verfeinert werden.
+
+\textbf{Definition:}
+Zutaten werden Hauptsächlich in "Dry" und "Wet" unterteilt, wobei eine feinere Differenzierung notwendig ist. Eine abstrahierte Kategorie namens "Liquid" wird eingeführt, um flüssige Zustände wie Milch und Wasser zu erfassen. Eine zusätzliche Kategorie, "Solid", differenziert sich von "Dry" durch feste Bestandteile wie Gemüse und Fleisch. Diese Unterscheidungen ermöglichen eine präzise Definition der Zutaten, verbessern die Analyse kulinarischer Bewegungsabläufe und deren Darstellung.
+
+In erster Version von uns definierten Zutaten sind:
+\begin{itemize}
+  \item Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces.
+  \item Wet: Egg White, Egg yolk, Butter, Whipped Cream, (mashed fruits?).
+  \item Dry: Flour, Salt, Sugar, Baking Soda, Cocoa Powder.
+  \item Solid: Onions, Pork, Chicken, Minced meat, Bacon.
+\end{itemize}
+
+Hier eventuell nochmal begründen wieso wir die nehmen??.
+
+1. Ansatz: Zutaten aus den Videoanylysen.
+
+2. Ansatz WikiHowExtraction.
 
 \subsubsection*{Tools and Container}
 Das kommt von Soma, muss man schauen wie man das beschreiben möchten
