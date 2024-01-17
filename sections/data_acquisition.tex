@@ -26,11 +26,10 @@ A part of this master's thesis involves creating a knowledge base that includes 
     \includegraphics[scale=0.3]{Graphics/MixingVerbClass.png}
     \end{figure}
     IN DEM BILD FEHLT STIRRING
-  Da wir nun die gewünschten Verben, wonach wir letzendlich suchen möchten definiert haben, passen wir einige Suchparameter für die Suche an.
-  Die wichtigen Parameter sind das Filtern der Kategorien, in unserem Fall möchten wir uns auf das Mixen in dem Kochbereich fokussieren, deshalb filtern wir alle Artikel, welche nicht in dem Bereich Food and Entertaining existieren, aus.
-  \subsubsection*{Hyponyms occurance}
-  Für jedes definierte Verb, wird eine Suche gestartet, wie oft dieses Verb in den WikiHow Artikeln vorkommt, dadurch wollen wir in Erfahrung bringen, welche Verben letzendlich für unsere Implentierung relevant sind und welche wir ausschließen können, da sie selten vorkommen im alltäglichen Gebrauch.
-  In the table below the results can be seen.
+    Since we have now defined the desired verbs that we ultimately want to search for, let's adjust some search parameters. The crucial parameters involve filtering the categories; in our case, we want to focus on mixing in the cooking domain. Therefore, we filter out all articles that do not exist in the Food and Entertaining category.
+    \subsubsection*{Hyponyms occurance}
+    For each defined verb, a search is initiated to determine how often this verb appears in the WikiHow articles. This is done to ascertain which verbs are ultimately relevant for our implementation and which ones we can exclude, as they are infrequently used in everyday language.
+    In the table below the results can be seen.
     \begin{table}[H]
         \centering
         \begin{tabular}{|c|c|}
@@ -89,17 +88,19 @@ A part of this master's thesis involves creating a knowledge base that includes 
       \end{table}
       
   \subsubsection*{Further examination and conclusion}
-  Diese Suche soll uns letzendlich Auskunft darüber geben, welche Verben wir in der Wissensbasis repräsentieren wollen, daher entscheiden wir uns für gewisse Verben unter 2 Bedingungen, Häufigkeit und Ausführbarkeit. Die erste Bedingung ist leicht zu verstehen, Verben die gar nicht oder so gut wie gar nicht vorkommen, werden nicht in Betracht gezogen. Die zweite Bedingung bezieht sich auf die Ausführbarkeit des Verbs im Kontext von Roboternbewegungen. Außerdem werden einige Verben mit relativ hoher Häufigkeit auch etwas genauer untersucht, da im Englischen der past tense auch als adjektiv benutzt wird unter gewissen Umständen.
-  Unter Berücksichtigung der ersten Bedingung werden folgende Verben nicht in Betracht gezogen: Amalgamate, Coalesce, Comingle, Compound, Conflate, Fuse, Intermix, Join, Jumble, Lump, Merge, Unify und Unite.
-  Die zweite Bedingung schließt ein weiteres Verb aus: Blend. Blend wird meistens nur im Kontext mit einer Blendmaschine benutzt, welches vom Roboter nicht gehandhabt wird. Ohne diese Maschine kann die Blend-Ausführung nicht richtig durchgeführt werden und somit ist für uns dieses Verb ausgeschlossen.
-  Unter genauer Betrachtung werden wir auch das Verb Whip nicht in Betracht ziehen, da dieses meist als adjektiv von Zutaten genutzt wird, wie zum Beispiel whipped Cream. Dies stellt heraus, dass nur das Verb Whip eine relativ gerine Häufigkeit hat. Das selbe gilt für pair, wo das past tense dazu genutzt wird eine Verbindung von verschiedenen Zutaten zu beschreiben, Wine paired with cheese.
+  This search is ultimately intended to provide us with information on which tasks we want to represent in the knowledge base. Therefore, we decide on certain tasks based on two conditions: frequency and executability. The first condition is easy to understand; tasks that do not occur or occur very rarely are not considered. The second condition relates to the executability of the task in the context of robot movements. Additionally, some tasks with relatively high frequency are also examined more closely, as in English, the past tense is used as an adjective under certain circumstances.
 
-  Somit sind die von uns in Betracht gezogenen Verben: Mix, Combine, Beat, Fold, Stir und Whisk.
-  
+Taking into account the first condition, the following tasks are not considered: Amalgamate, Coalesce, Comingle, Compound, Conflate, Fuse, Intermix, Join, Jumble, Lump, Merge, Unify, and Unite.
+
+The second condition excludes another task: Blend. Blend is mostly used in the context of a blending machine, which is not handled by the robot. Without this machine, the blending execution cannot be performed correctly, so this task is excluded for us.
+
+Upon closer examination, we will also not consider the verb Whip because it is mostly used as an adjective for ingredients, such as whipped cream. This highlights that only the verb Whip has relatively low frequency. The same applies to pair, where the past tense is used to describe a combination of different ingredients, such as wine paired with cheese.
+
+Thus, the tasks we consider are: Mix, Combine, Beat, Fold, Stir, and Whisk.
 
   \section*{Task analysis and defintion}
-  Da wir nun die Tasks ausgewählt haben, müssen diese Tasks anaylsiert werden und geschaut werden in welchem Kontext sie letzendlich genutzt werden. Unser Ziel ist es, dass der Roboter diese Tasks so ausführen kann, wie ein Mensch es tun würde. Um dies zu bewerkstelligen müssen wir im nächsten Schritt diese Tasks näher untersuchen. Dazu empfiehlt es sich Videos auf WikiHow oder andere Quellen zu analysieren, wo diese Tasks als Aufgabe vorkommen. Die Analyse besteht daraus zu gucken mit welchen Bewegungen die Tasks in Verbindung gebracht werden. Diese Analysen stellen wir tabellarisch im Folgenden dar. Untersucht wird die Task an sich, die jeweiligen Zutaten die verarbeitet werden, die Tools die dafür genutzt werden, sowie der Behälter worin die Task ausgeführt wird. 
-  \begin{table}[H]
+  Now that we have selected the tasks, they need to be analyzed to understand the context in which they are ultimately used. Our goal is for the robot to perform these tasks in a manner similar to how a human would. To achieve this, in the next step, we need to closely examine these tasks. It is recommended to analyze videos on WikiHow or other sources where these tasks are presented as activities. The analysis involves observing the movements associated with each task. We present these analyses in tabular form below. The examination includes the task itself, the respective ingredients being processed, the tools used for it, and the container in which the task is carried out.
+    \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|p{4,5cm}|p{4,5cm}|}
         \hline
@@ -127,16 +128,18 @@ A part of this master's thesis involves creating a knowledge base that includes 
   \end{table}
 NOCH UNVOLLSTÄDNIG
 
-Nach einer genauen Analyse der Videos und der in den Videos bereitgestellten Informationen, schlussfolgern wir, dass die ausgeführte Bewegung nicht nur im Zusammenhang mit dem Task steht, sondern auch mit den genutzten Zutaten. Einige Tasks sind allerdings determinierend, im Sinne dass sie schon ohne unbedingt auf die Zutaten zu achten, die Bewegung zwingend ausgeführt wird.
-Im Folgenden wollen wir extrahierten Informationen aus den Videos strukturieren und unsere Ergebnisse vorstellen
+After a thorough analysis of the videos and the information provided in them, we conclude that the executed movement is not only related to the task but also influenced by the ingredients used. However, some tasks are deterministic in the sense that the movement is performed regardless of the specific ingredients.
+
+In the following, we aim to structure the extracted information from the videos and present our findings.
+
 \subsection*{Video analysis conclusion and results}
 
-Basierend auf den extrahierten Informaitonen schlussfolgern wir dass für unsere Ziele folgende Aspekte, neben der Task, wichtig sind und weiter betrachtet werden:
+Based on the extracted information, we conclude that for our goals, the following aspects, in addition to the task, are important and will be further considered:
 \begin{itemize}
-  \item Ingredients: Die Zutaten spielen bei der Bewegungsentscheidung im Zusammenhang mit den Tasks eine wichtige Rolle und werden genauer definiert.
-  \item Tools: Die Tools die genutzt werden sind bei der Bewegungsentscheidung nicht unbedingt ausschlaggebend, diese sind jedoch wichtig für die Paramter des Roboters????
+  \item Ingredients: The ingredients play a crucial role in the movement decision associated with the tasks and will be defined more precisely.
+  \item Tools: The tools used may not be decisive in the movement decision, but they are important for the parameters of the robot.????
   \item Container: Das selbe wie oben.
-  \item Motions: Die Motions stellen letzendlich die Bewegung des Roboters für unsere Implentierung dar. Diese Bewegungen werden aus den Videos extrahiert und auf Roboternbewegungen abstimmend definiert.
+  \item Motions: The motions ultimately represent the movement of the robot for our implementation. These movements are extracted from the videos and defined in alignment with robot motions.
 \end{itemize}
 
 \subsubsection*{Ingredients}
@@ -146,19 +149,15 @@ Quellen:
   \item https://www.freshfarm.org/app/uploads/2020/05/Mixing-Measuring-Wet-and-Dry-Ingredients.pdf
   \item https://www.cookingforengineers.com/article/280/Analyzing-a-Baking-Recipe/print
 \end{itemize}
-Durch die Videoanalyse gelangen wir zu der Schlussfolgerung, dass die Zutaten wichtig sind gegeben dessen Art. 
-Hauptsächlich können Zutaten in zwei Hauptkategorien unterteilt werden, Dry and Wet. Diese Unterteilung wird auch wichtig hinsichtlich der Messung der Mengen der gegebenen Zutatenart. 
-Für unseren Fall ist eine etwas feinere Art der Unterteilung der Zutaten notwendig, um die verschiedenen Bewegungen vernünftig auf die gegebenen Arten abzubilden.
-Wir abstrahieren neben der Wet Ingredients, eine neue Art: Liquid, diese entspricht den Zutaten, die unter den Wet Ingredients fallen, aber dessen Aggregatzustand flüssig ist, wie Milch, Wasser und Öl.
-Dies ist wichtig, da einige Bewegungen sich unterscheiden, wenn die gegebenen Zutaten Wet oder Liquid sind.
-Eine weitere Kategorie, die wir einfügen ist die Solid Kategorie. Diese unterscheidet sich zu der Dry Kategorie, darin, dass sie aus festen Komponenten besteht, während wir die Dry Kategorie so definieren, dass dort Pulverartige Substanzen unterklassifiziert werden.
-Die Solid Kategorie beinhaltet Nahrung wie Gemüse, Obst, Fleisch.
-Durch diese Unterscheidungen können wir eine Definition erstellen, wobei die Ingredientkategorien etwas verfeinert werden.
+Through the video analysis, we come to the conclusion that the nature of ingredients is important. Primarily, ingredients can be divided into two main categories: Dry and Wet. This division becomes crucial, especially regarding the measurement of quantities for each type of ingredient.
+
+For our case, a somewhat finer categorization of ingredients is necessary to map the various movements sensibly to the given types. In addition to Wet Ingredients, we introduce a new category: Liquid. This corresponds to ingredients falling under Wet Ingredients but with a liquid state, such as milk, water, and oil. This is significant because some movements differ when the given ingredients are Wet or Liquid.
+
+Another category we include is the Solid category. This differs from the Dry category in that it consists of solid components, while we define the Dry category to include powdery substances. The Solid category encompasses foods like vegetables, fruits, and meats. Through these distinctions, we can create a definition refining the ingredient categories.
 
 \textbf{Definition:}
-Zutaten werden Hauptsächlich in "Dry" und "Wet" unterteilt, wobei eine feinere Differenzierung notwendig ist. Eine abstrahierte Kategorie namens "Liquid" wird eingeführt, um flüssige Zustände wie Milch und Wasser zu erfassen. Eine zusätzliche Kategorie, "Solid", differenziert sich von "Dry" durch feste Bestandteile wie Gemüse und Fleisch. Diese Unterscheidungen ermöglichen eine präzise Definition der Zutaten, verbessern die Analyse kulinarischer Bewegungsabläufe und deren Darstellung.
-
-In erster Version von uns definierten Zutaten sind:
+Ingredients are primarily divided into 'Dry' and 'Wet,' with a need for finer differentiation. An abstracted category called 'Liquid' is introduced to encompass liquid states such as milk and water. An additional category, 'Solid,' distinguishes itself from 'Dry' by including solid components like vegetables and meat. These distinctions allow for a precise definition of ingredients, enhancing the analysis of mixing motions in the context of cooking/baking and their representation."
+In the initial version, the ingredients we defined are:
 \begin{itemize}
   \item Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces.
   \item Wet: Egg White, Egg yolk, Butter, Whipped Cream, (mashed fruits?).
@@ -187,8 +186,7 @@ Das kommt von Soma, muss man schauen wie man das beschreiben möchten
 
 \section*{Data Acquision Conclusion}
 
-Bei der Datenacquise fokussierten wir uns darauf eine Grundlage der benötigen Daten und Informationen zu erschaffen, welche für einen Roboter benötigt werden verschiedene Mixing Tasks auszuführen.
-Nach der Feststellung der Tasks, konnten wir Videos analysieren um die Bewegungen zu untersuchen die in Zusammenhang mit den jeweiligen Tasks stehen. Dabei sind wir zu dem Entschluss gekommen, dass nicht nur die Task ausschlaggebend für die Bewegung sei, sondern auch die Zutatenauswahl.
-Die Zutaten werden in 4 verschiedenen Kategorien unterteilt und wir konnten 5 Motions definieren, welche vom Roboter so ausgeführt werden sollen, wie es im Alltag gebräuchlich ist.
-Im nächsten Kapitel wollen wir vorstellen, wie wir dieses Wissen nun repräsentieren und ein System erstellen, wodurch der Roboter in der Lage ist zu Wissen welche Bewegung es ausführen soll basierend auf einer gegebenen Task und Zutaten.
+In the data acquisition phase, our focus was on creating a foundation of the necessary data and information required for a robot to perform various mixing tasks. After identifying the tasks, we were able to analyze videos to examine the movements associated with each task. We concluded that not only the task itself but also the selection of ingredients is crucial for determining the movement.
+
+The ingredients are divided into four different categories, and we were able to define five motions that the robot should perform in a manner consistent with everyday use. In the next chapter, we will present how we intend to represent this knowledge and create a system that enables the robot to know which movement to execute based on a given task and set of ingredients.
 \newpage
