@@ -1,27 +1,32 @@
 \chapter*{Knowledge Graph Visualization Tool}
-During the process of working on the master's thesis, we were searching for a framework that could visually represent our implemented knowledge graph. Our aim was to clarify the connections and relationships between individual classes. In our search, we found several interesting frameworks that seemed suitable for our needs, which are also mentioned in the Related Work chapter. NOTE RELATED WORK HERE.
+During the process of working on the master's thesis, we were searching for a framework that could visually represent our implemented knowledge graph. Our aim was to clarify the connections and relationships between individual classes. In our search, we found several interesting frameworks that seemed suitable for our needs, which are also mentioned in the \nameref{chap:Related_work} chapter.
 
-However, these solutions weren't entirely satisfactory for us because they lacked some tools that we deemed important. Therefore, we decided to develop our own tool, which should serve as a good visualization framework for our and similar use cases.
+However, these solutions weren't entirely satisfactory for us because they lacked some features that we deemed important. Therefore, we decided to develop our own framwework, which should serve as a good visualization framework for our and similar use cases.
 
 In this chapter, we present the framework we developed, from the initial idea to the implementation and the functionalities of our tool.
 
-\section*{Main concept}
+\section{Main concept}
+\label{sec:MainConceps}
 
-Wir entschieden uns für 3 Hauptkomponente, welche das neue Framework beinhalten sollte:
+We decided on 3 main components that the new framework should include:
 \begin{itemize}
-    \item Klare Visualisierung: Um die Navigation durch den Wissensgraphen zu erleichtern, setzten wir uns als erstes Ziel, die Relationen und Klassen des Graphen so deutlich wie möglich hervorzuheben. Dies könnte zum Beispiel durch die Nutzung verschiedener Farben für verschiedene Klassen passieren oder durch das Highlighten einer Klasse und die dazugehörigen Klassen zu denen eine Relation besteht.
-    \item Query Builder: Um die Relationen zwischen den Queries zu verdeutlichen, benötigen wir einen Query Builder, der gegeben einer Klasse, durch die Relation auf andere Klassen hinweisen kann, welche wiederrum durch eine weitere Relation auf weitere Klassen hinweisen kann, solange wie der Nutzer das möchte oder es keine weiteren Relationen gibt. Dies sollte geschehen ohne die Query Sprache SPARQL einsetzen zu müssen, wodurch es dem Nutzer um einiges erleichtert wird.
-    \item Inference Query: Da unsere Arbeit auf Inferenzen beruht, möchten wir eine Inferenz Query implementieren, welche durch den Input einiger Klassen, auf inferierte Parameter hinweisen kann. Dieser Anwendungsfall ist ziemlich spezifisch für unseren UseCase, allerdings sollte dies auch auf andere Ontologien abbilden können. Der Output sollte ein Aktionsbaum sein, mit den inferierten Parametern und einen visualierten Graphen mit den dazugehörigen Klassen, welche für die Inferenz eine Rolle spielen.
+    \item Clear Visualization: Our first goal was to facilitate navigation through the knowledge graph by highlighting the relations and classes of the graph as clearly as possible. This could be achieved, for example, by using different colors for different classes or by highlighting a class and its associated classes to which a relation exists. Additionally, we aim to make the graph as clear as possible and reduce the number of nodes to those that are ultimately essential for visualization.
+    \item To clarify the relations between the queries, we implement a query builder that, given a class, can point to other classes through the relation, which in turn can point to further classes through another relation, as long as the user desires or there are no further relations. This should be done without having to use the SPARQL query language, making it much easier for the user. The Query Builder outputs a filtered graph with the selected triples.
+    \item Inference Query: Since a part of our work relies on inferences, we want to implement an inference query that can indicate inferred parameters based on the input of certain classes. This use case is quite specific to our scenario, but it should also be able to map to other ontologies. The output should be an action tree with the inferred parameters and a visualized graph with the associated classes that play a role in the inference.
 \end{itemize}
 
-\subsection*{Architekturbeschreibung, briefly}
+\section{Architecture}
+\label{sec:Architecture}
 
-Die Architecture besteht aus einem Full Stack Framework, welches im Backend das WebFramework Flask benutzt und fürs Frontend HTML und JavaScript. Für das Styling des HTMLs nutzen wir eine abgeänderte Version von Bootstrap. Außerdem werden im Backend die Bibliothek rdfLib genutzt um Daten aus der Wissensbasis zu verarbeiten. Die JavaScript Funktionen sind für die Visualisierung des Graphen da, welches mit der JS Bibliothek "Vis.js" geschieht.
-
-Die folgenden Grafiken soll eine einfache Beschreibung der Architektur visuell darstellen, sowie die Ordnerstruktur anzeigen.
-\begin{figure}[!ht]
+The architecture consists of a full-stack framework, utilizing \textit{flask} as the web framework in the backend and \textit{HTML} and \textit{JavaScript} for the frontend. 
+We use a modified version of \textit{bootstrap} for styling the \textit{HTML}-pages. Additionally, in the backend, we utilize the \textit{rdfLib}(section not yet written, 
+\ref{sec:Libraries}) library to process data from the knowledge base. The \textit{JavaScript} functions are responsible for visualizing the graph, which is done using the \textit{vis.js}(section not yet written, 
+\ref{sec:Libraries}) library. The following graphics are intended to visually represent a simple description of the architecture, as well as display the folder structure.
+\begin{figure}[H]
     \includegraphics[scale=0.35]{Graphics/OWLViz_architecture.jpg}
-    \end{figure}
+    \label{fig:OWLViz_architecture}
+    \caption{Architecture chart for the OWLVisualizer framework}
+\end{figure}
 
 \dirtree{%
 .1 main.py.
@@ -39,173 +44,298 @@ Die folgenden Grafiken soll eine einfache Beschreibung der Architektur visuell d
 .2 inference\_builder.py.
 .2 query\_builder.py.
 }
-
-Im Folgenden wollen wir auf die einzelnen Punkte der Architektur aus einer TopLevel Sicht näher betrachten.
+Below, we want to take a closer look at the individual points of the architecture from a top-level perspective.
 
 \subsubsection*{WebApp StartUp} 
 
-Um die Anwendung zu Starten muss das Python Skript \textit{main.py} ausgeführt werden.
-Dies kann mit dem folgenden Command, soweit die benötigten Bibliotheken installiert wurden, ausgeführt werden.
-
+To start the application, the Python script \textit{main.py} has to be executed. This can be done using the following command, provided that the necessary libraries have been installed:
 \textit{\$: python main.py}
 
-Damit wird die Flask Webanwendung gestartet und die Startseite \textit{index.html} aufgerufen.
-
+This will start the \textit{flask} web application and open the homepage \textit{index.html}.
 \begin{figure}[!ht]
     \includegraphics[scale=0.35]{Graphics/def_index.png}
-    \end{figure}
+    \caption{\textit{index()} - function.}
+\end{figure}
 
-    \begin{itemize}
-        \item \textit{@app.route("/")} zeigt an, welche Funktion als erstes beim Starten des Frameworks ausgeführt wird.
-        \item \textit{render\_template("index.html")} diese Funktion zeigt welche HTML-Seite dabei aufgerufen wird, in diesem Fall \textit{index.html}
-    \end{itemize}
+\begin{itemize}
+        \item \textit{@app.route("/")} indicates which function is executed first when the framework is started.
+        \item \textit{render\_template("index.html")} indicates which \textit{HTML} page is being called, in this case, \textit{index.html}.
+\end{itemize}
 
 \subsubsection*{Upload Ontology}
 
-Die WebApp startet erstmal mit einer (fast) leeren HTML-Seite, welches nur über einer Navigationsbar verfügt.
-Dem Nutzer steht jetzt die MÖglichkeit zu, selbst eine Ontologie hochzuladen, um mit dieser weiter zu arbeiten.
-Die Funktion \textit{upload\_graph()} speichert die Ontologie im \textit{data} Ordner.
-\begin{figure}[!ht]
+The web app initially starts with a (almost) blank \textit{HTML} page, which only contains a navigation bar. 
+\begin{figure}[H]
+    \includegraphics[scale=0.3]{Graphics/webapp_startupt_html.png}
+    \caption{Startpage of the framework}
+\end{figure}
+
+Now, the user has the option to upload an ontology to work with. The function \textit{upload\_graph()} saves the ontology in the \textit{data} folder.
+
+\begin{figure}[H]
     \includegraphics[scale=0.2]{Graphics/upload_graph.png}
-    \end{figure}
+    \caption{\textit{upload\_graph()} - function.}
+\end{figure}
 
 \subsubsection*{Visualized Graph}
+Once the ontology has been uploaded, the \textit{JavaScript} function \textit{viz\_graph()} is executed, 
+which ultimately visualizes the graph. This function fetches the required sets of nodes and edges from the backend function \textit{get\_graph\_data()}.
 
-Wenn die Ontologie hochgeladen wurde, wird die JavaScript Funktion \textit{viz\_graph()} ausgeführt, welche letzendlich den Graphen visualiert.
-Diese Funktion fetcht die benötigten Knoten- und Kantenmengen aus der BackEnd Funktion \textit{get\_graph\_data()}
-
-\begin{figure}[!ht]
+\begin{figure}[H]
     \includegraphics[scale=0.2]{Graphics/viz_graph_function().png}
+    \caption{\textit{viz\_graph()} - function.}
+
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[H]
     \includegraphics[scale=0.2]{Graphics/get_graph_data.png}
+    \caption{\textit{get\_graph\_data()} - function.}
+
 \end{figure}
 
-Die Verarbeitung der Daten ist komplex und wird im Kapitel Implemetierung (HINWEIS KAPITEL Implemetierung) näher ausgeführt.
-Außerdem haben wir einen Abschnitt geschrieben, welches eine einfache Einführung in unser Framework geben soll, dieser soll mit einem einfachen Beispiel die Funktionsweisen verdeutlichen (HINWEIS EinführendesBeispiel).
-
+The data processing is complex and will be further elaborated in the \nameref{sec:Implementation} section. 
+Additionally, we have written a section intended to provide a simple introduction to our framework, which can be found in the section 
+\nameref{sec:Introducing the framework with a trivial example} . This section aims to illustrate the functionality through a trivial example.
 \subsubsection*{Nodes Highlightning}
 
-Bei großen Graphen, kann es schwierig werden die Übersicht über die Knoten und dazugehörigen Relationen zu behalten. Deshalb implementieren wir eine Funktion, welches einen Knoten, sowie die benachbarten Knoten highlighted.
-Dies soll dazu führen, dass man einfacher den Überblick über eine Klasse und die dazugehörigen Relationen erhält.
-Die dazu benötigte Funktion ist eine JavaScript Funktion, welche als Parameter einen angeklickten Knoten nimmt, und darauf basiert die benachbarten Knoten berechnet. Anschließend werden alle Knoten
-ausgegraut, und der ausgewählte Knoten und seine Nachbaren, bekommen die ursprüngliche Farbe zurück. Dadurch erscheinen die ausgewählten Knoten "gehighlighted".
-\begin{figure}[!ht]
-    \includegraphics[scale=0.3]{Graphics/neighbourhood_highlighting.png}
+For large graphs, it can become difficult to maintain an overview of the nodes and their associated relations. 
+Therefore, we are implementing a function that highlights a node as well as its neighboring nodes. 
+This is intended to make it easier to understand the relationships between a class and its associated nodes. 
+
+The required function is a \textit{JavaScript} function that takes a clicked node as a parameter and calculates its neighboring nodes based on that. 
+Subsequently, all nodes are grayed out, and the selected node and its neighbors are restored to their original color. This makes the selected nodes appear "highlighted".
+
+\begin{figure}[H]
+    \includegraphics[scale=0.25]{Graphics/neighbourhood_highlighting.png}
+    \caption{\textit{neighbourhoodHighlight()}-function}
+\end{figure}
+
+Here is an example of a graph with highlighted nodes:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.3]{Graphics/nodes_highlight_html.png}
+    \caption{graph with highlighted nodes}
 \end{figure}
 
 \subsubsection*{Query Builder - Naser}
 
 \subsubsection*{Inference Builder}
-Die letzte Möglichkeit für den Nutzer, Funktionen auf einem Graphen auszuführen ist der Inference Builder.
-Vorab gesagt, der Inference Builder ist kein generischer Anwendungsfall und ist in dieser Version auf dem Mixing Graphen (HINWEIS HIER) abgestimmt.
-Im Kapitel Implemetierung (HINWEIS HIER), wird die ImplemetIierung näher erklärt und aufgezeigt wie dies auch für andere Ontologien eventuell implementiert werden kann.
-In unserem Fall inferieren wir eine Motion und dazugehörige Parameter basierend auf einer gegebenen Task und einer belieb langen Liste von Zutaten.
-Der Inference Builder generiert dann einen Graphen, welche nur die dazugehörigen Knoten übersichtshalber anzeigt, sowie einen Tasktree der von einem Agenten befolgt werden kann.
-
-Im ersten Weg werden der Task und die Zutaten an das Backend für die Inferenz gesendet, welches wiederrum dann die inferierten Motion und Parameter zurück an das FrontEnd schickt.
+The last option for the user to execute functions on a graph is the Inference Builder. 
+It's important to note that the Inference Builder is not a generic use case and in this version, it's tailored to the Mixing Graph (see \nameref{chap:Data_representation}). 
+In the \nameref{sec:Implementation} section, the implementation is further explained, demonstrating how it could potentially be implemented for other ontologies as well. 
+In our case, we infer a motion and its corresponding parameters based on a given task and a potentially long list of ingredients. 
+The Inference Builder then generates a graph that only displays the corresponding nodes for clarity, as well as a task tree that can be followed by an agent.
+In the first step, the task and the ingredients are sent to the backend for inference, which in turn sends back the inferred motion and parameters to the frontend.
 
 \begin{figure}[H]
     \includegraphics[scale=0.25]{Graphics/inference_builder_js.png}
+    \caption{data processing for the inference builder}
 \end{figure}
 
-Die BackEnd Funktion verarbeitet die Inferenz mit den empfangenen Parametern, welche dann für die Visualisierung genutzt werden.
+The backend function processes the inference with the received parameters, which are then used for visualization.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.25]{Graphics/get_data.png}
+    \includegraphics[scale=0.23]{Graphics/get_data.png}
+    \caption{\textit{get\_data()}-function}
 \end{figure}
-\subsection*{Einführendes Beispiel des Frameworks}
-In diesem Abschnitt stellen wir ein einfaches Beispiel unseres Frameworks dar, von der Verarbeitung der Ontologie, bis zur Visualisierung in der Webanwendung.
-Dies soll für den Leser den Einstieg in unser Framework erleichtern. 
-Für diesen Zweck erstellen wir eine kleine und einfache Ontologie, um die Programmabläufe unkompliziert erklären zu können.
-Außerdem möchten wir zeigen, wie diese Ontologie verarbeitet wird und wie die Schnittstelle zwischen FrontEnd und BackEnd aussieht.
 
+After processing the data, the graph and the task tree are visualized based on the user input.
 
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{Graphics/new_inference_graph.png}
+    \caption{inferred graph and task tree.}
+    \label{fig:graph_inferred}
+\end{figure}
 
+The data processing and the detailed implementation of the Inference Builder will be further explained in the \nameref{sec:Implementation} section.
 
-\subsubsection*{Einfache Ontologie}
+\subsubsection{Simple Example of our framework}
+\label{sec:Introducing the framework with a trivial example}
+In this section, we present a simple example of our framework, from processing the ontology to visualization in the web application. This is intended to facilitate the reader's understanding of our framework. For this purpose, we create a small and simple ontology to explain the program flow in a straightforward manner. Additionally, we aim to demonstrate how this ontology is processed and what the interface between the frontend and backend looks like.
 
-\begin{figure}[!ht]
+\subsubsection{Simple Ontology}
+
+\begin{figure}[H]
 \includegraphics[scale=0.5]{Graphics/simple_ontology_owlviz.png}
+\caption{Simple example of an ontology}
 \end{figure}
 
-Die für diesen Zweck erstellte Ontologie, soll eine einfach Darstellung verschiedener Tierarten sein. 
-Es gibt die Oberklassen Pferde, Vögel, Katzen und Hunde, sowie Unterklassen wie zum Beispiel die Klasse Labrador und Beagle, was Unterklassen von der Oberklasse Hund sind.
-Diese Ontologie stellt keine komplizierten Relationen dar, beziehungsweise die einzelnen Klassen sind nur durch die Relation "subClassOf" miteinander verbunden.
+The ontology created for this purpose aims to provide a simple representation of various animal species. It includes superclass categories such as \textit{Horses, Birds, Cats, and Dogs}, as well as subclasses like \textit{Labrador} and \textit{Beagle}, which are subclasses of the \textit{Dog} superclass. This ontology does not depict complicated relations; rather, the individual classes are only connected to each other through the \textit{subClassOf} relation.
 
-\subsubsection*{Ontologie verarbeiten}
-Im nächsten Schritt wird die Ontologie geparsed. Mit der Bibliothek rdfLib (VERWEIS), wird die Ontologie gelesen und queryable gemacht.
-Nun möchte man alle Klassen dieser Ontologie erhalten, sowie die zugehörigen Relationen. Diese werden dann in einer Liste gespeichert, welche für die Visualisierung des Graphen im FrontEnd wichtig werden.
-
-\begin{figure}[!ht]
-    \includegraphics[scale=0.17]{Graphics/simple_ontology_graph_init.png}
+\subsubsection*{Ontology processing}
+Next, the ontology is parsed. Using the \textit{rdfLib}(section not yet written, 
+\ref{sec:Libraries}) library , the ontology is read and made queryable. The goal is to retrieve all classes of this ontology along with their associated relations. 
+These are then stored in a list, which will be important for visualizing the graph in the frontend.
+\begin{figure}[H]
+    \includegraphics[scale=0.2]{Graphics/simple_ontology_graph_init.png}
+    \caption{Graph initialisation}
     \end{figure}
     
 \begin{itemize}
-    \item Zeile 1 und 2: Es wird ein Graph erstellt, die Ontologie wird geparsed und zu diesem Graphen eingefügt
-    \item Zeile 5 bis 7: Diese Funktion dient zur Weitergabe der Knoten und Kantenmenge für die Visualisierung des Graphen. Die Knoten repräsentieren die Klassen, die Kanten wiederrum die Relationen.
-    \item Zeile 10 bis 17: Diese Funktion durchsucht den Graphen nach allen Klassen, diese Klassen unterscheiden sich zwischen Oberklasse und Unterklasse. Die Kanten zeigen dann von einer Oberklasse zur zugehörigen Unterklasse. Beide Klassen werden ebenfalls zu einer Liste der Knoten hinzugefügt.
-    \item Zeile 20 bis 23: Die Menge der Knoten und Kanten werden für den Graphen initialisiert und stehen nun bereit für die Visualisierung.
+    \item Lines 1 and 2: A graph is created, and the ontology is parsed and inserted into this graph.
+    \item Lines 5 to 7: This function serves to pass on the set of nodes and edges for the visualization of the graph. The nodes represent the classes, while the edges represent the relations.
+    \item Lines 10 to 17: This function searches the graph for all classes, which are distinguished between superclass and subclass. The edges then point from a superclass to its corresponding subclass. Both classes are also added to a list of nodes.
+    \item Lines 20 to 23: The set of nodes and edges is initialized for the graph and is now ready for visualization.
 \end{itemize}
 
-Somit wurde die Verarbeitung der Ontologie für die Menge der Knoten und Kanten für die Visualisierung abgeschlossen. Nun möchte man diese Mengen visualieren.
+With that, the processing of the ontology for the set of nodes and edges for visualization has been completed. Now, we want to visualize these sets.
 
-\subsubsection*{From Backend to FrontEnd: Visualisierung}
+\subsubsection*{From Backend to FrontEnd: Visualization}
 
-Zur Erinnerung: Das Framework, welches wir nutzen ist Flask, damit kommunizieren wir zwischen dem FrontEnd, welches aus HTML, CSS und JavaScript besteht und unserem Backend, wo der Graph für die Visualisierung vorbereitet wird.
-Zunächst erklären wir die Kommunikation mit dem FrontEnd
-\begin{figure}[!ht]
+As a reminder: The framework we are using is \textit{flask}, which facilitates communication between the frontend, consisting of \textit{HTML}, \textit{CSS}, and \textit{JavaScript}, 
+and our backend, where the graph is prepared for visualization. First, we'll explain the communication with the frontend.
+
+\begin{figure}[H]
     \includegraphics[scale=0.2]{Graphics/simple_ontology_flask.png}
+    \caption{Interface between Front and BackEnd}
     \end{figure}
     
 \begin{itemize}
-    \item Zeile 1 bis 6: Beim Starten der Anwendung, wird die HTML Seite "index.html" aufgerufen.
-    \item Zeile 9 bis 17: Bei einem Aufruf der Funktion $"get\_graph\_data\_rdf"$, wird die Menge der Knoten und Kanten abgerufen, in einem Format, welches von der JavaScript Bibliothek vis.js verarbeitet werden kann.
+    \item Lines 1 to 6: When the application starts, the \textit{HTML} page \textit{index.html} is called.
+    \item Lines 9 to 17: When the function \textit{get\_graph\_data\_rdf} is called, the set of nodes and edges is retrieved in a format that can be processed by the \textit{JavaScript} library \textit{vis.js}.
 \end{itemize}
 
-Die Funktion "get\_graph\_data\_rdf" wird im FrontEnd JavaScript aufgerufen.
-\begin{figure}[!ht]
+The function \textit{get\_graph\_data\_rdf} is called in the frontend \textit{JavaScript}.
+
+\begin{figure}[H]
     \includegraphics[scale=0.23]{Graphics/simple_ontology_js.png}
+    \caption{trivialized example of the FrontEnd}
     \end{figure}
 
-Der Graph wird erstellt mit den Daten, welche aus dem Output der Funktion $"get\_graph\_data\_rdf"$ entnommen wurden.
-In Zeile 14 wird festgelegt, dass die Funktion zum rendern des Graphen, direkt beim Laden der HTML-Seite aufgerufen wird.
+The graph is created using the data extracted from the output of the function 
+\textit{get\_graph\_data\_rdf}. In line 14, it is specified that the function for rendering the graph is called directly upon loading the \textit{HTML} page.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
     \includegraphics[scale=0.45]{Graphics/simple_graph.png}
-    \end{figure}
+    \caption{generatd example-graph}
+\end{figure}
 
 
- Dieses Beispiel zeigte den Weg zur Visualisierung einer einfachen Ontologie. 
- Allerdings sind die Ontologien, welche wir im Laufe der implementierung getestet haben viel komplizierter und brauchten verschiedene spezifische Implemetierungen um diese zu visualieren.
- Außerdem haben wir auch für die Visualisierung selbst einige Verbesserungen gegenüber dem Standartgraphen unternommen. 
- Die Implemetierung des Backends, sowie der 3 verschiedenen Funktionen (HINWEIS AUF MAIN FUNCTIIONS) wird im nächsten Abschnitt Detaillierterer beschrieben.
-\subsection*{Implemetierung}
-In diesem Abschnitt gehen wir auf ein triviales Beispiel der Implemetierung ein, um zu verdeutlichen, wie von der Verarbeitung der Wissensbasis, zum visualierten Graphen resultiert.
-Detailliertere Einblicke gewähren wir in den einzelnen Abschnitten im nächsten Abschnitt "OWLVisualizer Framework".
+This example illustrated the process of visualizing a simple ontology. However, the ontologies we tested during the implementation were much more complex and required various specific implementations to visualize them. Additionally, we made several improvements to the visualization itself compared to the standard graph. The implementation of the backend, as well as the three different functions (see \nameref{sec:MainConceps}), will be described in more detail in the next section.
+\section{Implementation}
+\label{sec:Implementation}
 
-Die Ontologie die zu dem gegebenen Zeitpunkt verarbeitet werden soll, befindet sich im data Ordner des Projekts. Somit beschränken wir uns nicht auf bestimmte Ontologien, sondern können beliebige Ontologien vearbeiten.
-Diese Ontologie wird dann gelesen und geparsed mit Hilfe der Bibliothek rdfLib.
+This section explains the detailed implementation of the framework and highlights the challenges and solutions encountered during implementation. In the previous section, we provided a trivial example intended to serve as an introduction for users to understand the framework's basics. However, since ontologies can vary in structure and some relations can be complex, a simple implementation may not suffice in most cases.
 
-HIER BILD VOM CODE
+We will begin by explaining the implementation of the backend, and towards the end of the section, we will also address some aspects of the frontend. In the conclusion, we will touch upon points that, in our opinion, could be implemented in the future and discuss any problems/limitations this framework might have.
+\subsection*{BackEnd}
 
-Im nächsten Schritt wird es uns möglich die Ontologie zu queryien um so die Klassen und Relationen zu bestimmen. Je nach Aufbau der Ontologie, kann es vorkommen, dass zum Beispiel bei komplizierten Relationen Blank Nodes auftauchen, die nichts aussagend sind, sondern nur auf weitere Relationen hinweisen. Dieses Phänomen wird im Abschnitt "Visualisierung" näher betrachtet.
-Im Graphen stellen die Klassen Knoten dar und die Relationen die Kanten. Somit benötigen wir 2 Mengen, eine Menge für die Knoten und eine Menge für die Kanten.
+As explained in the \nameref{sec:Architecture} section and demonstrated in the Introductory Example section (see: \nameref{sec:Introducing the framework with a trivial example}), the framework uses \textit{flask} as its backend interface. 
+This ultimately serves to send processed data to the frontend or receive data from it. Now, we'd like to explain how this data is processed and how it has been adequately prepared.
+\subsubsection*{Graph Verarbeitung - Work in Progress}
 
-BILD HIER VOM CODE
+To visualize a graph using the JavaScript library \textit{vis.js} (NOTE), we need a set of nodes and edges. An example of how these could be processed was explained here (NOTE). The existing classes of an ontology are not always connected only by the \textit{subClassOf} relation. Some relations pose challenges in the graph because lists of possible classes related to a superclass can also appear. This poses a problem for visualization because in such cases, so-called \textit{Blank Nodes} appear. These nodes do not represent any information but merely serve as connection nodes between 2 or more classes. These nodes are connected by relations such as \textit{owl:intersectionOf}, \textit{owl:first}, or \textit{owl:rest} and have no added value for our visualization. The first challenge was to adequately process these nodes to remove \textit{Blank Nodes} from the visualized graph and to represent the correct relation between the classes between which these \textit{Blank Nodes} existed
 
-Die Frontend Bibliothek vis.js benötigt diese 2 Mengen um einen Graphen zu erstellen. Außerdem können verschiedene Optionen mit angegeben werden um den Graphen zu verändern. Einige Optionen sind wichtig für die Performance des Graphen, dies wird im Abschnitt "Performance" näher erläutert.
+\subsubsection*{Implementation of the Query Builder - Work in Progress}
 
-BILD VON JS DATA FETCH.
-\section*{The OWLVisualizer Framework}
 
-\subsection*{Functionalities}
+\subsubsection*{Implementation of the Inference Builder}
+As described in the \nameref{sec:Architecture}, the Inference Builder is intended to visualize and organize the results of inference within the ontology. 
+The inference refers to defined \textit{SWRL} rules (see: \nameref{sec:SWRL}), which can then be queried using the \textit{OWLReady2} library (see: \nameref{sec:OWLReady}).
+Therefore, the implementation assumes this type of rules. The rules implemented by us were explained in the \nameref{chap:Motions} chapter. 
+Ultimately, the goal is to execute the inference based on user input and visualize the results.
+\paragraph*{User Input}
 
-\subsection*{Visualisierung}
+The user selects a task and any number of ingredients.
+\begin{figure}[H]
+    \includegraphics[scale=0.45]{Graphics/inference_user_input.png}
+    \caption{Select fields for the inference.}
+\end{figure}
+These data are extracted from the ontology using the \textit{rdfLib}(section not yet written, 
+\ref{sec:Libraries}). The following code will explain this further.
 
-\subsection*{Query Builder}
+\begin{figure}[H]
+    \includegraphics[scale=0.22]{Graphics/get_tasks_ingredients.png}
+    \caption{Code snippet for querying the tasks and ingredients from the ontology}
+\end{figure}
 
-\subsection*{Inference Query}
+\begin{itemize}
+    \item Lines 1 - 7: Each triple where the predicate of the relation matches \textit{subClassOf} is queried. Additionally, it checks whether the object corresponds to the class \textit{Task}. These elements are then added to a list, which is also returned.
+    \item Lines 10 - 18: Similar to the above function, the subclasses of ingredients are returned. The only difference is that the function is called recursively since the class \textit{Ingredients} has subclasses at multiple levels. Therefore, it also checks which class has no more subclasses.
+    \item Lines 21 - 30: This function checks whether a given class corresponds to a leaf in a graph, meaning this class itself has no subclasses.
+    \item Lines 33 - 40: This function ultimately returns the list of ingredients available for the user's selection.
+\end{itemize}
 
-\subsection*{Performance}
+These data are sent to the frontend using the following function:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.25]{Graphics/inference_main.png}
+    \caption{\textit{get\_tasks\_and\_ingredients()}-function}
+\end{figure}
+
+The previously described functions are called, and the data is sent to the frontend in \textit{JSON} format. In the frontend, this data is fetched and processed.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.22]{Graphics/inference_frontend_fetch.png}
+    \caption{Data is fetched in the FrontEnd}
+\end{figure}
+
+This function populates the entries of the select fields for task and ingredient selection with the data from the backend. 
+By doing so dynamically, it ensures that even if the ontology has new entries in these classes, they will always be available for the user's selection.
+
+\paragraph*{Inference}
+\label{par:Inference}
+
+An example can illustrate the process of inference calculation. Taking the above example (see: \ref{fig:graph_inferred}), we have the input task: \textit{MixingTask} and the ingredients: \textit{Flour} and \textit{Water}. 
+These two ingredients correspond to the superclasses \textit{DryPowderIngredient} and \textit{LiquidIngredient}, respectively (see: \nameref{chap:Data_representation} for more information 
+about the structure of the ontology.). This combination ultimately corresponds to the \nameref{sec:SWRL}-Rule:
+\begin{lstlisting}
+MixingTask(?x) ^ DryPowderIngredient(?ing1) ^ hasIngredient(?x, ?ing1)
+^ LiquidIngredient(?ing2) ^ hasIngredient(?x, ?ing2) ^ Motion(?motion) 
+^ performMotion(?x, ?motion) -> WhirlstormMotion(?motion)
+\end{lstlisting}
+
+From this, the motion \textit{WhirlstormMotion} is inferred with the corresponding parameters:
+\begin{lstlisting}
+    radius_lower_bound_relative  0.0
+    radius_upper_bound_relative  0.7
+\end{lstlisting}
+To calculate this inference, we use the library \textit{OWLReady2} (see: \nameref{sec:OWLReady}), which enables us to utilize a reasoner for the inference.
+\begin{figure}[H]
+    \includegraphics[scale=0.23]{Graphics/get_inference.png}
+    \caption{Inference function}
+\end{figure}
+\begin{itemize}
+    \item Lines 1 - 10: The classes are instantiated. The function takes parameters \textit{task}, corresponding to a task, and \textit{ingredients}, corresponding to a list of ingredients. In line 2, the ontology for the \textit{OWLReady2} library is instantiated to utilize the reasoner. In lines 3 and 4, the \textit{task} is instantiated. Since the task comes as input in the full \textit{IRI} format, it needs to be processed first. From lines 5 to 10, the same is done analogously for the ingredients, this time only for a list of ingredients. Subsequently, the instances of the \textit{ingredients} are added to the instance of \textit{task}.
+    \item Lines 12 - 13: A top-level \textit{Motion} is instantiated to indicate that the \textit{Motion} is inferred during reasoning. ???
+    \item Lines 14 - 18: Since the superclasses of the \textit{ingredients} are important for the rules, they are added to a set which will be used later for inference.
+    \item Lines 19 - 25: The existing rules are examined and matched with the input to infer the correct \textit{SWRL} rules.
+    \item Lines 27 - 45: Here, the reasoner is first started. The inferred motion is stored, and now it is about determining the required parameters based on the motion. These parameters are then stored in a dictionary. The function returns the motion, the parameters, and the instance of \textit{task}.
+\end{itemize}
+
+\paragraph*{Preparing the Output}
+For clarity, we have decided to reduce the graph to only the classes used in the inference. The middle node of the graph represents the task instance selected by the user. 
+From this node, you can reach the other classes that are important for the inference. 
+These classes correspond to the classes of the ingredients, i.e., the ingredient instances selected by the user, the inferred motion along with parameters, 
+and each instance for the tools and containers, each of which can represent any possible combination if no selection has been made.
+\begin{figure}[H]
+    \includegraphics[scale=0.2]{Graphics/get_graph_data_new.png}
+    \caption{generating the visualized graph and task tree}
+\end{figure}
+
+\begin{itemize}
+    \item Line 3: The results of the inference function (see: \nameref{par:Inference}) are stored and used for further processing.
+    \item Lines 5 and 6: We initialize an empty graph, which will be filled with nodes and edges throughout the function. Additionally, a set is initialized for the set of nodes.
+    \item Lines 7 to 17: Based on the task instance, the graph is structured starting from this node. It checks which relations exist for this instance and accordingly inserts into the set of edges and nodes. Additionally, for the \textit{hasIngredient} relation, the superclass of the ingredient is considered. Finally, the edge labeling is chosen based on the relation, and the classes are added to the graph.
+    \item Lines 19 to 21: The task instance itself is processed and added to the graph.
+    \item Lines 23 and 24: Iterating over the set of nodes, they are added to the graph.
+    \item Lines 26 to 30: The inferred parameters are processed and added to the graph in the end.
+\end{itemize}
+
+For the task tree, we create a 3-column table. The first column represents the step, the second column represents the action, and the third column represents the parameters used to illustrate them. The task tree is a list of entries, which can also contain dynamic data such as motions and ingredients.
+\begin{figure}[H]
+    \includegraphics[scale=0.2]{Graphics/get_graph_data_new2ä.png}
+    \caption{generating the visualized graph and task tree}
+\end{figure}
+
+\begin{itemize}
+    \item 1: The first entry pertains to the robot's action, which is to choose a tool for the upcoming actions. The list of \textit{Tools} corresponds to the subclasses of \textit{Tools} from the ontology. (REFERENCE TO GET TOOLS LEAF)
+    \item 2 and 3: Analogous to the first entry, the container is chosen and must be held with an arm for the upcoming motion.
+    \item 4: This action describes the starting point of the motion; each motion has its own starting point (see: \nameref{chap:Motions}).
+    \item 5: In this step, it is explained with which parameters the motion must be executed.
+    \item 6: Once the motion execution is complete, the used tool is set aside.
+    \item 7: The final step does nothing but announce the end of the task tree.
+    \end{itemize}
+
+These data are forwarded to the frontend via the \textit{flask} interface, where ultimately the graph and the task tree are visualized (see: \ref{fig:graph_inferred})
+\section*{Fazit -}
