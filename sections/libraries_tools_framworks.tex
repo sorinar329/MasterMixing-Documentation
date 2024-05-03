@@ -42,7 +42,7 @@
     \end{figure}
     \section{Knowledge Section: Ontologies and Rules}
     The parameters inferred for various robot actions come from a knowledge base. In the following, the principle of an ontology, as well as the concept of rules, which play a crucial role in parameter inference, will be introduced.
-    \subsection*{Ontology}
+    \subsection{Ontology}
 	Ontologies are structured frameworks that provide a formal representation of knowledge within a specific domain. They play a crucial role in knowledge representation, facilitating the organization and sharing of information in a way that is both machine-readable and understandable by humans. 
 
     \begin{figure}[H]
@@ -89,26 +89,49 @@
 	\textit{SWRL} rules are useful for expressing complex relationships and constraints within ontologies, enabling automated reasoning systems to make inferences and derive new knowledge from existing data.
 	\section{Libraries}
 	\label{sec:Libraries}
-	\subsection*{OWLReady}
-	\label{sec:OWLReady}
-	One important library used for our Implementation is OWLReady. "OWLReady" is a Python library designed for ontology-oriented programming. It facilitates the development, manipulation, and querying of ontologies using the Web Ontology Language (OWL), a standard for representing knowledge in a machine-readable format. OWLReady simplifies ontology-related tasks by providing a convenient and object-oriented interface for working with OWL ontologies in Python.
+\subsection{RDFLib}
+\label{sec:RDFLib}
+\textit{RDFLib} \cite{Krech_RDFLib_2023} is a Python package designed to work with \textit{Resource Description Framework (RDF)} data. RDF is a standard model for data interchange on the web and is used to represent information in the form of subject-predicate-object triples. Key features of the library are:
 
-	Key features of the OWLReady library include:
+\begin{itemize}
+    \item \textbf{Parsing RDF Data}: \textit{RDFLib} can parse RDF data in various formats such as RDF/XML, N-Triples, Turtle, and more.
+    
+    \item \textbf{Creating and Modifying RDF Graphs}: It allows you to create and manipulate RDF graphs, which consist of a collection of RDF triples. You can add, remove, or modify triples in the graph.
+    
+    \item \textbf{Querying RDF Data}: \textit{RDFLib} provides a \textit{SPARQL} query engine, allowing you to perform queries on RDF graphs using the \textit{SPARQL} query language.
+    
+    \item \textbf{Serializing RDF Data}: You can serialize RDF graphs back into different RDF formats using \textit{RDFLib}, making it easy to store or share RDF data.
+    
+    \item \textbf{Working with Ontologies}: It supports working with RDF vocabularies and ontologies, enabling the use of predefined classes and properties from existing ontologies like RDF Schema (\textit{RDFS}) or the Web Ontology Language (\textit{OWL}).
+    
+    \item \textbf{Integration with Semantic Web Tools}: \textit{RDFLib} can be integrated with other Semantic Web tools and frameworks, allowing you to build applications that leverage Semantic Web technologies.
+\end{itemize}
+
+
+	\subsection{Owlready}
+	\label{sec:OWLReady}
+	One important library used for our implementation is \textit{Owlready} \cite{LAMY201711}. \textit{Owlready} is a \textit{Python} library designed for ontology-oriented programming. It facilitates the development, manipulation, and querying of ontologies using the Web Ontology Language (\textit{OWL}), a standard for representing knowledge in a machine-readable format. \textit{Owlready} simplifies ontology-related tasks by providing a convenient and object-oriented interface for working with \textit{OWL} ontologies in \textit{Python}.
+
+	Key features of the \textit{Owlready} library include:
 
 	\begin{itemize}
-		\item Object-Oriented Programming (OOP): OWLReady adopts an object-oriented approach, allowing users to interact with ontology entities as Python objects. This makes it more intuitive for developers familiar with Python's OOP principles.
-		\item Ontology Loading and Parsing: The library supports the loading and parsing of OWL ontologies, making it easy to access and manipulate ontology data within Python scripts or applications.
-		\item Class and Individual Manipulation: OWLReady provides functionality for creating, modifying, and querying classes and individuals within an ontology. This allows for dynamic and programmatic management of ontology content.
-		\item Reasoning Support: Depending on the version and features, OWLReady may offer support for reasoning tasks. Reasoning involves deducing implicit information based on the logical relationships defined in the ontology.
-		\item Integration with RDFLib: OWLReady may integrate with RDFLib, another Python library commonly used for working with Resource Description Framework (RDF) data. This integration enhances the capabilities of handling semantic data.
+		\item \textbf{Object-Oriented Programming (OOP)}: \textit{Owlready} adopts an object-oriented approach, allowing users to interact with ontology entities as Python-objects. This makes it more intuitive for developers familiar with Python's OOP principles.
+		\item \textbf{Ontology Loading and Parsing}: The library supports the loading and parsing of \textit{OWL} ontologies, making it easy to access and manipulate ontology data within Python-scripts or applications.
+		\item \textbf{Class and Individual Manipulation}: \textit{Owlready} provides functionality for creating, modifying, and querying classes and individuals within an ontology. This allows for dynamic and programmatic management of ontology content.
+		\item \textbf{Reasoning Support}: Depending on the version and features, \textit{Owlready} may offer support for reasoning tasks. Reasoning involves deducing implicit information based on the logical relationships defined in the ontology.
+		\item \textbf{Integration with \textit{RDFLib}}: \textit{Owlready} may integrate with \textit{RDFLib}, another Python-library commonly used for working with Resource Description Framework (\textit{RDF}) data. This integration enhances the capabilities of handling semantic data.
 	\end{itemize}
+
 	\newpage
-	\subsection{WikiHow}
+
+	\subsection{WikiHow-Instruction-Extraction}
 	\label{sec:WikiHow}
 	
 	\begin{wrapfigure}{r}{0.5\textwidth}
         \centering
         \includegraphics[width=0.48\textwidth]{Graphics/WikiHow Article Structure.png}
     \end{wrapfigure}
-	WikiHow is an extraction tool, that can collect informations from the WikiHow Corpus. The goal of this tool is to analyse a WikiHow corpus using basic NLP techniques to gather information about Everyday tasks like "Pouring", "Cutting" or "Discarding". These information should support cognitive robots in understanding and parameterizing these tasks to better handle unknown tasks, working in underspecified environments and handling common task-object combinations.
-	Jedes Verb hat eine eigene Klasse, worin das Verb und die zusätzlich gewünschten Hyponyme/Synonyme definiert sind. Diese Verben dienen das als Schlüsselwort, wonach in den WikiHow Artikeln letzendlich gesucht wird. Außerdem kann man verschiedene Parameter einstellen, wie zum Beispiel das Ausschließen verschiedener Kategorien, welche für die Suche nicht von Relevanz sind.
+	\textit{WikiHow-Instruction-Extraction} \cite{wikihow-extraction}  is an extraction tool, that can collect informations from the WikiHow Corpus. 
+	The goal of this tool is to analyse a WikiHow corpus using basic \textit{NLP} techniques to gather information about Everyday tasks like \textit{Pouring}, \textit{Cutting} or \textit{Discarding}. 
+	These information should support cognitive robots in understanding and parameterizing these tasks to better handle unknown tasks, working in underspecified environments and handling common task-object combinations.
+	Every verb has its own class, in which the verb and the additionally desired hyponyms/synonyms are defined. These verbs serve as keywords for the search in the WikiHow articles. Additionally, various parameters can be set, such as excluding different categories that are not relevant for the search.
