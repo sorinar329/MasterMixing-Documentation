@@ -1,34 +1,35 @@
 \chapter*{Data acquisition}
-ToDo:
-\begin{itemize}
-  \item Aus deutsch ins englische übersetzen.
-  \item Beim vorletzten Punkt, die Zutaten Tools und Container besser beschreiben.
-  \item Tabelle der Videos vervollständigen.
-  \item Code Bild um Stir vervollständigen. 
-\end{itemize}
+
 A part of this master's thesis involves creating a knowledge base that includes certain queryable parameters, allowing the robot to perform specific actions. The initial step in building the knowledge base is to gather data. In this chapter, we elaborate on our data acquisition strategy.
 \section*{Task variations}
 	As our main focus is to represent the knowledge about mixing, first we had to acquire the different types and variations of mixing in order to create a complete Knowldegerepresentation. The first step in acquiring the needed data, was to acknowledge which task varations of mixing are actually important. 
-  So we had to analyze the word \textit{Mixing} and its hyponyms. But first we have to ask ourselves What is Mixing?
+  So we had to analyze the word \textit{Mixing} and its hyponyms. But first we have to ask ourselves: \textbf{What is Mixing?}
   \subsection*{What is Mixing?}
-  The definition provided by the Oxford Dictionary is as follows: To put together or combine (two or more substances or things) so that the constituents or particles of each are interspersed or diffused more or less evenly among those of the rest; to unite (one or more substances or things) in this manner with another or others; to make a mixture of, to mingle, blend.
-  Ultimately, this definition conveys that mixing requires at least two elements or substances, which are then combined (evenly) with each other, resulting in a (new) substance.
-  This definition is general and can be applied to various contexts. For our work, the aspect of cooking or mixing different (cooking) ingredients is important. Therefore, we consider some hyponyms of the verb "mixing" irrelevant for our cause and do not take them into account.
-  An adapted definition for our work could be: Mixing is the combination of various (cooking) ingredients through different motions in a container.
+  The definition provided by the Oxford Dictionary \cite{Oxford} is as follows:
   
-  \subsection*{Mixing hyponyms analysis} 
+  \textbf{Definition:} To put together or combine (two or more substances or things) so that the constituents or particles of each are interspersed or diffused more or less evenly among those of the rest; to unite (one or more substances or things) in this manner with another or others; to make a mixture of, to mingle, blend.
+
+  Ultimately, this definition conveys that mixing requires at least two elements or substances, which are then combined (evenly) with each other, resulting in a (new) substance.
+  This definition is general and can be applied to various contexts. For our work, the aspect of cooking or mixing different (cooking) ingredients is important. Therefore, we consider some hyponyms of the verb \textit{mixing} irrelevant for our cause and do not take them into account.
+  An adapted definition for our work could be: 
+  
+  \textbf{Definition:} Mixing is the combination of various (cooking) ingredients through different motions in a container.
+  
+  \subsection*{Hyponyms} 
 	Hyponyms are subordered words of a given word, for example one hyponym of mixing could be beating. 
-  To conduct this analysis, one can utilize tools from various websites, such as FrameNet and WordNet. These platforms provide users with the ability to search for specific words and obtain various associations for those words, including synonyms, acronyms, or, crucial for our case, hyponyms.	
+  To conduct this analysis, one can utilize tools from various websites, such as FrameNet\cite{FrameNet} and WordNet\cite{WordNet}. These platforms provide users with the ability to search for specific words and obtain various associations for those words, including synonyms, acronyms, or, crucial for our case, hyponyms.	
+  A full list of the considered hyponyms can be seen in table \ref{tab:hyponyms}.
   \subsubsection*{WikiHow extraction}
-  For all those hyponyms, we delegated a WikiHow extraction search which should show us, how many times one of these words occur, in the context of cooking.
-	Damit wir die Suche ausführen können definieren wir eine neue Klasse "MixingVerb", welche das Verb Mix, sowie die von uns gefundenen hyponyme und Synonyme enthält.
+  For all those hyponyms, we delegated a WikiHow extraction search (see: \nameref{sec:WikiHow}) which should show us, how many times one of these words occur, in the context of cooking.
+	To execute the search, we define a new Class \textit{MixingVerb}, which represents the verb \textit{mixing} and its hyponyms.
   \begin{figure}[H]
-    \includegraphics[scale=0.3]{Graphics/MixingVerbClass.png}
-    \end{figure}
-    IN DEM BILD FEHLT STIRRING
+    \includegraphics[scale=0.4]{Graphics/MixingVerbClass.png}
+    \caption{\textit{MixingVerb} definition}
+    \label{fig:mixingverb WikiHow}
+  \end{figure}
     Since we have now defined the desired verbs that we ultimately want to search for, let's adjust some search parameters. The crucial parameters involve filtering the categories; in our case, we want to focus on mixing in the cooking domain. Therefore, we filter out all articles that do not exist in the Food and Entertaining category.
     \subsubsection*{Hyponyms occurance}
-    For each defined verb, a search is initiated to determine how often this verb appears in the WikiHow articles. This is done to ascertain which verbs are ultimately relevant for our implementation and which ones we can exclude, as they are infrequently used in everyday language.
+    For each defined verb, a search is initiated to determine how often this verb appears in the WikiHow articles \cite{wikihow}. This is done to ascertain which verbs are ultimately relevant for our implementation and which ones we can exclude, as they are infrequently used in everyday language.
     In the table below the results can be seen.
     \begin{table}[H]
         \centering
@@ -84,33 +85,37 @@ A part of this master's thesis involves creating a knowledge base that includes 
     
         \end{tabular}
         \caption{Mix synoyms/hyponyms occurance}
-        \label{tab:example}
+        \label{tab:hyponyms}
       \end{table}
       
   \subsubsection*{Further examination and conclusion}
   This search is ultimately intended to provide us with information on which tasks we want to represent in the knowledge base. Therefore, we decide on certain tasks based on two conditions: frequency and executability. The first condition is easy to understand; tasks that do not occur or occur very rarely are not considered. The second condition relates to the executability of the task in the context of robot movements. Additionally, some tasks with relatively high frequency are also examined more closely, as in English, the past tense is used as an adjective under certain circumstances.
 
-Taking into account the first condition, the following tasks are not considered: Amalgamate, Coalesce, Comingle, Compound, Conflate, Fuse, Intermix, Join, Jumble, Lump, Merge, Unify, and Unite.
+Taking into account the first condition, the following tasks are not considered: \textit{Amalgamate, Coalesce, Comingle, Compound, Conflate, Fuse, Intermix, Join, Jumble, Lump, Merge, Unify, and Unite}.
 
-The second condition excludes another task: Blend. Blend is mostly used in the context of a blending machine, which is not handled by the robot. Without this machine, the blending execution cannot be performed correctly, so this task is excluded for us.
+The second condition excludes another task: \textit{Blend. Blend} is mostly used in the context of a blending machine, which is not handled by the robot. Without this machine, the blending execution cannot be performed correctly, so this task is excluded for us.
 
-Upon closer examination, we will also not consider the verb Whip because it is mostly used as an adjective for ingredients, such as whipped cream. This highlights that only the verb Whip has relatively low frequency. The same applies to pair, where the past tense is used to describe a combination of different ingredients, such as wine paired with cheese.
+Upon closer examination, we will also not consider the verb \textit{Whip} because it is mostly used as an adjective for ingredients, such as whipped cream. This highlights that only the verb \textit{Whip} has relatively low frequency. The same applies to \textit{Pair}, where the past tense is used to describe a combination of different ingredients, such as wine paired with cheese.
 
-Thus, the tasks we consider are: Mix, Combine, Beat, Fold, Stir, and Whisk.
+Thus, the tasks we consider are: \textit{Mix, Combine, Beat, Fold, Stir, and Whisk.}
 
-  \section*{Task analysis and defintion}
-  Now that we have selected the tasks, they need to be analyzed to understand the context in which they are ultimately used. Our goal is for the robot to perform these tasks in a manner similar to how a human would. To achieve this, in the next step, we need to closely examine these tasks. It is recommended to analyze videos on WikiHow or other sources where these tasks are presented as activities. The analysis involves observing the movements associated with each task. We present these analyses in tabular form below. The examination includes the task itself, the respective ingredients being processed, the tools used for it, and the container in which the task is carried out.
+\section*{Task analysis and defintion}
+Now that we have selected the tasks, they need to be analyzed to understand the context in which they are ultimately used. 
+Our goal is for the robot to perform these tasks in a manner similar to how a human would. 
+To achieve this, in the next step, we need to closely examine these tasks. 
+It is recommended to analyze videos on WikiHow or other sources where these tasks are presented as activities. 
+The analysis involves observing the movements associated with each task. 
+We present these analyses in tabular form below. The examination includes the task itself, the respective ingredients being processed, the tools used for it, and the container in which the task is carried out.
+The tasks will be ennumerated, and we will provide the full table with the actual video source in the appendix (HERE REFERENCE TO APPENDIX).
     \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|p{4,5cm}|p{4,5cm}|}
         \hline
         \textbf{Task} & \textbf{Tool} & \textbf{Container} & \textbf{Ingredients} & \textbf{Description} \\
         \hline
-        Beating & Whisk & Bowl & Egg yolk (Wet ingredient) & circular, swirling wildly around the bowl \\
+        Beating$^1$ & Whisk & Bowl & Egg yolk (Wet ingredient) & circular, swirling wildly around the bowl \\
         \hline
         Stirring & Whisk & Bowl & Beaten Egg Yolk (Wet), Parmesan(Powder) and Pepper (Powder) & Circular, from the inside to the outside. \\
-        \hline
-        Stirring & Tongs & Pan & Wet Mixture, Pasta (Solid) and Bacon (Solid) & Diving motions, circular but also straight lines. \\
         \hline
         Whisk & Fork & Bowl & Eggs (Wet) & Circular but also straight, wildly motion. \\
         \hline
@@ -118,15 +123,11 @@ Thus, the tasks we consider are: Mix, Combine, Beat, Fold, Stir, and Whisk.
         \hline
         Folding & Spatula & Pan & cooked eggs in melted butter (Wet) & Gently motion from the outisde to the inside straight, then moving about 90 degree before going to the inside again. \\
         \hline
-        Mixing & Spoon & Cup & Dry yeast(Powder), Water (Liquid) & Circular \\
-        \hline
-        Mixing & Spoon & Bowl & Dry yeast, Water, Flour (Powder), Salt(Powder) & Whirlstorm-like motion. \\
-        \hline 
-    \end{tabular}
+      \end{tabular}
     \caption{Video analysis}
-    \label{tab:example}
+    \label{tab:videoanalysis}
   \end{table}
-NOCH UNVOLLSTÄDNIG
+
 
 After a thorough analysis of the videos and the information provided in them, we conclude that the executed movement is not only related to the task but also influenced by the ingredients used. However, some tasks are deterministic in the sense that the movement is performed regardless of the specific ingredients.
 
@@ -137,42 +138,34 @@ In the following, we aim to structure the extracted information from the videos 
 Based on the extracted information, we conclude that for our goals, the following aspects, in addition to the task, are important and will be further considered:
 \begin{itemize}
   \item Ingredients: The ingredients play a crucial role in the movement decision associated with the tasks and will be defined more precisely.
-  \item Tools: The tools used may not be decisive in the movement decision, but they are important for the parameters of the robot.????
-  \item Container: Das selbe wie oben.
+  \item Tools: The tools used may not be decisive in the movement decision.
+  \item Container: As conducted with the tools, the container wont play a crucial in the motion decision.
   \item Motions: The motions ultimately represent the movement of the robot for our implementation. These movements are extracted from the videos and defined in alignment with robot motions.
 \end{itemize}
 
 \subsubsection*{Ingredients}
-Quellen:
-\begin{itemize}
-  \item https://ceur-ws.org/Vol-2028/paper28.pdf
-  \item https://www.freshfarm.org/app/uploads/2020/05/Mixing-Measuring-Wet-and-Dry-Ingredients.pdf
-  \item https://www.cookingforengineers.com/article/280/Analyzing-a-Baking-Recipe/print
-\end{itemize}
-Through the video analysis, we come to the conclusion that the nature of ingredients is important. Primarily, ingredients can be divided into two main categories: Dry and Wet. This division becomes crucial, especially regarding the measurement of quantities for each type of ingredient.
+Through the video analysis , we come to the conclusion that the nature of ingredients is important. 
+Primarily, ingredients can be divided into two main categories: \textit{Dry} and \textit{Wet} \cite{Ohene2017}. This division becomes crucial, especially regarding the measurement of quantities for each type of ingredient.
 
-For our case, a somewhat finer categorization of ingredients is necessary to map the various movements sensibly to the given types. In addition to Wet Ingredients, we introduce a new category: Liquid. This corresponds to ingredients falling under Wet Ingredients but with a liquid state, such as milk, water, and oil. This is significant because some movements differ when the given ingredients are Wet or Liquid.
+For our case, a somewhat finer categorization of ingredients is necessary to map the various movements sensibly to the given types. In addition to \textit{Wet} ingredients, we introduce a new category: \textit{Liquid} ingredients. 
+This corresponds to ingredients falling under the \textit{Wet} ingredients but with a liquid state, such as milk, water, and oil. This is significant because some movements differ when the given ingredients are \textit{Wet} or \textit{Liquid}.
 
-Another category we include is the Solid category. This differs from the Dry category in that it consists of solid components, while we define the Dry category to include powdery substances. The Solid category encompasses foods like vegetables, fruits, and meats. Through these distinctions, we can create a definition refining the ingredient categories.
+Another category we include is the \textit{Solid} ingredients category. This differs from the \textit{Dry} category in that it consists of solid components, while we define the \textit{Dry} category to include powdery substances. The \textit{Solid} category encompasses foods like vegetables, fruits, and meats. Through these distinctions, we can create a definition refining the ingredient categories.
 
 \textbf{Definition:}
-Ingredients are primarily divided into 'Dry' and 'Wet,' with a need for finer differentiation. An abstracted category called 'Liquid' is introduced to encompass liquid states such as milk and water. An additional category, 'Solid,' distinguishes itself from 'Dry' by including solid components like vegetables and meat. These distinctions allow for a precise definition of ingredients, enhancing the analysis of mixing motions in the context of cooking/baking and their representation."
-In the initial version, the ingredients we defined are:
+Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a need for finer differentiation. An abstracted category called \textit{Liquid} is introduced to encompass liquid states such as milk and water. An additional category, \textit{Solid}, distinguishes itself from \textit{Dry} by including solid components like vegetables and meat. These distinctions allow for a precise definition of ingredients, enhancing the analysis of mixing motions in the context of cooking/baking and their representation.
+In the initial version, the ingredients we defined are for example:
 \begin{itemize}
-  \item Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces.
-  \item Wet: Egg White, Egg yolk, Butter, Whipped Cream, (mashed fruits?).
-  \item Dry: Flour, Salt, Sugar, Baking Soda, Cocoa Powder.
-  \item Solid: Onions, Pork, Chicken, Minced meat, Bacon.
+  \item \textit{Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}.
+  \item \textit{Wet: Egg White, Egg yolk, Butter, Whipped Cream}.
+  \item \textit{Dry: Flour, Salt, Sugar, Baking Soda, Cocoa Powder}.
+  \item \textit{Solid: Onions, Pork, Chicken, Minced meat, Bacon}.
 \end{itemize}
+These ingredients are commonly used in the analyzed videos and are also very common ingredients for baking and cooking recipes.
 
-Hier eventuell nochmal begründen wieso wir die nehmen??.
-
-1. Ansatz: Zutaten aus den Videoanylysen.
-
-2. Ansatz WikiHowExtraction.
 
 \subsubsection*{Tools and Container}
-Das kommt von Soma, muss man schauen wie man das beschreiben möchten
+These come from SOMA and should be accordingly descirbed.
 
 \subsubsection*{Motions}
 	From this videos we extracted informations about the executed motions. The following motions can be defined:
@@ -181,7 +174,7 @@ Das kommt von Soma, muss man schauen wie man das beschreiben möchten
 		\item \textbf{Whirlstorm}: Moving from the inside to the outside of the container with the tool, by circulating in an incremented radius.
 		\item \textbf{Folding}: Gently motion, where you start from the outside, moving one straight line to the inner side, then picking the tool up and going to the initial state before moving the tool for about 90 degrees, then going back in a straight line to the inner side of the container again.
 		\item \textbf{VerticalCircular}: Imagine a line which can be seen as the diameter of the container, from this line one can define certain regions on which you move the tool circular from side to side. This motion is used by the beating task.
-		\item \textbf{CircularDivingToInner}: Starting from the outerside, moving the tool in the container arround its edge for about 270 degrees, before diving to the middle of the container. This motion is used by Tasks where is required to turn the Ingredients over.
+		\item \textbf{CircularDivingToInner}: Starting from the outerside, moving the tool in the container arround its edge for about 270 degrees, before diving to the middle of the container. This motion is used by certain tasks where is required to turn the ingredients over.
 	\end{itemize}
 
 \section*{Data Acquision Conclusion}
