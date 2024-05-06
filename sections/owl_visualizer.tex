@@ -118,6 +118,67 @@ Here is an example of a graph with highlighted nodes:
 \end{figure}
 
 \subsubsection*{Query Builder - Naser}
+The \textit{QueryBuilder} is another feature of the OWLVisualizer. Its core feature is making triple matching possible without possesing knowledge of  
+constructing SPARQL queries. Next to triple matching, visualizing selected triples is made possible, to further visualize relationships between concepts and restrictions
+and instances. 
+Class restrictions in particular are easily queried using the QueryBuilder, without knowing how to actually query them. 
+
+Another functionality is to construct a SPARQL query from the matched triples for further usage of the user. 
+
+In this section the requirements for this feature are explained.
+
+\paragraph*{Requirements}
+
+The \textit{QueryBuilder} needs a processable graph to apply the pattern matching on. 
+Two different sources of data can be considered. The parsed graph from rdflib or the graph model for visualization.
+Choosing the graph model for visualization is rational since we introduce consistency between graph visualization and
+triple matching in the \textit{QueryBuilder}. The main drawback of choosing the graph visualization model is, constructing a
+SPARQL query from this model instead of the rdflib parsed graph is made difficult since the graph has to be detransformed into the rdflib parsed graph, to then construct the 
+SPARQL query. How this is handled will be discussed in a seperate paragraph. 
+
+
+\paragraph*{Triple Matching}
+The concept of triple matching for the \textit{QueryBuilder} is rather simple.
+Consider a triple consisting of subject, predicate and object.
+A subject is connected via a set of predicates to a set of objects. 
+For example we have a subject \textit{A} which has predicates ${\textit{subClassOf}, \textit{equivalentClass}}$
+available objects are ${\textit{B}, \textit{C}, \textit{D}}$, where A is a subClassOf B and A is equivalent to C and D. 
+Suppose A is picked, then available predicates are ${\textit{subClassOf}, \textit{equivalentClass}}$.
+If \textit{subClassOf} is chosen available objects are \textit{B}.
+In essence the QueryBuilder is doing exactly that.
+
+
+
+\paragraph*{Initial Triple Matching}
+There is no complete triple matching available if no triples have been selected yet. For example class restrictions are not queryable, they will be queryable once a class
+with restrictions has been selected. Initial triple matching is applied to OWL-Classes and instances.
+
+\paragraph*{Base Triple Matching} 
+Once a triple has been selected more options are available. 
+If a OWL-Class has been chosen, the following triples become available:
+Relationships with classes connected with subClassOf or equivalentClass.
+Classes with class restriction. 
+Classes and their instances. 
+
+If an instance has been picked, relationships between other instances are available
+between attributes and to which class this instance belongs is available too.
+
+\paragraph*{Graphfiltering}
+Based on the matched triples provided by the user, the model for graph visualization filtered based upon 
+the matched triples to visualize it. 
+
+\paragraph*{SPARQL}
+To generate a SPARQL query based on the selected triples, triples containing restrictions have to be transformed back into 
+rdf graph containing blank nodes. This is relevant for querying in SPARQL, since matching against blanknodes is mandatory to retrieve 
+properties and values/classes out of a restriction. 
+
+The resulting query 
+
+
+
+
+
+
 
 \subsubsection*{Inference Builder}
 The last option for the user to execute functions on a graph is the Inference Builder. 
