@@ -1,76 +1,26 @@
 \chapter{Related Work}
 \label{chap:Related_work}
-
-In diesem Kapitel möchten wir auf die verschiedenen Arbeiten hinweisen, die ähnlich zu unserer sind.
-Da unsere Arbeit sich auf zwei Hauptkomponente bezieht, nämlich der Mixing Motions und der dementsprechenden Wissensrepräsentation, werden wir dieses Kapitel in zwei Abschnitten unterteilen, die sich jeweils mit dem Fokus befassen.
-\section*{Knowledge Representation}
-In diesem Abschnitt untersuchen wir ähnliche Arbeiten, die sich mit der Wissensrepräsentation befassen, welche abfragbare Parameter und Entscheidungen enthält, welche dazu führen sollen, die richtige Motion auszuführen.
-\subsection*{FOON}
-\subsection*{Cutting}
-FoodCutting aims to equip robotic agents with necessary information about how to 
-execute  cutting tasks in unknown environments for the household domain. From high level plans FoodCutting breaks down 
-the cutting task, part of some robot plan, into executable motions regarding cutting fruits and vegetables. These motions are parameterized 
-by some technique and repetitions to achieve the agents objective. 
-FoodCutting does not require fully available knowledge
-about the agents environment, instead the robot should be capable of recognizing certain objects for cutting 
-operations. 
-\subsection*{Pouring?}
-\section*{Motions}
-Dieser Abschnitt stellt die Arbeiten vor, welche sich mit der Motion Plannung von verschiedenen Mixing Bewegungen auseinadersetzt.
-\subsection*{BakingBot}
-BakeBot realised on the PR2 robotics platform attempts to achieve baking cookies. An implementation of locating relevant things for MixingTasks
-like a bowl and ingredients has been realised for semi-structured environments. An algorithm to perform mixing motions has been implemented as well, to mix 
-ingredients with different characteristics into an uniform dough. These motions are limited to a simple circular and linear mixing motion.
-The authors follow an bottom-up approach which is inherently motion driven rather than a
-symbolic one which attempts to break down high level tasks into executable low level motions. 
-
-\subsection*{Mixing Paper}
-\subsection*{FluidLab}
-FluidLab is a simulation environment for different kinds of manipulation tasks regarding liquids. Its underlying engine uses differentiable physics 
-enabling reinforcement learning and optimization techniques in manipulation to utilize the engine, to achieve several tasks 
-including liquids and solids, like mixing tasks. 
-
-\newpage
-\begin{itemize}
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1641754}: relativ alte Quelle, dort möchte man einen Hilfsroboter vorstellen, der mit dem Menschen zusmamen Teilaufgaben im Bereich des Kochens übernehmen kann. Mixing wird als special motion erwähnt und es werden keine Beispiele einer Motionausführung im Bereich des Mixings angeboten. Quelle weiter benutzen?: Eher nicht
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8954776}: Bezieht sich kaum auf Mixing Aktion, wird erwähnt dass es getan wird, jedoch nicht weiter darauf eingegangen, reinnehmen? Nein.
-    \item \url{https://robomechjournal.springeropen.com/articles/10.1186/s40648-021-00204-6}
-    \item \url{https://www.researchgate.net/profile/Daniela_Rus/publication/265243176_BakeBot_Baking_Cookies_with_the_PR2/links/56d043ad08aeb52500cd34a0.pdf}
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9083695}: Mixing steht drin, allerdings nur high level commands sowas wie: Mix all the ingredients with a blender, es wird nicht gesagt wie man das mixen soll oder womit etc. Reinnehmen?: Vlt als Beispiel für MixingAktionen wo nicht klar wird wie das abgebildet wird auf motions etc.
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7301404}
-    \item \url{https://ieeexplore.ieee.org/abstract/document/8460964}
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9096241}: Paper, dass die Cooking Roboter beschreibt und kategorisiert, gut als Anlaufstelle um Quellen zu erhalten. Reinnehmen?: Eventuell wenn wir irgendwie kategorisieren wollen wo unser system steht.
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10004056}
-    \item \url{https://robbreport.com/gear/electronics/moley-robotics-robot-kitchen-uk-for-sale-1234590791/}
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8310925}
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7523919}: Nein
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7523919}
-    \item \url{https://www.researchgate.net/publication/361723447_The_use_of_Robotics_in_the_Kitchens_of_the_Future_The_example_of_Moley_Robotics/link/63beb455a99551743e5d609a/download?_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6InB1YmxpY2F0aW9uIiwicGFnZSI6InB1YmxpY2F0aW9uIn19}
-    \item \url{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6100855}
-    \item \url{https://cs.brown.edu/people/stellex/publications/bollini12.pdf} BakeBot Paper related, Mixing wird kurz erwähnt, welche Bewegungen gemacht werden, jedoch nicht in abhängigkeit von irgendwelchen Gegebenheiten wie zb Zutaten. Reinnehmen?: Ja, wenn es sonst nichts gibt ...
-\end{itemize}
-
-There are multiple approaches for mixing tasks in the kitchen domain. From high level symbolic to low level motions and 
+There are some approaches for mixing tasks in the kitchen domain. From high level symbolic to low level motions and 
 learning approaches, these different approaches, tries to tackle the challenge of solving mixing in the kitchen environment.
 
-FoodCutting aims to equip robotic agents with necessary information about how to 
-execute  cutting tasks in unknown environments for the household domain. From high level plans FoodCutting breaks down 
+\textit{FoodCutting} (HIER REF aber wie?) aims to equip robotic agents with necessary information about how to 
+execute  cutting tasks in unknown environments for the household domain. From high level plans \textit{FoodCutting} breaks down 
 the cutting task, part of some robot plan, into executable motions regarding cutting fruits and vegetables. These motions are parameterized 
 by some technique and repetitions to achieve the agents objective. 
-FoodCutting does not require fully available knowledge
+\textit{FoodCutting} does not require fully available knowledge
 about the agents environment, instead the robot should be capable of recognizing certain objects for cutting 
 operations. 
 
-BakeBot realised on the PR2 robotics platform attempts to achieve baking cookies. An implementation of locating relevant things for MixingTasks
+\textit{BakeBot} \cite{Bollini2011BakebotBC} realised on the \textit{\nameref{sec:pr2}}  robotics platform attempts to achieve baking cookies. An implementation of locating relevant things for mixing tasks
 like a bowl and ingredients has been realised for semi-structured environments. An algorithm to perform mixing motions has been implemented as well, to mix 
 ingredients with different characteristics into an uniform dough. These motions are limited to a simple circular and linear mixing motion.
 The authors follow an bottom-up approach which is inherently motion driven rather than a
 symbolic one which attempts to break down high level tasks into executable low level motions. 
 
-FluidLab is a simulation environment for different kinds of manipulation tasks regarding liquids. Its underlying engine uses differentiable physics 
+\textit{FluidLab} \cite{xian2023fluidlab} is a simulation environment for different kinds of manipulation tasks regarding liquids. Its underlying engine uses differentiable physics 
 enabling reinforcement learning and optimization techniques in manipulation to utilize the engine, to achieve several tasks 
 including liquids and solids, like mixing tasks. 
 
-Our mixing approach will be most similar to the FoodCutting approach, in which we model symbolic knowledge about how to perform
+Our mixing approach will be most similar to the \textit{FoodCutting} approach, in which we model symbolic knowledge about how to perform
 mixing tasks, which technique should be used and infering parameters for the execution of the underlying motion.
 

@@ -22,6 +22,7 @@
     \end{itemize}
 
     \subsection{Pr2}
+	\label{sec:pr2}
 	Introduced in 2010 by Willow Garage, the \textit{PR2} \cite{pr2} stands as an advanced research robot. Boasting multiple joints and 20 degrees of freedom, this robot excels in autonomous navigation and the manipulation of a diverse array of objects, making it an ideal choice for our specific needs. Additionally, it is equipped with a HeadStereoCamera that can be used to perceive the surroundings.
 	
     \begin{figure}[H]
@@ -40,6 +41,12 @@
     \includegraphics[scale=1.5]{Graphics/cram-language-architecture.png}
 	\caption{\textit{CRAM} Language Architecture}
     \end{figure}
+
+	\subsection{PyBullet}
+	\label{sec:pybullet}
+	\textit{PyBullet}\cite{coumans2021} is an open-source physics engine and 3D simulation library used for robotics, machine learning, and computer graphics research. 
+	It offers accurate physics simulation, 3D rendering, robotics support, and seamless integration with machine learning frameworks. 
+	With a \textit{Python} API and cross-platform compatibility, it's a versatile tool for simulating complex environments and interactions.
     \section{Knowledge Section: Ontologies and Rules}
     The parameters inferred for various robot actions come from a knowledge base. In the following, the principle of an ontology, as well as the concept of rules, which play a crucial role in parameter inference, will be introduced.
     \subsection{Ontology}
@@ -121,8 +128,6 @@
 		\item \textbf{Reasoning Support}: Depending on the version and features, \textit{Owlready} may offer support for reasoning tasks. Reasoning involves deducing implicit information based on the logical relationships defined in the ontology.
 		\item \textbf{Integration with \textit{RDFLib}}: \textit{Owlready} may integrate with \textit{RDFLib}, another Python-library commonly used for working with Resource Description Framework (\textit{RDF}) data. This integration enhances the capabilities of handling semantic data.
 	\end{itemize}
-
-	\newpage
 
 	\subsection{WikiHow-Instruction-Extraction}
 	\label{sec:WikiHow}
