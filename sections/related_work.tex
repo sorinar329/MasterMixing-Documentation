@@ -11,12 +11,19 @@ by some technique and repetitions to achieve the agents objective.
 about the agents environment, instead the robot should be capable of recognizing certain objects for cutting 
 operations. 
 
+
 \textit{BakeBot} \cite{Bollini2011BakebotBC} realised on the \textit{\nameref{sec:pr2}}  robotics platform attempts to achieve baking cookies. An implementation of locating relevant things for mixing tasks
 like a bowl and ingredients has been realised for semi-structured environments. An algorithm to perform mixing motions has been implemented as well, to mix 
 ingredients with different characteristics into an uniform dough. These motions are limited to a simple circular and linear mixing motion.
 The authors follow an bottom-up approach which is inherently motion driven rather than a
 symbolic one which attempts to break down high level tasks into executable low level motions. 
 
+\textit{Robotic roommates making pancakes} \cite{beetzrrmp} is another Paper which shows how robot behave in a baking environment. This article is about two robots that bake pancakes through collaboration. 
+Although the mixing motions are not explicitly mentioned in this article, it shows an approach to actions through reasoning. This approach is similar to our work. As a result, the agent is able to reason a sequence of actions based on an input.
+
+Some interesting approaches pursue robot learning by tracking human movement \cite{10.1007/978-3-030-95892-3_22}. By learning these movements, they can be transferred to primitive motions and parameterized based on tracking.
+In our work, we do not pursue learning through demonstrations; however, this paper mentions parameterizing motion primitives (such as a radius), which is similarly addressed in our work.
+ 
 \textit{FluidLab} \cite{xian2023fluidlab} is a simulation environment for different kinds of manipulation tasks regarding liquids. Its underlying engine uses differentiable physics 
 enabling reinforcement learning and optimization techniques in manipulation to utilize the engine, to achieve several tasks 
 including liquids and solids, like mixing tasks. 
