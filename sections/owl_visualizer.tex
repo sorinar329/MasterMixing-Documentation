@@ -172,7 +172,10 @@ To generate a SPARQL query based on the selected triples, triples containing res
 rdf graph containing blank nodes. This is relevant for querying in SPARQL, since matching against blanknodes is mandatory to retrieve 
 properties and values/classes out of a restriction. 
 
-The resulting query 
+The resulting query consists off all added triples by the user, where subject, predicate and object is replaced by the 
+chosen values. An exception is made for blanknodes, since their indentifiers change each time an ontology is parsed into 
+a rdf graph using rdflib. Precise identification is not possible, thus blanknodes have to be replaced with variables, to 
+be able to do the triple matching.
 
 
 
