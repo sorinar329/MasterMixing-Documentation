@@ -11,11 +11,20 @@ The Knowledgebase is divided upon the superclasses Ingredient, Tools, Tasks, Mot
 \begin{figure}[H]
 \includegraphics[scale=0.3]{Graphics/Ontology.png}
 \end{figure}
+
 \subsection*{Ingredients}
-The Ingredient has 4 subclasses: WetIngredients, SolidIngredients, LiquidIngredients and DryPowderIngredients.
-The WetIngredients are all the ingredients that can not be considered liquids but also not considered dry and solid, like (melted) butter or eggyolk. 
-Liquid ingredients consists of liquids such as water and milk. Powder ingredients are the ingredients which are dry but also consists of small particles like sugar, salt and flour.
-Last we have the solid ingredients which consists of ingredients with solid material like vegetables, fruits and meat.
+The concept \textbf{Ingredient} has three subclasses modelling a subset of ingredients
+\begin{itemize}
+    \item \textbf{LiquidIngredient}: Class for all fluid ingredients.
+    \item \textbf{SolidIngredient}: Class for all solid ingredients including dry and powder ingredients. 
+    \item \textbf{WetIngredients}: Class for all ingredients that cannot be classified as either solid or fluid, but rather exist in a state between the two, for example
+        EggYolk.
+\end{itemize}
+
+By adopting the IRIs utilized by FoodOn, we not only incorporate the specific ingredient we aim to add to the knowledgebase but also automatically acquire all subclasses of those FoodOn concepts. 
+
+This approach applies similarly to tools and containers by leveraging SOMA, and it can be extended to ingredients through integration with FoodOn.
+
 
 \subsection*{Tools and containers}
 The tools can be also divided in multiple categories. Cutlery consists of Fork and Spoon, while Spoon also has subclasses like a wooden spoon and tea spoon.
@@ -35,7 +44,7 @@ The most important parameters are:
 \end{itemize}
 Our implemented motions are:
 \begin{itemize}
-    \item Circular Motion: A circular motion is a motion defined on a circular with a constant radius. This motion basically sets the 2 parameters radius upper bound and radius lower bound on the same value.  \newline HIER BILD
+    \item Circular Motion: A circular motion is a motion defined on a circular with a constant radius. This motion has an equal lower und upper bound radius to keep the radius of the motion constant.  \newline HIER BILD
     \item Whirlstorm Motion: The Whirlstorm motion covers multiple parts of the container, the motion starts on the center of the container and increments its radius until it reaches the radius upper bound parameter, before turning back to the center. \newline HIER BILD
     \item Folding Motion: Folding is a special motion which is mostly used in the context of the folding task. The motion's goal is to mix the ingredients gently without overmixing the mixture. The motion starts on a point on the circle with the radius of the upper bound parameter, from there the motion draws a straight line to the middle point of the container, then getting back to the start point, next the tool will be moved 90 degrees on the defined circle and it moves back to the middle, this motion is repeteadet 4 times, and then you move the tool 20 degrees to cover all of the ingredients before starting the cycle again. \newline HIER BILD
     \item Vertical Circular Motion: The last motion can also be seen as the most difficult one. The main idea of this motion is to `wildly` mix the ingredients. Beschreibung fehlt, Bild hier rein.
