@@ -403,4 +403,18 @@ For the task tree, we create a 3-column table. The first column represents the s
     \end{itemize}
 
 These data are forwarded to the frontend via the \textit{flask} interface, where ultimately the graph and the task tree are visualized (see: \ref{fig:graph_inferred})
+
+\subsection(Weaknesses)
+\paragraph{Using vis.js}
+Using the graph visualization library vis.js yields poor performance on large graphs.
+This reason is known to the developers of vis.js (See reference) and the cause of the problem is coming
+from the physics simulation. The visualized graph is a force directed graph and the physics simulation attempts to make a user readable graph 
+by seperating and clustering nodes who don't or belong to each other. This is done iteratively and consumes a lot of time for large sets of nodes
+connected via many edges. The more interconnected the graph is the more terrible the performance gets. 
+
+\paragraph{Data Visualizer}
+This framework in its core is not a graph data visualizer. While it is absolutely able to display relationships and attributes of instance data, visualizing 
+large datasets defined as ontology is not feasible. It is limited by vis.js which is poorly optimised for large sets of nodes and edges. 
+Thus this framework can't be a graph data visualizer. 
+
 \section*{Fazit -}
