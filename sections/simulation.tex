@@ -46,6 +46,28 @@ BILDER CODE FUNKtIONEN
 Hier Vanessa fragen, wie wir ihre Motion referenzieren sollen, einfahc sagen es war vorhanden oder es detaillierten angeben?
 
 \section*{Simulation to RealWorld gap}
+\subsection{Ground Truth Perception}
+Jumping from simulation to real world will immediately introduce the lack of knowledge, where objects are located, what kinds of objects
+the robots is seeing, what its sizes are. The robot will be in need of a perception framework, which can detect and localize objects in a scene, 
+is able to approxiamate bounds of an object. 
+
+\subsection{Failure Handling}
+At the current state the robot in simulation either succesfully executes actions or fails to do so.
+In case of failues there is no recovery to succesfully execute a mixing task. The robot is not able critically 
+reflect upon its made failures, which will 
+
+\subsection{Physical Attributes of Objects}
+Mixing different kinds of ingredients can be done easily in simulation using PyBullet. Since ingredients and their 
+respective physical properties are not simulated, the robot essentially performs mixing tasks as if it is performing in 
+a vacuum. In real world however any robot has to deal with different kinds of forces.
+
+\subsection{Orientation of Tools}
+In simulation the tools have a predefined orientation, so that the robot can pick the tool up in the same way every time.
+Going into real world, this can cause a problem, because the tool might not be picked up at the handle, resulting 
+a mixing task to be executed with the handle instead of the head(Anderes wort für head) of the tool.
+
+
+
 \begin{itemize}
 	\item Big Problem: Uncertaininty
 	\item Perception Solution as first approach: RoboKudo
