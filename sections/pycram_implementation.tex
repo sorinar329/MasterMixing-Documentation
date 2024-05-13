@@ -1,0 +1,37 @@
+\chapter*{Implementation in PyCram}
+
+\subsection{Workflow}
+
+
+
+
+\subsection{Asserted Knowledge}
+Any robot capable of executing mixing motions need to have knowledge before executing a mixing task. 
+The robot needs to know where the container and tools are located, for picking up and for navigation to Theoretically
+respective places. It needs to know which ingredients have to be mixed, in simulation only their existence have to be known. 
+It needs to know which task to execute, since we differentiate between different mixing tasks as discussed in this section. 
+
+
+\subsection{Inferring parameters}
+The robot doesn't know what kind of motion with fitting parameters it has to execute. Once all the assertional knowledge is available
+to the robot, it is then capable of inferring motion and parameters through reasoning. 
+
+
+\subsection{MixingActionSWRL}
+This class has multiple functionalities to infer the relevant motion or compound motions to execute, with its associated 
+parameters. This class needs asserted knowledge by the robot, which tool has to be used, which ingredients have to be mixed 
+which task has to be executed. To enable inference on the Mixing knowledgegraph, we have to first initialize instances of 
+all ingredients, task, tool and container. Additionally a motion instance is initialized using the top-level concept \textit{Motion}. 
+SWRL rules are only applied onto instances, not on classes. 
+
+Once the initialization has been completed, we run the inference, which either uses a reasoner like pellet or HermIt. 
+Running the inference will cause a reclasification on the motion instance, i.e a motion becomes a circular motion or something else. 
+Since we know which class it has been reclassified to, we can then extract all parameters from the respective class and set the motion to be executed as well.
+
+The inferred knowledge is passed onto the MixingAction which executes the actual mixing motion. 
+
+
+
+
+
+
