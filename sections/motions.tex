@@ -1,4 +1,4 @@
-\chapter*{Motions}
+\chapter{Motions}
 \label{chap:Motions}
 
 In this chapter we'll describe on an abstract level how the motions are implemented in pycram2.
@@ -6,7 +6,7 @@ To simplify the implementation of motions, we hold the following assumptions abo
 Firstly we assume, the container is symmetric in the x,y direction. We don't consider the descent of the container, we keep the height for the tool
 constant over the performed motion. We don't have collision detection.
 
-\subsection*{Circular Motion}
+\section{Circular Motion}
 The circular motion is generated on a circular plane. 
 By having a center coordinate = $(x,y)$, which is the center coordinate of 
 the container to execute the Circular Motion, we generate a set of coordinates
@@ -25,7 +25,7 @@ Here, we pick a sequence of angles starting from
 
 INSERT Plot
 
-\subsection{Folding Motion}
+\section{Folding Motion}
 The folding motion is not a circular motion but rather a linear motion. In its current implementation, the motion is a singular line having where one endpoint is on the edge of the container
 the other is center of the container. While the motion in itself is a straight line going through the container, the motion is executed by traversing from one end of the container to the center,
 and then repeating the motion flipped - from center to one of the end, which creates a folding effect.
@@ -50,7 +50,7 @@ we realign the line, so that different parts of the container can be folded by u
 
 INSERT Plot
 
-\subsubsection{Horizontal Elliptic Motion}
+\section{Horizontal Elliptic Motion}
 The horizontal elliptic motion is executed on a horizontal plane and involves multiple ellipses.
 Using the function to compute x,y coordinates on a circle, we use one constant radius and one radius which is changing. 
 
@@ -61,7 +61,7 @@ $\sqrt{(x\_{i} - center\_x)^2 + (y\_{i} - center\_y)^2} < radius_upper_bound$
 Additionally we decrement and increment y coordinates. If the condition: $\sqrt{(y\_{i} - center\_y)^2} > radius_upper_bound$
 is met we change from decrementing to incrementing and vice versa until this condition is fulfilled again.
 
-\subsection*{Whirlstorm Motion}
+\section{Whirlstorm Motion}
 The whirlstorm motion uses the function to generate points lying inside a circle, with differing radiuses, over the course of the motion. 
 Using an upper bound radius and a lower bound radius, we create an evenly spaced interval between those radiuses, to use them for coordinate generation. 
 Starting from the upper bound to the lower bound translates to performing the motion from the edge to the center or close to the center, depending on the 
