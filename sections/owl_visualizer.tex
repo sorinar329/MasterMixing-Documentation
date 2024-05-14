@@ -46,7 +46,7 @@ We use a modified version of \textit{bootstrap} for styling the \textit{HTML}-pa
 }
 Below, we want to take a closer look at the individual points of the architecture from a top-level perspective.
 
-\subsubsection*{WebApp StartUp} 
+\subsubsection{WebApp StartUp} 
 
 To start the application, the Python script \textit{main.py} has to be executed. This can be done using the following command, provided that the necessary libraries have been installed:
 \textit{\$: python main.py}
@@ -62,7 +62,7 @@ This will start the \textit{flask} web application and open the homepage \textit
         \item \textit{render\_template("index.html")} indicates which \textit{HTML} page is being called, in this case, \textit{index.html}.
 \end{itemize}
 
-\subsubsection*{Upload Ontology}
+\subsubsection{Upload Ontology}
 
 The web app initially starts with a (almost) blank \textit{HTML} page, which only contains a navigation bar. 
 \begin{figure}[H]
@@ -77,7 +77,7 @@ Now, the user has the option to upload an ontology to work with. The function \t
     \caption{\textit{upload\_graph()} - function.}
 \end{figure}
 
-\subsubsection*{Visualized Graph}
+\subsubsection{Visualized Graph}
 Once the ontology has been uploaded, the \textit{JavaScript} function \textit{viz\_graph()} is executed, 
 which ultimately visualizes the graph. This function fetches the required sets of nodes and edges from the backend function \textit{get\_graph\_data()}.
 
@@ -117,7 +117,7 @@ Here is an example of a graph with highlighted nodes:
     \caption{graph with highlighted nodes}
 \end{figure}
 
-\subsubsection*{Query Builder - Naser}
+\subsubsection{Query Builder - Naser}
 The \textit{QueryBuilder} is another feature of the OWLVisualizer. Its core feature is making triple matching possible without possesing knowledge of  
 constructing SPARQL queries. Next to triple matching, visualizing selected triples is made possible, to further visualize relationships between concepts and restrictions
 and instances. 
@@ -127,7 +127,7 @@ Another functionality is to construct a SPARQL query from the matched triples fo
 
 In this section the requirements for this feature are explained.
 
-\paragraph*{Requirements}
+\paragraph{Requirements}
 
 The \textit{QueryBuilder} needs a processable graph to apply the pattern matching on. 
 Two different sources of data can be considered. The parsed graph from rdflib or the graph model for visualization.
@@ -137,7 +137,7 @@ SPARQL query from this model instead of the rdflib parsed graph is made difficul
 SPARQL query. How this is handled will be discussed in a seperate paragraph. 
 
 
-\paragraph*{Triple Matching}
+\paragraph{Triple Matching}
 The concept of triple matching for the \textit{QueryBuilder} is rather simple.
 Consider a triple consisting of subject, predicate and object.
 A subject is connected via a set of predicates to a set of objects. 
@@ -149,11 +149,11 @@ In essence the QueryBuilder is doing exactly that.
 
 
 
-\paragraph*{Initial Triple Matching}
+\paragraph{Initial Triple Matching}
 There is no complete triple matching available if no triples have been selected yet. For example class restrictions are not queryable, they will be queryable once a class
 with restrictions has been selected. Initial triple matching is applied to OWL-Classes and instances.
 
-\paragraph*{Base Triple Matching} 
+\paragraph{Base Triple Matching} 
 Once a triple has been selected more options are available. 
 If a OWL-Class has been chosen, the following triples become available:
 Relationships with classes connected with subClassOf or equivalentClass.
@@ -163,12 +163,12 @@ Classes and their instances.
 If an instance has been picked, relationships between other instances are available
 between attributes and to which class this instance belongs is available too.
 
-\paragraph*{Graphfiltering}
+\paragraph{Graphfiltering}
 Based on the matched triples provided by the user, the model for graph visualization filtered based upon 
 the matched triples to visualize it. The filtered graph contains all information used in the graph visualization in 
 the web app to ensure that the view or partial view remains consistent with the original graph.
 
-\paragraph*{SPARQL}
+\paragraph{SPARQL}
 To generate a SPARQL query based on the selected triples, triples containing restrictions have to be transformed back into 
 rdf graph containing blank nodes. This is relevant for querying in SPARQL, since matching against blanknodes is mandatory to retrieve 
 properties and values/classes out of a restriction. 
@@ -184,7 +184,7 @@ be able to do the triple matching.
 
 
 
-\subsubsection*{Inference Builder}
+\subsubsection{Inference Builder}
 The last option for the user to execute functions on a graph is the Inference Builder. 
 It's important to note that the Inference Builder is not a generic use case and in this version, it's tailored to the Mixing Graph (see \nameref{chap:Data_representation}). 
 In the \nameref{sec:Implementation} section, the implementation is further explained, demonstrating how it could potentially be implemented for other ontologies as well. 
@@ -227,7 +227,7 @@ In this section, we present a simple example of our framework, from processing t
 
 The ontology created for this purpose aims to provide a simple representation of various animal species. It includes superclass categories such as \textit{Horses, Birds, Cats, and Dogs}, as well as subclasses like \textit{Labrador} and \textit{Beagle}, which are subclasses of the \textit{Dog} superclass. This ontology does not depict complicated relations; rather, the individual classes are only connected to each other through the \textit{subClassOf} relation.
 
-\subsubsection*{Ontology processing}
+\subsubsection{Ontology processing}
 Next, the ontology is parsed. Using the \textit{rdfLib}(section not yet written, 
 \ref{sec:Libraries}) library , the ontology is read and made queryable. The goal is to retrieve all classes of this ontology along with their associated relations. 
 These are then stored in a list, which will be important for visualizing the graph in the frontend.
@@ -245,7 +245,7 @@ These are then stored in a list, which will be important for visualizing the gra
 
 With that, the processing of the ontology for the set of nodes and edges for visualization has been completed. Now, we want to visualize these sets.
 
-\subsubsection*{From Backend to FrontEnd: Visualization}
+\subsubsection{From Backend to FrontEnd: Visualization}
 
 As a reminder: The framework we are using is \textit{flask}, which facilitates communication between the frontend, consisting of \textit{HTML}, \textit{CSS}, and \textit{JavaScript}, 
 and our backend, where the graph is prepared for visualization. First, we'll explain the communication with the frontend.
@@ -283,23 +283,23 @@ This example illustrated the process of visualizing a simple ontology. However, 
 This section explains the detailed implementation of the framework and highlights the challenges and solutions encountered during implementation. In the previous section, we provided a trivial example intended to serve as an introduction for users to understand the framework's basics. However, since ontologies can vary in structure and some relations can be complex, a simple implementation may not suffice in most cases.
 
 We will begin by explaining the implementation of the backend, and towards the end of the section, we will also address some aspects of the frontend. In the conclusion, we will touch upon points that, in our opinion, could be implemented in the future and discuss any problems/limitations this framework might have.
-\subsection*{BackEnd}
+\subsection{BackEnd}
 
 As explained in the \nameref{sec:Architecture} section and demonstrated in the Introductory Example section (see: \nameref{sec:Introducing the framework with a trivial example}), the framework uses \textit{flask} as its backend interface. 
 This ultimately serves to send processed data to the frontend or receive data from it. Now, we'd like to explain how this data is processed and how it has been adequately prepared.
-\subsubsection*{Graph Verarbeitung - Work in Progress}
+\subsubsection{Graph Verarbeitung - Work in Progress}
 
 To visualize a graph using the JavaScript library \textit{vis.js} (NOTE), we need a set of nodes and edges. An example of how these could be processed was explained here (NOTE). The existing classes of an ontology are not always connected only by the \textit{subClassOf} relation. Some relations pose challenges in the graph because lists of possible classes related to a superclass can also appear. This poses a problem for visualization because in such cases, so-called \textit{Blank Nodes} appear. These nodes do not represent any information but merely serve as connection nodes between 2 or more classes. These nodes are connected by relations such as \textit{owl:intersectionOf}, \textit{owl:first}, or \textit{owl:rest} and have no added value for our visualization. The first challenge was to adequately process these nodes to remove \textit{Blank Nodes} from the visualized graph and to represent the correct relation between the classes between which these \textit{Blank Nodes} existed
 
-\subsubsection*{Implementation of the Query Builder - Work in Progress}
+\subsubsection{Implementation of the Query Builder - Work in Progress}
 
 
-\subsubsection*{Implementation of the Inference Builder}
+\subsubsection{Implementation of the Inference Builder}
 As described in the \nameref{sec:Architecture}, the Inference Builder is intended to visualize and organize the results of inference within the ontology. 
 The inference refers to defined \textit{SWRL} rules (see: \nameref{sec:SWRL}), which can then be queried using the \textit{OWLReady2} library (see: \nameref{sec:OWLReady}).
 Therefore, the implementation assumes this type of rules. The rules implemented by us were explained in the \nameref{chap:Motions} chapter. 
 Ultimately, the goal is to execute the inference based on user input and visualize the results.
-\paragraph*{User Input}
+\paragraph{User Input}
 
 The user selects a task and any number of ingredients.
 \begin{figure}[H]
@@ -338,7 +338,7 @@ The previously described functions are called, and the data is sent to the front
 This function populates the entries of the select fields for task and ingredient selection with the data from the backend. 
 By doing so dynamically, it ensures that even if the ontology has new entries in these classes, they will always be available for the user's selection.
 
-\paragraph*{Inference}
+\paragraph{Inference}
 \label{par:Inference}
 
 An example can illustrate the process of inference calculation. Taking the above example (see: \ref{fig:graph_inferred}), we have the input task: \textit{MixingTask} and the ingredients: \textit{Flour} and \textit{Water}. 
@@ -368,7 +368,7 @@ To calculate this inference, we use the library \textit{OWLReady2} (see: \namere
     \item Lines 27 - 45: Here, the reasoner is first started. The inferred motion is stored, and now it is about determining the required parameters based on the motion. These parameters are then stored in a dictionary. The function returns the motion, the parameters, and the instance of \textit{task}.
 \end{itemize}
 
-\paragraph*{Preparing the Output}
+\paragraph{Preparing the Output}
 For clarity, we have decided to reduce the graph to only the classes used in the inference. The middle node of the graph represents the task instance selected by the user. 
 From this node, you can reach the other classes that are important for the inference. 
 These classes correspond to the classes of the ingredients, i.e., the ingredient instances selected by the user, the inferred motion along with parameters, 
@@ -417,4 +417,4 @@ This framework in its core is not a graph data visualizer. While it is absolutel
 large datasets defined as ontology is not feasible. It is limited by vis.js which is poorly optimised for large sets of nodes and edges. 
 Thus this framework can't be a graph data visualizer. 
 
-\section*{Fazit -}
+\section{Fazit -}
