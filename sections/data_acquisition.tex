@@ -16,61 +16,19 @@ A part of this master's thesis involves creating a knowledge base that includes 
   \textbf{Definition:} Mixing is the combination of various (cooking) ingredients through different motions in a container.
   
   \subsection{Hyponyms} 
-	Hyponyms are subordered words of a given word, for example one hyponym of mixing could be beating. 
+	Hyponyms are subordered words of a given word, for example one hyponym of mixing could be beating. (cite $https://www.oxfordlearnersdictionaries.com/definition/american_english/hyponym$)
   To conduct this analysis, one can utilize tools from various websites, such as FrameNet\cite{FrameNet} and WordNet\cite{WordNet}. These platforms provide users with the ability to search for specific words and obtain various associations for those words, including synonyms, acronyms, or, crucial for our case, hyponyms.	
   A full list of the considered hyponyms can be seen in table \ref{tab:hyponyms}.
   \subsubsection{WikiHow extraction}
   For all those hyponyms, we delegated a \textit{WikiHow} extraction search (see: \nameref{sec:WikiHow}) which should show us, how many times one of these words occur, in the context of cooking.
 	To execute the search, we define a new Class \textit{MixingVerb}, which represents the verb \textit{mixing} and its hyponyms.
+  
+  For the search, we consider each verb and a triple consisting of the verb forms. We consider three forms of the verbs: the infinitive, the past tense, and the present progressive. An example of such a search would be:
   \begin{lstlisting}
-    public enum MixingVerb implements ISearchableVerb {
-
-      MIX ("mix", "mixed", "mixing"),
-
-      AMALGAMATE ("amalgamate", "amalgamated", "amalgamating"),
-
-      BEAT ("beat", "beaten", "beating"),
-
-      BLEND ("blend", "blended", "blending"),
-
-      COALESCE ("coalesce", "coalesced", "coalescing"),
-
-      COMBINING ("combine, combined, combining"),
-
-      COMMINGLE ("commingle, commingled, commingling"),
-
-      COMPOUND ("compound, compounded, compounding"),
-
-      CONFLATE ("conflate, conflated, conflating"),
-
-      FOLD ("fold, folded, folding"),
-
-      FUSE ("fuse", "fused", "fusing"),
-
-      INTERMIX ("intermix, intermixed, intermixing"),
-
-      JOIN ("join", "joined", "joining"),
-
-      JUMBLE ("jumble, jumbled, jumbling"),
-
-      LUMP ("lump", "lumped", "lumping"),
-
-      MERGE ("merge", "merged", "merging"),
-
-      PAIR ("pair", "paired", "pairing"),
-
-      STIR ("stir", "stirred", "stirring"),
-
-      UNIFY ("unify", "unified", "unifying"),
-
-      UNITE ("unite", "united", "uniting"),
-
-      WHIP ("whip", "whipped", "whipping"),
-
-      WHISK ("whisk", "whisked", "whisking");
+      MIX ("mix", "mixed", "mixing")
   \end{lstlisting}
 
-    Since we have now defined the desired verbs that we ultimately want to search for, let's adjust some search parameters. The crucial parameters involve filtering the categories; in our case, we want to focus on mixing in the cooking domain. Therefore, we filter out all articles that do not exist in the \textit{Food and Entertaining} category.
+    After we have defined the desired verbs that we ultimately want to search for, we want to adjust some search parameters. The crucial parameters involve filtering the categories; in our case, we want to focus on mixing in the cooking domain. Therefore, we filter out all articles that do not exist in the \textit{Food and Entertaining} category.
     \subsubsection{Hyponyms occurance}
     For each defined verb, a search is initiated to determine how often this verb appears in the \textit{WikiHow} articles \cite{wikihow}. This is done to ascertain which verbs are ultimately relevant for our implementation and which ones we can exclude, as they are infrequently used in everyday language.
     In the table below the results can be seen.
@@ -154,19 +112,19 @@ We present these analyses in tabular form below. The examination includes the ta
 The tasks will be ennumerated, and we will provide the full table with the actual video source in the appendix (HERE REFERENCE TO APPENDIX).
     \begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|p{4,5cm}|p{4,5cm}|}
+    \begin{tabular}{|c|p{5,5cm}|p{6,5cm}|}
         \hline
-        \textbf{Task} & \textbf{Tool} & \textbf{Container} & \textbf{Ingredients} & \textbf{Description} \\
+        \textbf{Task} &  \textbf{Ingredients} & \textbf{Description} \\
         \hline
-        Beating & Whisk & Bowl & Egg yolk (Wet ingredient) & circular, swirling wildly around the bowl \\
+        Beating &  Egg yolk & circular, swirling wildly around the bowl \\
         \hline
-        Stirring & Whisk & Bowl & Beaten Egg Yolk (Wet), Parmesan(Powder) and Pepper (Powder) & Circular, from the inside to the outside. \\
+        Stirring & Beaten Egg Yolk , Parmesan and Pepper  & Circular, from the inside to the outside. \\
         \hline
-        Whisk & Fork & Bowl & Eggs (Wet) & Circular but also straight, wildly motion. \\
+        Whisk & Eggs  & Circular but also straight, wildly motion. \\
         \hline
-        Mixing & Spatula & Pan & Eggs, melted butter (Wet) & Circular, from the inside to the outside, also diving. \\
+        Mixing &  Eggs, melted butter & Circular, from the inside to the outside, also diving. \\
         \hline
-        Folding & Spatula & Pan & cooked eggs in melted butter (Wet) & Gently motion from the outisde to the inside straight, then moving about 90 degree before going to the inside again. \\
+        Folding & cooked eggs in melted butter & Gently motion from the outisde to the inside straight, then moving about 90 degree before going to the inside again. \\
         \hline
       \end{tabular}
     \caption{Video analysis}
@@ -190,20 +148,25 @@ Based on the extracted information, we conclude that for our goals, the followin
 
 \subsubsection{Ingredients}
 Through the video analysis , we come to the conclusion that the nature of ingredients is important. 
-Primarily, ingredients can be divided into two main categories: \textit{Dry} and \textit{Wet} \cite{Ohene2017}. This division becomes crucial, especially regarding the measurement of quantities for each type of ingredient.
+Primarily, ingredients can be divided into two main categories: \textit{Dry} and \textit{Wet} \cite{Ohene2017}. 
+This division becomes crucial, especially regarding the measurement of quantities for each type of ingredient.
 
-For our case, a somewhat finer categorization of ingredients is necessary to map the various movements sensibly to the given types. In addition to \textit{Wet} ingredients, we introduce a new category: \textit{Liquid} ingredients. 
-This corresponds to ingredients falling under the \textit{Wet} ingredients but with a liquid state, such as milk, water, and oil. This is significant because some movements differ when the given ingredients are \textit{Wet} or \textit{Liquid}.
+For our case, a somewhat finer categorization of ingredients is necessary to map the various movements sensibly to the given types. 
+In addition to \textit{Wet} ingredients, we introduce 2 new sub-categories: \textit{Liquid} and \textit{Semi-Liquid} ingredients. 
+This corresponds to ingredients falling under the \textit{Wet} ingredients but with a liquid or semi-liquid state, such as milk, water, eggs, butter and oil. 
+This is significant because some movements differ when the given ingredients are \textit{Semi-Liquid} or \textit{Liquid}.
 
-Another category we include is the \textit{Solid} ingredients category. This differs from the \textit{Dry} category in that it consists of solid components, while we define the \textit{Dry} category to include powdery substances. The \textit{Solid} category encompasses foods like vegetables, fruits, and meats. Through these distinctions, we can create a definition refining the ingredient categories.
+We will also include 2 sub-categories for the \textit{Dry} category, namely the \textit{Solid} and \textit{Powder} ingredients category. 
+This differs from the each other in that it consists of solid components, while we define the \textit{Powder} category to include powdery substances. The \textit{Solid} category encompasses foods like vegetables, fruits, and meats. 
+Through these distinctions, we can create a definition refining the ingredient categories.
 
 \textbf{Definition:}
-Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a need for finer differentiation. An abstracted category called \textit{Liquid} is introduced to encompass liquid states such as milk and water. An additional category, \textit{Solid}, distinguishes itself from \textit{Dry} by including solid components like vegetables and meat. These distinctions allow for a precise definition of ingredients, enhancing the analysis of mixing motions in the context of cooking/baking and their representation.
+Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a need for finer differentiation. More abstracted categories called \textit{Liquid} and \textit{Semi-Liquid} are introduced to encompass finer states such as milk, egg, butter and water. Also additional categories, \textit{Solid} and \textit{Powder}, distinguishes itself from each other by including solid components like vegetables and meat. These distinctions allow for a precise definition of ingredients, enhancing the analysis of mixing motions in the context of cooking/baking and their representation.
 In the initial version, the ingredients we defined are for example:
 \begin{itemize}
   \item \textit{Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}.
-  \item \textit{Wet: Egg White, Egg yolk, Butter, Whipped Cream}.
-  \item \textit{Dry: Flour, Salt, Sugar, Baking Soda, Cocoa Powder}.
+  \item \textit{Semi-Liquid: Egg White, Egg yolk, Butter, Whipped Cream}.
+  \item \textit{Powder: Flour, Salt, Sugar, Baking Soda, Cocoa Powder}.
   \item \textit{Solid: Onions, Pork, Chicken, Minced meat, Bacon}.
 \end{itemize}
 These ingredients are commonly used in the analyzed videos and are also very common ingredients for baking and cooking recipes.
@@ -211,7 +174,7 @@ These ingredients are commonly used in the analyzed videos and are also very com
 
 \subsubsection{Containers and Tools}
 \label{sec:ContainersAndToolsAcquisition}
-Throughout the analysis of wikihow videos common tools and containers were identied during mixing task execution.
+Throughout the analysis of \textit{WikiHow} videos common tools and containers were identied during mixing task execution.
 The most dominant occuring container was a bowl, followed by a pan, cup and then lastly a mug. Some common tools were used, like a whisk, spoon, spatula and mixer.
 Since all of the containers can be used to serve or store food, this can be summarised in a single concept - crockery. \textbf{Crockery} is a concept in the \textit{SOMA-Home} \cite{soma}
 ontology, by subsuming all of the subclasses of \textbf{Crockery}, we acquire in an instant many containers for mixing. Identified tools are partially represented by \textit{SOMA-Home},
@@ -230,10 +193,10 @@ Another advantage is, when \textit{SOMA-Home} is extended with new concepts, tho
 \subsubsection{Motions}
 	From this videos we extracted informations about the executed motions. The following motions can be defined:
 	\begin{itemize}
-		\item \textbf{Circular}: Moving the tool in a defined circular movement in the container, not changing the radius during execution
-		\item \textbf{Whirlstorm}: Moving from the inside to the outside of the container with the tool, by circulating in an incremented radius.
-		\item \textbf{Folding}: Gently motion, where you start from the outside, moving one straight line to the inner side, then picking the tool up and going to the initial state before moving the tool for about 90 degrees, then going back in a straight line to the inner side of the container again.
-		\item \textbf{Horizontal Eliptic}: Imagine a line which can be seen as the diameter of the container, from this line one can define certain regions on which you move the tool circular from side to side. This motion is used by the beating task.
+		\item \textbf{Circular}: Moving the tool in a defined circular movement in the container
+		\item \textbf{Whirlstorm}: Moving from the inside to the outside of the container with the tool, like a whirlstorm.
+		\item \textbf{Folding}: The folding motion in mixing involves lifting part of the material and folding it over the rest. This action helps blend the ingredients thoroughly. By repeating this motion, it will be ensured that everything is mixed evenly. It's a controlled and gentle way to combine ingredients.
+		\item \textbf{Horizontal Eliptic}: Imagine a line which can be seen as the diameter of the container, from this line one can define certain regions on which you move the tool circular from side to side. This motion is commonly used by the beating task.
 		\item \textbf{Circular Diving To Inner}: Starting from the outerside, moving the tool in the container arround its edge for about 270 degrees, before diving to the middle of the container. This motion is used by certain tasks where is required to turn the ingredients over.
 	\end{itemize}
 
