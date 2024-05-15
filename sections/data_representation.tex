@@ -1,40 +1,55 @@
 \chapter{Data Representation}
 \label{chap:Data_representation}
 
-In this chapter we want to introduce our main ideology behind the Data Representation. Our main goal is to determine different motions for different given scenarios, while keeping it as simplified as possible.
-The main idea behind simplifying the decisions, is motivated through given situations in which the robot would be to dependent on multiple parameters in order to suceed and execute its motion.
-By simplifying these scenarios the robots decision will rely on less parameters thus the succes rate on making decisions will rise.
+In this chapter we are going to introduce our modeled knowledge graph which serves as our \textit{OWL} databasis. We modeled several aspects from the acquired data to cover up the full \textit{Mixing} domain. In other words we definde domain knowledge.
+
+Our main goal is to determine different mixing motions from asserted knowledge, like the given task, the set of ingredients used for mixing and additional knowledge like, which container and which tools are used.
+Our knowledge base is not overly abstract but not overly simplified either, the robot doesn't learn how to execute motions, but rather it infers motions and its parameters with asserted knowledge, where the inference rules are kept simple.
+By simplyfing the knowledgebase, the robot relies on less asserted knowledge, which can result in a higher success rate.
 
 \section{The Knowledgebase}
 We designed a Ontology in which we illustrated our needed classes. 
-The Knowledgebase is divided upon the superclasses Ingredient, Tools, Tasks, Motions and Container.
+The Knowledgebase is divided upon the superclasses \textit{Ingredient, DesignedTool, Tasks and Motions }
 \begin{figure}[H]
-\includegraphics[scale=0.3]{Graphics/Ontology.png}
+\includegraphics[scale=0.32]{Graphics/ontology05.png}
+\caption{modeled Knowledgebase}
 \end{figure}
 
-\subsection{Ingredients}
-The concept \textbf{Ingredient} has three subclasses modelling a subset of ingredients
+\subsection{Ingredients (outdated)}
+
+\textbf{Definition:}
+Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a need for finer differentiation. More abstracted categories called \textit{Liquid} and \textit{Semi-Liquid} are introduced to encompass finer states such as milk, egg, butter and water. Also additional categories, \textit{Solid} and \textit{Powder}, distinguishes itself from each other by including solid components like vegetables and meat. These distinctions allow for a precise definition of ingredients, enhancing the analysis of mixing motions in the context of cooking/baking and their representation.
+
 \begin{itemize}
-    \item \textbf{LiquidIngredient}: Class for all fluid ingredients.
-    \item \textbf{SolidIngredient}: Class for all solid ingredients including dry and powder ingredients. 
-    \item \textbf{WetIngredients}: Class for all ingredients that cannot be classified as either solid or fluid, but rather exist in a state between the two, for example
-        EggYolk.
-\end{itemize}
+    \item \textit{Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}.
+    \item \textit{Semi-Liquid: Egg White, Egg yolk, Butter, Whipped Cream}.
+    \item \textit{Powder: Flour, Salt, Sugar, Baking Soda, Cocoa Powder}.
+    \item \textit{Solid: Onions, Pork, Chicken, Minced meat, Bacon}.
+  \end{itemize}
 
-By adopting the IRIs utilized by FoodOn, we not only incorporate the specific ingredient we aim to add to the knowledgebase but also automatically acquire all subclasses of those FoodOn concepts. 
+These subsets are also considered the subclasses for the \textbf{Ingredient} superclass.
 
-This approach applies similarly to tools and containers by leveraging SOMA, and it can be extended to ingredients through integration with FoodOn.
+By importing the concepts from \textit{FoodOn} (CITE HERE), we not only incorporate the specific ingredient we aim to add to the knowledgebase but also automatically acquire all subclasses of those \textit{FoodOn} concepts, once the ontology is imported into ours. 
+
+This approach applies similarly to \nameref{sec:toolsandcontainers} by leveraging \textit{SOMA}, and it can be extended to ingredients through integration with \textit{FoodOn}.
 
 
 \subsection{Tools and containers}
-The tools can be also divided in multiple categories. Cutlery consists of Fork and Spoon, while Spoon also has subclasses like a wooden spoon and tea spoon.
-Then we have kitchen tools where we can find different types of mixers and whisks. Last we got the superclass Crockery in which our containers we will be saved, like different bowls, pot and mugs.
+\label{sec:toolsandcontainers}
+
+By identifying common occuring containers and tools, 
+a generalization can be made and this is where \textit{SOMA} helps. \textit{SOMA-Home} is a taxonomy modelling concepts for a kitchen environment.
+Top level concepts from \textit{SOMA-Home} can help us identify specific tools and containers without going through dozens of videos. 
+Another advantage is, when \textit{SOMA-Home} is extended with new concepts, those concepts can be easily included into the mixing task procedure. 
+
+The tools can be also divided in multiple categories. \textit{Cutlery} consists of \textit{Fork} and \textit{Spoon}, while \textit{Spoon} also has subclasses like a \textit{Wooden Spoon and Tea Spoon}.
+Then we have kitchen tools where we can find different types of \textit{mixers} and \textit{whisks}. Last we got the superclass \textit{Crockery} in which our containers we will be saved, like different \textit{Bowls, Pot and Mugs}.
 
 \subsection{Tasks}
-Different Tasks will be saved under the Task superclass. The tasks consists of Mixing, which can be regarded as the umbrela term of all tasks, Stirring which is mostly a task that includes a circular motion, Beating will be mostly used in context with eggs and other wet ingredients, Folding which represents a gentle type of mixing and the last task is whisking which is similar to the beating task.
-While some of these tasks can be regarded as deterministic when considering the motion decision, like the folding task will always rely on a folding motion, we discovered that the task itself is not as ausschlaggebend, but in combination with the ingredients, one can decide upon a better motion decision. 
+Different tasks will be saved under the \textit{Task} superclass. The tasks consists of \textit{Mixing}, which can be regarded as the umbrela term of all tasks, \textit{Stirring} which is mostly a task that includes a circular motion, \textit{Beating} will be mostly used in context with eggs and other wet ingredients, \textit{Folding} which represents a gentle type of mixing and the last task is \textit{Whisking} which is similar to the beating task.
+While some of these tasks have only one motion that can be dervied, like the \textit{Folding} task, we discovered that the others tasks can have multiple motions associated to them. This decision is influenced by the set of ingredients on which the motion will be performed
 
-\subsection{Motions}
+\subsection{Motions (kein Feedback notwendig, muss grundartig geändert werden.)}
 The motions are necessary for the robotic system to know what has to be done?. The motions are inferred from Rules that regards a task component, combined with ingredients.
 The motion also contain parameters, which should determine the moving space available for the robotic system. As in the mixing world, most of the container have a circular formed base, our motions are defined with a radius.
 The most important parameters are:
@@ -51,19 +66,22 @@ Our implemented motions are:
 \end{itemize}
 
 \section{Rules}
-In order to infer the right motion based on the ingredients and task input, rules have to be defined. This rules are written in SWRL, which was presented in the USEDLIBRARIES section. In this section we want to illustrate the inference on a high level, while the implementation of it will be shown in the implementation chapter. 
-The rules can be thoguht was if conditions, which will then result in a motion. For example, if we regard the combination of the task Mixing and the ingredient type liquid, we infer the motion Whirlstormmotion. This can be done for every task and ingredient combination. 
-The inference can be illustrated with decision trees which will be shown in the next images for every task and ingredient type combination available. 
-Hier die decision trees?.
+In order to infer the right motion based on the ingredients and task input, rules have to be defined. This rules are \nameref{sec:SWRL}-rules.
+In this section we want to illustrate the inference on a high level.
+The rules can be thoguht as if conditions, which will then result in a motion, 
+for example, if we regard the combination of the task \textit{Mixing} and the ingredient type \textit{Liquid}, we infer the motion \textit{Whirlstormmotion}. 
+This can be done for every task and ingredient combination. 
+The inference can be illustrated with decision trees which will be shown in the following section for every task and ingredient type combination available. 
 
 \subsection{Mixing}
 \begin{figure}[H]
 \includegraphics[scale=0.18]{Graphics/MixingDecisionTree.jpg}
+\caption{Mixing decision tree}
 \end{figure}
-\textbf{Definition:} In the context of baking or cooking, a mixing task refers to the process of combining multiple ingredients thoroughly to create a homogeneous mixture. The goal is to distribute the ingredients evenly, ensuring that each component contributes to the overall texture, flavor, and consistency of the final dish or baked good. Mixing is a fundamental step in many recipes and is essential for achieving a balanced and cohesive result.
+\textbf{Definition:} In the context of baking or cooking, a mixing task refers to the process of combining multiple ingredients thoroughly to create a homogeneous mixture. The goal is to distribute the ingredients evenly, ensuring that each component contributes to the overall texture, flavor, and consistency of the final dish or baked good. Mixing is a fundamental step in many recipes and is essential for achieving a balanced and cohesive result (Quelle).
 
 
-"As can be seen from the illustration, the mixing task can primarily be mapped to the Whirlstorm motion. This is not surprising when considering the definition, as this motion results in the uniform distribution of all ingredients in the container."
+As can be seen from the illustration, the mixing task can primarily be mapped to the Whirlstorm motion. This is not surprising when considering the definition, as this motion results in the uniform distribution of all ingredients in the container.
 \subsection{Stirring}
 \begin{figure}[H]
     \includegraphics[scale=0.18]{Graphics/StirringDeisionTree.jpg}
@@ -71,7 +89,7 @@ Hier die decision trees?.
 \textbf{Definition:}
 In the context of baking or cooking, a stirring task involves using a utensil, such as a spoon, spatula, or whisk, to agitate and circulate the ingredients within a mixture. The purpose of stirring is to achieve a uniform distribution of ingredients
 
-In comparison to mixing, the stirring task, depending on the ingredients, maps to a broader range of motions. In addition to the Whirlstorm motion, the Circular Motion is used here for the first time. This is particularly important when considering the stirring task with the ingredient type Liquid, as one does not want the ingredients to be "whirled," as would be the case with the Whirlstorm motion, but rather just stirred.
+In comparison to \textit{Mixing}, the \textit{Stirring} task, depending on the ingredients, maps to a broader range of motions. In addition to the \textit{WhirlstormMotion}, the \textit{Circular Motion} is used here for the first time. This is particularly important when considering the \textit{Stirring} task with the ingredient type \textit{Liquid}, as one does not want the ingredients to be whirled, as would be the case with the \textit{Whirlstorm Motion}, but rather just stirred.
 \subsection{Beating}
 \begin{figure}[H]
     \includegraphics[scale=0.18]{Graphics/BeatingDecisionTree.jpg}
@@ -79,7 +97,7 @@ In comparison to mixing, the stirring task, depending on the ingredients, maps t
 \textbf{Definition:}
 In the context of baking and cooking, a "beating" task refers to the process of vigorously stirring or mixing ingredients to achieve a specific texture or consistency. Beating is often done to incorporate air into the mixture, create smooth and uniform blends, or alter the physical properties of certain ingredients.
 
-In addition to the Whirlstorm Motion, the VerticalCircular Motion also predominates here. This can be derived from the definition as well, as this motion requires a random mixing style, to which the VerticalCircular Motion aligns.
+In addition to the Whirlstorm Motion, the Horizontal Eliptic Motion also predominates here. This can be derived from the definition as well, as this motion requires a wild mixing style, to which the Horizontal Eliptic Motion aligns.
 \subsection{Whisking}
 \begin{figure}[H]
     \includegraphics[scale=0.18]{Graphics/WhiskingDecisionTree.jpg}
@@ -94,4 +112,4 @@ In addition to the Whirlstorm Motion, the VerticalCircular Motion also predomina
 In the context of baking and cooking, a "folding" task refers to a gentle mixing technique used to incorporate ingredients without deflating or destroying the air bubbles that have been created. Folding is often employed when combining a lighter mixture (such as whipped cream or beaten egg whites) with a denser one (such as a batter or a heavier mixture). The goal is to maintain the desired texture, lightness, or fluffiness in the final dish.
 
 Theoretically, we wouldn't need to graphically represent the Folding Task since each task and ingredient combination maps to a single motion, the Folding Motion. The graphic was nevertheless included for completeness. The Folding Task requires a specific movement that does not remove the air in the mixture, and any other movement would fail.
-\section*{How to expand the Knowledgebase}
+\section{How to expand the Knowledgebase}

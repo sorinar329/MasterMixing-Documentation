@@ -160,17 +160,11 @@ We will also include 2 sub-categories for the \textit{Dry} category, namely the 
 This differs from the each other in that it consists of solid components, while we define the \textit{Powder} category to include powdery substances. The \textit{Solid} category encompasses foods like vegetables, fruits, and meats. 
 Through these distinctions, we can create a definition refining the ingredient categories.
 
-\textbf{Definition:}
-Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a need for finer differentiation. More abstracted categories called \textit{Liquid} and \textit{Semi-Liquid} are introduced to encompass finer states such as milk, egg, butter and water. Also additional categories, \textit{Solid} and \textit{Powder}, distinguishes itself from each other by including solid components like vegetables and meat. These distinctions allow for a precise definition of ingredients, enhancing the analysis of mixing motions in the context of cooking/baking and their representation.
-In the initial version, the ingredients we defined are for example:
-\begin{itemize}
-  \item \textit{Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}.
-  \item \textit{Semi-Liquid: Egg White, Egg yolk, Butter, Whipped Cream}.
-  \item \textit{Powder: Flour, Salt, Sugar, Baking Soda, Cocoa Powder}.
-  \item \textit{Solid: Onions, Pork, Chicken, Minced meat, Bacon}.
-\end{itemize}
-These ingredients are commonly used in the analyzed videos and are also very common ingredients for baking and cooking recipes.
+Our initial set of ingredients is: \textit{Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}, \textit{Egg White, Egg yolk, Butter, Whipped Cream}, \textit{Flour, Salt, Sugar, Baking Soda, Cocoa Powder},
+\textit{Onions, Pork, Chicken, Minced meat, Bacon}.
 
+These ingredients are commonly used in the analyzed videos and are also very common ingredients for baking and cooking recipes.
+In the chapter \nameref{chap:Data_representation} these classes will be categorized.
 
 \subsubsection{Containers and Tools}
 \label{sec:ContainersAndToolsAcquisition}
@@ -180,14 +174,7 @@ Since all of the containers can be used to serve or store food, this can be summ
 ontology, by subsuming all of the subclasses of \textbf{Crockery}, we acquire in an instant many containers for mixing. Identified tools are partially represented by \textit{SOMA-Home},
 mainly cutleries like spoons are belonging to this concept. Using \textbf{Cutlery} we can acquire a set of tools for mixing. Tools like whisks and mixers neither belong 
 to the \textbf{Cutlery} concept nor have a representation in \textit{SOMA}, thus a higher level concept can't be acquired for these tools, to retrieve a set of tools resembling
-kitchen tools. 
-
-\paragraph{Why is SOMA used?}
-
-Going through all available wikihow videos is very tedious and time consuming. By identifying common occuring containers and tools, 
-a generalization can be made and this is where \textit{SOMA} helps. \textit{SOMA-Home} is a taxonomy modelling concepts for a kitchen environment.
-Top level concepts from \textit{SOMA-Home} can help us identify specific tools and containers without going through dozens of videos. 
-Another advantage is, when \textit{SOMA-Home} is extended with new concepts, those concepts can be easily included into the mixing task procedure.   
+kitchen tools.   
 
 
 \subsubsection{Motions}
