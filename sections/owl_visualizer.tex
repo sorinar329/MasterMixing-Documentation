@@ -322,7 +322,7 @@ This section explains the detailed implementation of the framework and highlight
 We will begin by explaining the implementation of the backend, and towards the end of the section, we will also address some aspects of the frontend. In the conclusion, we will touch upon points that, in our opinion, could be implemented in the future and discuss any problems/limitations this framework might have.
 \subsection{BackEnd}
 
-As explained in the \nameref{sec:Architecture} section and demonstrated in the Introductory Example section (see: \nameref{sec:Introducing the framework with a trivial example}), the framework uses \textit{flask} as its backend interface. 
+As explained in the \nameref{sec:Architecture} section and demonstrated in the Introductory Example section (see: \nameref{sec:Introducing the framework with a trivial example}), the framework uses \textit{flask} (see \ref{sec:flask}) as its backend interface. 
 This ultimately serves to send processed data to the frontend or receive data from it. Now, we'd like to explain how this data is processed and how it has been adequately prepared.
 \subsubsection{Graph Verarbeitung - Work in Progress}
 
@@ -343,8 +343,8 @@ The user selects a task and any number of ingredients.
     \includegraphics[scale=0.45]{Graphics/inference_user_input.png}
     \caption{Select fields for the inference.}
 \end{figure}
-These data are extracted from the ontology using the \textit{rdfLib}(section not yet written, 
-\ref{sec:Libraries}). The following code will explain this further.
+These data are extracted from the ontology using the \textit{rdfLib}(see  
+\ref{sec:RDFLib}). The following code will explain this further.
 
 \begin{figure}[H]
     \includegraphics[scale=0.22]{Graphics/get_tasks_ingredients.png}
