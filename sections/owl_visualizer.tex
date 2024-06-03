@@ -49,57 +49,72 @@ We use a modified version of \textit{bootstrap} for styling the \textit{HTML}-pa
 }
 Below, we want to take a closer look at the individual points of the architecture from a top-level perspective.
 
-\subsubsection{WebApp StartUp} 
+\subsection{WebApp StartUp} 
 
 To start the application, the Python script \textit{main.py} has to be executed. This can be done using the following command, provided that the necessary libraries have been installed:
 \textit{\$: python main.py}
 
 This will start the \textit{flask} web application and open the homepage \textit{index.html}.
-\begin{figure}[!ht]
-    \includegraphics[scale=0.35]{Graphics/def_index.png}
-    \caption{\textit{index()} - function.}
-\end{figure}
+
+\begin{lstlisting}[caption={Application StartUp},captionpos=b]
+    @app.route('/')
+    def index():
+        return render_template("index.html")
+\end{lstlisting}
+
 
 \begin{itemize}
         \item \textit{@app.route("/")} indicates which function is executed first when the framework is started.
         \item \textit{render\_template("index.html")} indicates which \textit{HTML} page is being called, in this case, \textit{index.html}.
 \end{itemize}
 
-\subsubsection{Upload Ontology}
+\subsection{Upload Ontology}
 
 The web app initially starts with a (almost) blank \textit{HTML} page, which only contains a navigation bar. 
 \begin{figure}[H]
-    \includegraphics[scale=0.3]{Graphics/webapp_startupt_html.png}
-    \caption{Startpage of the framework}
+    \includegraphics[scale=0.25]{Graphics/webapp_startupt_html.png}
+    \caption{Landingpage of the framework}
 \end{figure}
 
 Now, the user has the option to upload an ontology to work with. The function \textit{upload\_graph()} saves the ontology in the \textit{data} folder.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.2]{Graphics/upload_graph.png}
-    \caption{\textit{upload\_graph()} - function.}
-\end{figure}
+\begin{lstlisting}[caption={Uploading a Ontology file},captionpos=b]
+    @app.route('/upload')
+    def upload_graph():
+        check if an ontology file is already present
+        check if the given file is valid 
+        save the file in the data folder
+        return filename
+\end{lstlisting}
 
-\subsubsection{Visualized Graph}
+
+\subsection{Visualized Graph}
 Once the ontology has been uploaded, the \textit{JavaScript} function \textit{viz\_graph()} is executed, 
 which ultimately visualizes the graph. This function fetches the required sets of nodes and edges from the backend function \textit{get\_graph\_data()}.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.2]{Graphics/viz_graph_function().png}
-    \caption{\textit{viz\_graph()} - function.}
+\begin{lstlisting}[caption={Function for visualizing the graph},captionpos=b]
+    function viz_graph() {
+        fetch('/get_graph_data')
+        .then data => {
+            network = new vis.Network(data);
+        }
+    }
+\end{lstlisting}
 
-\end{figure}
+\begin{lstlisting}[caption={Proccesing through the ontology},captionpos=b]
+    @app.route('/get_graph_data'):
+        initialize the graph
+        get the nodes and edges from the uploaded ontology
+        return graph_data
+        
+\end{lstlisting}
 
-\begin{figure}[H]
-    \includegraphics[scale=0.2]{Graphics/get_graph_data.png}
-    \caption{\textit{get\_graph\_data()} - function.}
 
-\end{figure}
 
 The data processing is complex and will be further elaborated in the \nameref{sec:Implementation} section. 
 Additionally, we have written a section intended to provide a simple introduction to our framework, which can be found in the section 
 \nameref{sec:Introducing the framework with a trivial example} . This section aims to illustrate the functionality through a trivial example.
-\subsubsection*{Nodes Highlightning}
+\subsection{Nodes Highlightning}
 
 For large graphs, it can become difficult to maintain an overview of the nodes and their associated relations. 
 Therefore, we are implementing a function that highlights a node as well as its neighboring nodes. 
@@ -108,10 +123,19 @@ This is intended to make it easier to understand the relationships between a cla
 The required function is a \textit{JavaScript} function that takes a clicked node as a parameter and calculates its neighboring nodes based on that. 
 Subsequently, all nodes are grayed out, and the selected node and its neighbors are restored to their original color. This makes the selected nodes appear "highlighted".
 
-\begin{figure}[H]
-    \includegraphics[scale=0.25]{Graphics/neighbourhood_highlighting.png}
-    \caption{\textit{neighbourhoodHighlight()}-function}
-\end{figure}
+\begin{lstlisting}[caption={Neighbourhood highlighting},captionpos=b]
+    function neighbourhoodHighlight(params) {
+        if (params.nodes.length > 0){
+            Mark and highlight neighbourhood nodes
+        }
+        else if (params.nodes.length === true) {
+            Reset node colors and labels
+        }
+        Update node dataset with changes
+    }
+        
+        
+\end{lstlisting}
 
 Here is an example of a graph with highlighted nodes:
 
@@ -120,7 +144,7 @@ Here is an example of a graph with highlighted nodes:
     \caption{graph with highlighted nodes}
 \end{figure}
 
-\subsubsection{Query Builder - Naser}
+\subsection{Query Builder}
 The \textit{QueryBuilder} is another feature of the OWLVisualizer. Its core feature is making triple matching possible without possesing knowledge of  
 constructing SPARQL queries. Next to triple matching, visualizing selected triples is made possible, to further visualize relationships between concepts and restrictions
 and instances. 
@@ -187,25 +211,27 @@ be able to do the triple matching.
 
 
 
-\subsubsection{Inference Builder}
+\subsection{Inference Builder}
 The last option for the user to execute functions on a graph is the Inference Builder. 
 It's important to note that the Inference Builder is not a generic use case and in this version, it's tailored to the Mixing Graph (see \nameref{chap:Data_representation}). 
 In the \nameref{sec:Implementation} section, the implementation is further explained, demonstrating how it could potentially be implemented for other ontologies as well. 
-In our case, we infer a motion and its corresponding parameters based on a given task and a potentially long list of ingredients. 
+In our case, we infer a motion and its corresponding parameters based on a given task and a list of ingredients. 
 The Inference Builder then generates a graph that only displays the corresponding nodes for clarity, as well as a task tree that can be followed by an agent.
 In the first step, the task and the ingredients are sent to the backend for inference, which in turn sends back the inferred motion and parameters to the frontend.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.25]{Graphics/inference_builder_js.png}
-    \caption{data processing for the inference builder}
-\end{figure}
 
 The backend function processes the inference with the received parameters, which are then used for visualization.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.23]{Graphics/get_data.png}
-    \caption{\textit{get\_data()}-function}
-\end{figure}
+
+\begin{lstlisting}[caption={Inference Builder pipeline},captionpos=b]
+    def get_data():
+        request the data from the frontend
+        initialize task variable
+        initialize list of ingredients
+        generate taskTree and graph based on the requested data
+        return graphData, taskTree
+\end{lstlisting}
+In the frontend, the data is processed using an \textit{AJAX} request. After sending the task and the list of ingredients, the response, which includes the generated graph and task tree, is returned to the frontend and processed. A \textit{JavaScript}-function then creates a graph with the nodes and edges received from the backend and generates a table with a variable number of rows based on the backend's output.
 
 After processing the data, the graph and the task tree are visualized based on the user input.
 
@@ -217,11 +243,11 @@ After processing the data, the graph and the task tree are visualized based on t
 
 The data processing and the detailed implementation of the Inference Builder will be further explained in the \nameref{sec:Implementation} section.
 
-\subsubsection{Simple Example of our framework}
+\section{Simple Example of our framework}
 \label{sec:Introducing the framework with a trivial example}
 In this section, we present a simple example of our framework, from processing the ontology to visualization in the web application. This is intended to facilitate the reader's understanding of our framework. For this purpose, we create a small and simple ontology to explain the program flow in a straightforward manner. Additionally, we aim to demonstrate how this ontology is processed and what the interface between the frontend and backend looks like.
 
-\subsubsection{Simple Ontology}
+\subsection{Simple Ontology}
 
 \begin{figure}[H]
 \includegraphics[scale=0.5]{Graphics/simple_ontology_owlviz.png}
@@ -230,7 +256,7 @@ In this section, we present a simple example of our framework, from processing t
 
 The ontology created for this purpose aims to provide a simple representation of various animal species. It includes superclass categories such as \textit{Horses, Birds, Cats, and Dogs}, as well as subclasses like \textit{Labrador} and \textit{Beagle}, which are subclasses of the \textit{Dog} superclass. This ontology does not depict complicated relations; rather, the individual classes are only connected to each other through the \textit{subClassOf} relation.
 
-\subsubsection{Ontology processing}
+\subsection{Ontology processing}
 Next, the ontology is parsed. Using the \textit{rdfLib}(section not yet written, 
 \ref{sec:Libraries}) library , the ontology is read and made queryable. The goal is to retrieve all classes of this ontology along with their associated relations. 
 These are then stored in a list, which will be important for visualizing the graph in the frontend.
@@ -248,7 +274,7 @@ These are then stored in a list, which will be important for visualizing the gra
 
 With that, the processing of the ontology for the set of nodes and edges for visualization has been completed. Now, we want to visualize these sets.
 
-\subsubsection{From Backend to FrontEnd: Visualization}
+\subsection{From Backend to FrontEnd: Visualization}
 
 As a reminder: The framework we are using is \textit{flask}, which facilitates communication between the frontend, consisting of \textit{HTML}, \textit{CSS}, and \textit{JavaScript}, 
 and our backend, where the graph is prepared for visualization. First, we'll explain the communication with the frontend.
