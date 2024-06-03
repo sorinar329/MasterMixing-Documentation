@@ -1,12 +1,26 @@
 \chapter*{Introduction}
 
+VON Naser:
+
+Diese Masterarbeit befasst sich mit der Problmestellung das Mixing und ihre Variationen als high level tasks unter berücksichtung vom kontextuellen Wissen zu nutzen,
+um Aussagen ableiten zu können welche Mischbewegungen der Roboter ausführen soll unter Einsatz einer Wissensbasis.
+
+
 Diese Masterarbeit befasst sich mit der Problemstellung der Generierung von Roboterplänen im Kontext von Mixing Aktionen, welche aus einer Wissensbasis abgeleitet werden.
 Bevor wir mit der Vorstellung der Gliederung der Masterarbeit anfangen, möchten wir auf 5 essenzielle Fragen eingehen, um den Lesern einen besseren Überblick geben zu können:
 \begin{itemize}
     \item \textbf{Was ist das Problem?} In der Welt des Kochen und Backen müssen verschiedene Tätigkeiten ausgeführt werden. Während ein Mensch im Laufe seines Lebens erlernt, wie Rezepte zubereitet werden und intuitiv die benötigten Aktionen ausführt, muss ein Roboter die benötigten Aktionen abrufbar haben. Die Aufgaben eines Roboters im Kontext vom Kochen können vielfältig sein, wie zum Beispiel das Schneiden, Gießen oder Rühren. In dieser Arbeit befassen wir uns mit der Aufgabe des Rührens und betrachten dabei das Problem der verschiedenen Rühraktionen und in welchem Zusammenhang diese ausgeführt werden. 
     \item \textbf{Warum ist es wichtig?} Im Kontext des Mixen müssen verschiedene Bewegungen betrachtet werden um die gewünschten Resultate zu erzielen. Es reicht nicht eine einzelne Bewegung als Pauschalbewegung im Kontext des Mixings zu betrachten, da sonst verschiedene Ausgänge einer Mixingaktion nicht erreicht werden können. Deshalb muss man verschiedene Bewegungen in Betracht ziehen um gewünschte Resultate einer Mixingaktion erzielen zu können.
     \item \textbf{Warum ist es schwierig?} Die Schwierigkeit liegt darin zu bestimmen unter welchen Umständen welche Bewegung ausgeführt wird. Dies erfordert eine genauere Analyse bestehender Quellen woraus die verschiedenen Bewegungen extrahiert werden können. Eine weitere Herausforderung liegt darin dieses Wissen dementsprechend zu repräsentieren.
-    \item \textbf{Wie wird das Problem gelöst?} Um dieses Problem zu lösen implementieren wir eine Wissensbasis, woraus ein Roboteragent die benötigte Bewegung samt Parameter ableiten kann. Die Bewegung leitet sich ab aus der angegeben Aufgabe und aus der Menge der genutzten Zutaten.
+    \item \textbf{Warum ist es schwierig?} Zum aktuellen Stand der Forschung gibt es kein systematisches Vorgehen um zu bestimmen welche Mischbewegung unter bestimmten Umständen ausgeführt werden soll.
+    Ein systematisches Vorgehen wird daher notwendig sein, welches primär Videomaterial nutzt. Die Herausforderung ist die Zusammenhänge zwischen der Aktion die von Menschen ausgeführt werden mit 
+    den verwendeten Zutaten und welche Bewgegung dazu assoziiert wird herauszuarbeiten. Das größte Problem jedoch ist, sofern man sich entscheidet das Wissen in einer symbolischen Wissensbasis
+    zu modellieren, wie die Modellierungen aussehen, soll damit das relevante Wissen für den Roboter nutzbar ist.
+    \item \textbf{Wie wird das Problem gelöst?}  Durch die Analyse von Videos möchten wir herausfinden, wie von Einzelfällen auf allgemeine Prinzipien geschlossen werden kann, insbesondere in Bezug auf menschliche Handlungen während des Mischens von Zutaten. Dabei berücksichtigen wir sowohl die Art der Zutaten als auch die ausgeführten Bewegungen.
+    Die erfassten Zusammenhänge sollen in einer Wissensbasis modelliert werden, sodas ein Roboteragent eine mögliche Bewegung mit notwendigen Parametern zu Ausführung der Bewegung
+    ableiten kann. Die Wissensbasis ist symbolisch modelliert, sodass die Ausführung theoretisch von vielen Roboteragenten unterstützt werden kann.
+    \item \textbf{Wie wird das Problem gelöst?} Um dieses Problem zu lösen implementieren wir eine Wissensbasis, 
+    woraus ein Roboteragent die benötigte Bewegung samt Parameter ableiten kann. Die Bewegung leitet sich ab aus der angegeben Aufgabe und aus der Menge der genutzten Zutaten.
     \item \textbf{Wie kann diese Arbeit zur Forschung beitragen?} Durch die Implementierung unserer Wissenbasis ist es dementsprechend möglich für Roboteragenten das benötigte Wissen für die Mixingaktionen abzufragen. Unser Beitrag richtet sich an die Entwicklung von Robotern, welche im Haushalt tätig sind und autonom nicht-triviale Aufgaben ausführen können ohne eine festgelegte Umgebung zu haben.
 \end{itemize}
 
