@@ -3,6 +3,14 @@
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/overview_2.jpg}
 \end{figure}
+VON NASER: 
+In this chapter we will present you the mixing knowledgegraph using \textit{OWL} as basis to formally define knowledge.
+This knowledge base defines domain knowledge about mixing, which encompasses several aspects derived from the data acquisition.
+Using assertional knowledge such as the task to execute, the set of ingredients as input for a mixing task, 
+and additional knowledge like which container to use, the knowledge base can infer facts about the motions that should be executed.
+Our goal is not to teach a robot how to execute a specific mixing motion, but rather infer a motion and relevant parameters for this motion. 
+
+
 In this chapter we are going to introduce our modeled knowledge graph which serves as our \textit{OWL} databasis. We modeled several aspects from the acquired data to cover up the full \textit{Mixing} domain. In other words we definde domain knowledge.
 
 Our main goal is to determine different mixing motions from asserted knowledge, like the given task, the set of ingredients used for mixing and additional knowledge like, which container and which tools are used.
@@ -48,7 +56,7 @@ The tools can be also divided in multiple categories. \textit{Cutlery} consists 
 Then we have kitchen tools where we can find different types of \textit{mixers} and \textit{whisks}. Last we got the superclass \textit{Crockery} in which our containers we will be saved, like different \textit{Bowls, Pot and Mugs}.
 
 \subsection{Tasks}
-Different tasks will be saved under the \textit{Task} superclass. The tasks consists of \textit{Mixing}, which can be regarded as the umbrela term of all tasks, \textit{Stirring} which is mostly a task that includes a circular motion, \textit{Beating} will be mostly used in context with eggs and other wet ingredients, \textit{Folding} which represents a gentle type of mixing and the last task is \textit{Whisking} which is similar to the beating task.
+Mixing task variations are subclasses \textit{Task} superclass, where \textit{Task} is \textit{DUL} concept. The tasks consists of \textit{Mixing}, which can be regarded as the umbrela term of all tasks, \textit{Stirring} which is mostly a task that includes a circular motion, \textit{Beating} will be mostly used in context with eggs and other wet ingredients, \textit{Folding} which represents a gentle type of mixing and the last task is \textit{Whisking} which is similar to the beating task.
 While some of these tasks have only one motion that can be dervied, like the \textit{Folding} task, we discovered that the others tasks can have multiple motions associated to them. This decision is influenced by the set of ingredients on which the motion will be performed
 
 \subsection{Motions (kein Feedback notwendig, muss grundartig geändert werden.)}
