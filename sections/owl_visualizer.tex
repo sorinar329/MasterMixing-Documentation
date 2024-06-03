@@ -250,57 +250,65 @@ In this section, we present a simple example of our framework, from processing t
 \subsection{Simple Ontology}
 
 \begin{figure}[H]
-\includegraphics[scale=0.5]{Graphics/simple_ontology_owlviz.png}
-\caption{Simple example of an ontology}
+\includegraphics[scale=0.4]{Graphics/simple_ontology.jpg}
+\caption{Trivial example of an ontology}
 \end{figure}
 
-The ontology created for this purpose aims to provide a simple representation of various animal species. It includes superclass categories such as \textit{Horses, Birds, Cats, and Dogs}, as well as subclasses like \textit{Labrador} and \textit{Beagle}, which are subclasses of the \textit{Dog} superclass. This ontology does not depict complicated relations; rather, the individual classes are only connected to each other through the \textit{subClassOf} relation.
+The ontology created for this purpose aims to provide a simple representation of various animal species. It includes superclass categories such as \textit{Fruits, Vegetables, Meat, and Dairy Products}, as well as subclasses like \textit{Apple} and \textit{Orange}, which are subclasses of the \textit{Fruits} superclass. This ontology does not depict complicated relations; rather, the individual classes are only connected to each other through the \textit{subClassOf} relation.
 
 \subsection{Ontology processing}
-Next, the ontology is parsed. Using the \textit{rdfLib}(section not yet written, 
-\ref{sec:Libraries}) library , the ontology is read and made queryable. The goal is to retrieve all classes of this ontology along with their associated relations. 
+Next, the ontology is parsed. Using the \textit{rdfLib} library (see \ref{sec:Libraries}), the ontology is read and made queryable. The goal is to retrieve all classes of this ontology along with their associated relations. 
 These are then stored in a list, which will be important for visualizing the graph in the frontend.
-\begin{figure}[H]
-    \includegraphics[scale=0.2]{Graphics/simple_ontology_graph_init.png}
-    \caption{Graph initialisation}
-    \end{figure}
-    
+
+The process consists of the following steps:
 \begin{itemize}
-    \item Lines 1 and 2: A graph is created, and the ontology is parsed and inserted into this graph.
-    \item Lines 5 to 7: This function serves to pass on the set of nodes and edges for the visualization of the graph. The nodes represent the classes, while the edges represent the relations.
-    \item Lines 10 to 17: This function searches the graph for all classes, which are distinguished between superclass and subclass. The edges then point from a superclass to its corresponding subclass. Both classes are also added to a list of nodes.
-    \item Lines 20 to 23: The set of nodes and edges is initialized for the graph and is now ready for visualization.
+    \item First, a graph instance needs to be created. This instance will parse the given ontology into a graph for further processing.
+    \item In the next step, the data required for graph visualization is processed. A set of nodes is defined which represent the different classes, while a set of edges shows the relationships between them.
+    \item The process involves searching the graph for all classes, distinguishing between superclasses and subclasses. Edges are then created to connect each superclass to its corresponding subclass. Both types of classes are also added to a list of nodes.
+    \item The final step involves preparing the necessary data for visualization and sending it to the frontend.
 \end{itemize}
 
 With that, the processing of the ontology for the set of nodes and edges for visualization has been completed. Now, we want to visualize these sets.
 
 \subsection{From Backend to FrontEnd: Visualization}
 
-As a reminder: The framework we are using is \textit{flask}, which facilitates communication between the frontend, consisting of \textit{HTML}, \textit{CSS}, and \textit{JavaScript}, 
+As a reminder: The framework we are using is \textit{flask} (see\ref{sec:flask}), which facilitates communication between the frontend, consisting of \textit{HTML}, \textit{CSS}, and \textit{JavaScript}, 
 and our backend, where the graph is prepared for visualization. First, we'll explain the communication with the frontend.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.2]{Graphics/simple_ontology_flask.png}
-    \caption{Interface between Front and BackEnd}
-    \end{figure}
+\begin{lstlisting}[caption={Backend preparing data},captionpos=b]
+    @app.route('/')
+    def index():
+        return render_template('index.html')
+    
+    def get_graph_data():
+        initialize an empty graph
+        populate the empty graph with the processed data
+        return graph
+
+\end{lstlisting}
     
 \begin{itemize}
-    \item Lines 1 to 6: When the application starts, the \textit{HTML} page \textit{index.html} is called.
-    \item Lines 9 to 17: When the function \textit{get\_graph\_data\_rdf} is called, the set of nodes and edges is retrieved in a format that can be processed by the \textit{JavaScript} library \textit{vis.js}.
+    \item When the application starts, the \textit{HTML} page \textit{index.html} is called. This is indicated by the \textit{@app.route('/')} line.
+    \item When the function \textit{get\_graph\_data} is called, the set of nodes and edges is retrieved in a format that can be processed by the \textit{JavaScript} library \textit{vis.js}, which is ultimately used for visualization.
 \end{itemize}
 
-The function \textit{get\_graph\_data\_rdf} is called in the frontend \textit{JavaScript}.
+The function \textit{get\_graph\_data()} is called in the frontend \textit{JavaScript} function.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.23]{Graphics/simple_ontology_js.png}
-    \caption{trivialized example of the FrontEnd}
-    \end{figure}
+\begin{lstlisting}[caption={Frontend visualization function},captionpos=b]
+    function renderGraph() {
+        fetch('get_graph_data()')
+            .then data =>
+                network = new vis.Network(data)
+    }
+    window.onload = renderGraph;
+
+\end{lstlisting}
 
 The graph is created using the data extracted from the output of the function 
-\textit{get\_graph\_data\_rdf}. In line 14, it is specified that the function for rendering the graph is called directly upon loading the \textit{HTML} page.
+\textit{get\_graph\_data()}. It is specified that the function for rendering the graph is called directly upon loading the \textit{HTML} page.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.45]{Graphics/simple_graph.png}
+    \includegraphics[scale=0.45]{Graphics/simple_ontology_example.png}
     \caption{generatd example-graph}
 \end{figure}
 
