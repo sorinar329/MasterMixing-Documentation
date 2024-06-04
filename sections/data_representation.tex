@@ -21,14 +21,25 @@ By simplyfing the knowledgebase, the robot relies on less asserted knowledge, wh
 We designed a Ontology in which we illustrated our needed classes. 
 The Knowledgebase is divided upon the superclasses \textit{Ingredient, DesignedTool, Tasks and Motions }
 \begin{figure}[H]
-\includegraphics[scale=0.5]{Graphics/mixing_graph_repr.png}
-\caption{modeled Knowledgebase}
+    \includegraphics[scale=0.5]{Graphics/classHierarchy/taxonomy.png}
+    \centering
+    \caption{Mixing Ontology Taxonomy}
 \end{figure}
 
-\subsection{Ingredients (outdated)}
+\subsection{Ingredients}
 
-\textbf{Definition:}
-Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a need for finer differentiation. More abstracted categories called \textit{Liquid} and \textit{Semi-Liquid} are introduced to encompass finer states such as milk, egg, butter and water. Also additional categories, \textit{Solid} and \textit{Powder}, distinguishes itself from each other by including solid components like vegetables and meat. These distinctions allow for a precise definition of ingredients, enhancing the analysis of mixing motions in the context of cooking/baking and their representation.
+\begin{figure}[H]
+    \includegraphics[scale=0.45]{Graphics/classHierarchy/ingredients_hierarchy.png}
+    \centering
+    \caption{Ingredients Hierarchy in Mixing Ontology}
+\end{figure}
+
+Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a need for finer differentiation.
+Wet ingredients can be further differentiated into \textit{Liquid} and \textit{Semi-Liquid}, where liquids include examples like water and semi-liquids include examples like egg whites or yolks. 
+Dry ingredients, on the other hand, are divided into the subcategories \textit{Solid} and \textit{Powder}. 
+Solid ingredients include whole vegetables and meat, while powder ingredients are not solid but rather granulated. 
+This hierarchy of ingredients is modeled with a view towards the cooking domain and enables us to formulate rules to infer motions to perform. 
+There does not exist a single hierarchy of ingredients, but rather many hierarchies modeling different aspects of ingredients.
 
 \begin{itemize}
     \item \textit{Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}.
@@ -37,15 +48,20 @@ Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a nee
     \item \textit{Solid: Onions, Pork, Chicken, Minced meat, Bacon}.
   \end{itemize}
 
-These subsets are also considered the subclasses for the \textbf{Ingredient} superclass.
-
-By importing the concepts from \textit{FoodOn} (CITE HERE), we not only incorporate the specific ingredient we aim to add to the knowledgebase but also automatically acquire all subclasses of those \textit{FoodOn} concepts, once the ontology is imported into ours. 
-
-This approach applies similarly to \nameref{sec:toolsandcontainers} by leveraging \textit{SOMA}, and it can be extended to ingredients through integration with \textit{FoodOn}.
+For each specific ingredient, a respective \textit{FoodOn} class is used. By using \textit{FoodOn}, we directly include all available subclasses of the 
+\textit{FoodOn} class once the ontology is imported into the \textit{mixing} ontology.
+Different variations of the same ingredient are then covered in case a finer differentiation is needed. This approach applies similarly to 
+\nameref{sec} by leveraging \textit{SOMA}, and it can be extended to ingredients through integration with \textit{FoodOn}.
 
 
 \subsection{Tools and containers}
 \label{sec:toolsandcontainers}
+
+\begin{figure}[H]
+    \includegraphics[scale=0.45]{Graphics/classHierarchy/tools_hierarchy.png}
+    \centering
+    \caption{Tools and Container Hierarchy in Mixing Ontology}
+\end{figure}
 
 By identifying common occuring containers and tools, 
 a generalization can be made and this is where \textit{SOMA} helps. \textit{SOMA-Home} is a taxonomy modelling concepts for a kitchen environment.
@@ -56,10 +72,57 @@ The tools can be also divided in multiple categories. \textit{Cutlery} consists 
 Then we have kitchen tools where we can find different types of \textit{mixers} and \textit{whisks}. Last we got the superclass \textit{Crockery} in which our containers we will be saved, like different \textit{Bowls, Pot and Mugs}.
 
 \subsection{Tasks}
+
+\begin{figure}[H]
+    \includegraphics[scale=0.45]{Graphics/classHierarchy/task_hierarchy.png}
+    \centering
+    \caption{Task Hierarchy in Mixing Ontology}
+\end{figure}
+
 Mixing task variations are subclasses \textit{Task} superclass, where \textit{Task} is \textit{DUL} concept. The tasks consists of \textit{Mixing}, which can be regarded as the umbrela term of all tasks, \textit{Stirring} which is mostly a task that includes a circular motion, \textit{Beating} will be mostly used in context with eggs and other wet ingredients, \textit{Folding} which represents a gentle type of mixing and the last task is \textit{Whisking} which is similar to the beating task.
 While some of these tasks have only one motion that can be dervied, like the \textit{Folding} task, we discovered that the others tasks can have multiple motions associated to them. This decision is influenced by the set of ingredients on which the motion will be performed
 
-\subsection{Motions (kein Feedback notwendig, muss grundartig geändert werden.)}
+\subsection{Motions}
+VON NASER
+\begin{figure}[H]
+    \includegraphics[scale=0.45]{Graphics/classHierarchy/motions_hierarchy.png}
+    \centering
+    \caption{Motion Hierarchy in Mixing Ontology}
+\end{figure}
+
+
+Top level class motion is the class of all possible motions which can be performed. MixingMotion a subclass of motion, are all mixing motions 
+which were found during data acquisiton. To make a distinction between one singular mixing motion and motions consisting of at least two motions
+we created the class CompoundMotions, where more then one motion is performed. 
+Mixing Motion is comprised of the following motions:
+
+\begin{itemize}
+    \item \textit{Circular Motion}: Simple Circular Motion
+    \item \textit{Circular Diving To Inner}: Circular Motions including diving moving to the center of a container
+    \item \textit{Folding Motion}: Motion executed as line with back and forth on multiple areas inside the container.
+    \item \textit{Horizontal Elliptical Motion}: Multiple ellipse motions around the container, which resembles mixing `wildly`
+    \item \textit{Whirlstorm Motion}: Whirlstorm or spiral like motion
+\end{itemize}
+
+Each motion has class restrictions with different kinds of motion parameters.
+
+The following motion parameters are modelled in the \textit{mixing} ontology:
+
+\begin{itemize}
+    \item \textit{Radius lower Bound Relative}: The smallest possible radius percentage wise
+    \item \textit{Radius Upper Bound Relative}: The maximum possible radius percentage wise
+    \item \textit{Folding Rotation Shift}: How much the folding line has to be rotated around 
+    \item textit{Repetetive Folding Rotation Shift}: After the folding motion has been executed this parameter sets realigns all folding motions
+     to cover similar areas of a container. 
+    \item \textit{Ellipse Shift}: How much the ellipse has to be shifted.
+\end{itemize}
+
+The modelled CompoundMotions have a restriction: 
+It is equivalent to a motion which has a specific motion followedBy another specific motion, where that can exactly be one motion.
+
+
+
+\subsection{Motions (kein Feedback notwendig, muss grundartig geändert werden. - ALTER STAND)}
 The motions are necessary for the robotic system to know what has to be done?. The motions are inferred from Rules that regards a task component, combined with ingredients.
 The motion also contain parameters, which should determine the moving space available for the robotic system. As in the mixing world, most of the container have a circular formed base, our motions are defined with a radius.
 The most important parameters are:
