@@ -14,18 +14,22 @@ By having a center coordinate = $(x,y)$, which is the center coordinate of
 the container to execute the Circular Motion, we generate a set of coordinates
 with the following functions: 
 
-$circleX = containerCenterX + radius * cos(radian)$
-
-$circleY = containerCenterY + radius * sin(radian)$
+\[x = centerX + radius * cos(radian)\]
+\[y = centerY + radius * sin(radian)\]
 
 We retrieve the respective radians using the following function:
 
-$ angle2radian = angle * \frac{\pi}{180} $
+\[radian = angle * \frac{\pi}{180}\]
 
-Here, we pick a sequence of angles starting from
-0 to 360 degrees convert these into radians in order to generate points lying on a circle.
+Generating a sequence of points lying inside a circle is accomplished by generating a sequence of angles starting from 0 to 360 degrees, 
+converting them into radians, and using formulas to compute the circular coordinates.
 
-INSERT Plot
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/circular_motion.png}
+    \centering
+    \label{fig:circularMotion}
+    \caption{Top Down View - Circular Motion}
+\end{figure}
 
 \section{Folding Motion}
 The folding motion is not a circular motion but rather a linear motion. In its current implementation, the motion is a singular line having where one endpoint is on the edge of the container
@@ -42,26 +46,55 @@ By constructing a 2D rotation matrix for some angle, where the angle determines 
 
 a transformation onto the line can be applied, which shifts the line using this function: 
 
-$\begin{bmatrix} x' \\ y' \end{bmatrix} = R(\theta) * \begin{bmatrix} x \\ y \end{bmatrix}$
+\[\begin{bmatrix} x' \\ y' \end{bmatrix} = R(\theta) * \begin{bmatrix} x \\ y \end{bmatrix}\]
 
-The folding motion is executed multiple times, in that the motion is covering multiple parts of the container, depending on what 
-the value of the angle is to shift the folding line. 
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/folding0.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Top Down View - Folding 4 areas of a container}
+\end{figure}
 
-Once the folding motion has finished, by shifting the folding line another time with an angle $\phi$
-we realign the line, so that different parts of the container can be folded by using angle $\theta$ again.
+In this example the folding motion is applied onto four different areas of the circular container. 
+It doesn't really matter how many areas are covered or at what angle the folding line is adjusted. 
+The core movement remains the same: the motion is executed in a line and then returns.
 
-INSERT Plot
+Once the folding motion has been executed, to cover different parts of the container, we apply a transformation with a different angle $\phi$
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/folding1.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Cover different areas of the container}
+\end{figure}
 
 \section{Horizontal Elliptic Motion}
 The horizontal elliptic motion is executed on a horizontal plane and involves multiple ellipses.
-Using the function to compute x,y coordinates on a circle, we use one constant radius and one radius which is changing. 
+Using the function to compute x,y coordinates on a circle, we use two different radii.
+One radius equals the radius of a given container, and the other radius is sampled from an interval. The interval is defined as \[radii = [radius, \frac{radius} {2} ]\]
+meaning the sampled radius ranges from the full radius of the container to half of that radius.
 
-By using the formular to compute points on a circle, we adjust the radius for 
-x,y, where one of the values is set to 0.01, the other one is sampled evenly from the interval $semi\_major\_radius = (radius\_upper\_bound,radius\_upper\_bound / 2 ).$
-We take the maximum sampled radius which fulfills the following condition. 
-$\sqrt{(x\_{i} - center\_x)^2 + (y\_{i} - center\_y)^2} < radius_upper_bound$
-Additionally we decrement and increment y coordinates. If the condition: $\sqrt{(y\_{i} - center\_y)^2} > radius_upper_bound$
-is met we change from decrementing to incrementing and vice versa until this condition is fulfilled again.
+
+A sampled radius from this interval is taken, if the following condition is true for all resulting circle coordinates:
+\[\sqrt{(xCord - xCenter)^2 + (yCord - yCenter)^2} < radius\] 
+
+To cover most areas of any container and assuming that generating y-coordinates used a constant radius, all y-coordinates are shifted after generating the ellipses. 
+To check if the y-coordinates are within the container's bounds, the following condition is checked for every y-coordinate:
+
+\[\sqrt{(yCord)^2 + (yCenter)^2} < radius\]
+
+If this condition is met, the direction of the shift is reversed, switching from incrementing to decrementing and vice versa.
+
+The horizontal elliptic motion can look like this:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/horizontal_elliptical.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Multiple ellipses covering the containers area}
+\end{figure}
+
+
 
 \section{Whirlstorm Motion}
 The whirlstorm motion uses the function to generate points lying inside a circle, with differing radiuses, over the course of the motion. 
