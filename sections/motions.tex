@@ -74,9 +74,18 @@ Using the function to compute x,y coordinates on a circle, we use two different 
 One radius equals the radius of a given container, and the other radius is sampled from an interval. The interval is defined as \[radii = [radius, \frac{radius} {2} ]\]
 meaning the sampled radius ranges from the full radius of the container to half of that radius.
 
-
 A sampled radius from this interval is taken, if the following condition is true for all resulting circle coordinates:
 \[\sqrt{(xCord - xCenter)^2 + (yCord - yCenter)^2} < radius\] 
+
+A generated ellipse inside a container, considering the above defined condition, could look like this:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/ellipse.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Top Down View - Single Ellipse}
+\end{figure}
+
 
 To cover most areas of any container and assuming that generating y-coordinates used a constant radius, all y-coordinates are shifted after generating the ellipses. 
 To check if the y-coordinates are within the container's bounds, the following condition is checked for every y-coordinate:
@@ -85,7 +94,7 @@ To check if the y-coordinates are within the container's bounds, the following c
 
 If this condition is met, the direction of the shift is reversed, switching from incrementing to decrementing and vice versa.
 
-The horizontal elliptic motion can look like this:
+One horizontal elliptic motion consisting of multiple ellipses could look like this:
 
 \begin{figure}[H]
     \includegraphics[scale=0.35]{Graphics/motions/horizontal_elliptical.png}
@@ -95,14 +104,36 @@ The horizontal elliptic motion can look like this:
 \end{figure}
 
 
-
 \section{Whirlstorm Motion}
-The whirlstorm motion uses the function to generate points lying inside a circle, with differing radiuses, over the course of the motion. 
-Using an upper bound radius and a lower bound radius, we create an evenly spaced interval between those radiuses, to use them for coordinate generation. 
-Starting from the upper bound to the lower bound translates to performing the motion from the edge to the center or close to the center, depending on the 
-values of upper and lower bound radius. 
+The whirlstorm motion uses the function to generate circle coordinates  with differing radii sampled from an interval:
+\[[upperBoundRadius, lowerBoundRadius]\]
 
-To create a consistent and fluid motion, we introduce mirroring of the coordinates and alternating from outer to inner circular motion and vice versa.
-These are visualized in these plots:
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/whirlstorm1.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Multiple ellipses covering the containers area}
+\end{figure}
 
 
+The whirlstorm motion is a dynamic and complex swirling pattern that simulates a series of interconnected spiral motions. 
+This motion starts outwardly gradually moving to the inner part of a container, creating a visual effect reminiscent of a whirlpool or tornado. 
+The movement alternates in direction and shape periodically, ensuring a diverse and comprehensive coverage within the containers bounds.
+This results in a fluid, spiraling trajectory, effectively mimicking natural swirling motions.
+
+In total four whirlstorm patterns are generated, where the first two pattern look like this:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/whirlstorm2.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Multiple ellipses covering the containers area}
+\end{figure}
+The third and fourth look like this:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/whirlstorm3.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Multiple ellipses covering the containers area}
+\end{figure}
