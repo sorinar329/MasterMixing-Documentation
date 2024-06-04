@@ -344,33 +344,57 @@ The user selects a task and any number of ingredients.
     \caption{Select fields for the inference.}
 \end{figure}
 These data are extracted from the ontology using the \textit{rdfLib}(see  
-\ref{sec:RDFLib}). The following code will explain this further.
+\ref{sec:RDFLib}). In the following it will be explained further.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.22]{Graphics/get_tasks_ingredients.png}
-    \caption{Code snippet for querying the tasks and ingredients from the ontology}
-\end{figure}
+\begin{lstlisting}[caption={Task and ingredient extraction},captionpos=b]
+   def get_tasks():
+        iterate over classes that are related by rdfs:subClassOf
+        check for subclasses of Task and appent to task_list
+        return task_list
+
+    def get_ingredients():
+        analogously to get_tasks()
+        filter for ingredients that are only subclasses.
+        return ingredients_list
+
+
+\end{lstlisting}
+
 
 \begin{itemize}
-    \item Lines 1 - 7: Each triple where the predicate of the relation matches \textit{subClassOf} is queried. Additionally, it checks whether the object corresponds to the class \textit{Task}. These elements are then added to a list, which is also returned.
-    \item Lines 10 - 18: Similar to the above function, the subclasses of ingredients are returned. The only difference is that the function is called recursively since the class \textit{Ingredients} has subclasses at multiple levels. Therefore, it also checks which class has no more subclasses.
-    \item Lines 21 - 30: This function checks whether a given class corresponds to a leaf in a graph, meaning this class itself has no subclasses.
-    \item Lines 33 - 40: This function ultimately returns the list of ingredients available for the user's selection.
+    \item Each triple where the predicate of the relation matches \textit{subClassOf} is queried. Additionally, it checks whether the object corresponds to the class \textit{Task}. These elements are then added to a list, which is also returned.
+    \item Similar to the \textit{get\_task()} function, the subclasses of ingredients are returned. The only difference is that the function is called recursively since the class \textit{Ingredients} has subclasses at multiple levels. Therefore, it also checks which class has no more subclasses.
 \end{itemize}
 
-These data are sent to the frontend using the following function:
+These data can be sent to the frontend by calling the corresponding \textit{@app.route}
 
-\begin{figure}[H]
-    \includegraphics[scale=0.25]{Graphics/inference_main.png}
-    \caption{\textit{get\_tasks\_and\_ingredients()}-function}
-\end{figure}
+\begin{lstlisting}[caption={Sending task and ingredients list to the frontend},captionpos=b]
+    @app.route('/task_ingredients')
+    def get_tasks_and_ingredients():
+        return {tasks: get_tasks(), 
+            ingredients: get_ingredients()} 
+
+\end{lstlisting}
 
 The previously described functions are called, and the data is sent to the frontend in \textit{JSON} format. In the frontend, this data is fetched and processed.
 
-\begin{figure}[H]
-    \includegraphics[scale=0.22]{Graphics/inference_frontend_fetch.png}
-    \caption{Data is fetched in the FrontEnd}
-\end{figure}
+\begin{lstlisting}[caption={Fetch and populate select fields},captionpos=b]
+    function ($) {
+        url: '/task_ingredients'
+        success: function(data)
+        {
+            taskSelect = #taskSelectElement
+            iterate through the list of tasks
+            appent each task as an option to the taskSelectField
+        }
+        {
+            analogously for ingredients
+        }
+    }
+
+\end{lstlisting}
+
+
 
 This function populates the entries of the select fields for task and ingredient selection with the data from the backend. 
 By doing so dynamically, it ensures that even if the ontology has new entries in these classes, they will always be available for the user's selection.
@@ -379,10 +403,10 @@ By doing so dynamically, it ensures that even if the ontology has new entries in
 \label{par:Inference}
 
 An example can illustrate the process of inference calculation. Taking the above example (see: \ref{fig:graph_inferred}), we have the input task: \textit{MixingTask} and the ingredients: \textit{Flour} and \textit{Water}. 
-These two ingredients correspond to the superclasses \textit{DryPowderIngredient} and \textit{LiquidIngredient}, respectively (see: \nameref{chap:Data_representation} for more information 
+These two ingredients correspond to the superclasses \textit{PowderIngredient} and \textit{LiquidIngredient}, respectively (see: \nameref{chap:Data_representation} for more information 
 about the structure of the ontology.). This combination ultimately corresponds to the \nameref{sec:SWRL}-Rule:
 \begin{lstlisting}
-MixingTask(?x) ^ DryPowderIngredient(?ing1) ^ hasIngredient(?x, ?ing1)
+MixingTask(?x) ^ PowderIngredient(?ing1) ^ hasIngredient(?x, ?ing1)
 ^ LiquidIngredient(?ing2) ^ hasIngredient(?x, ?ing2) ^ Motion(?motion) 
 ^ performMotion(?x, ?motion) -> WhirlstormMotion(?motion)
 \end{lstlisting}
@@ -393,16 +417,33 @@ From this, the motion \textit{WhirlstormMotion} is inferred with the correspondi
     radius_upper_bound_relative  0.7
 \end{lstlisting}
 To calculate this inference, we use the library \textit{OWLReady2} (see: \nameref{sec:OWLReady}), which enables us to utilize a reasoner for the inference.
-\begin{figure}[H]
-    \includegraphics[scale=0.23]{Graphics/get_inference.png}
-    \caption{Inference function}
-\end{figure}
+
+\begin{lstlisting}[caption={Inference},captionpos=b]
+    def get_inference(task, ingredients):
+        load the ontology
+        initialize a task instance
+        iterate over the list of ingredients
+            initialize an instance for every ingredient
+            relate the ingredients to the task instance
+        
+        initialize the motion
+        relate the motion to the task instance
+
+        extract the rules from the ontology
+
+        start the reasoner
+        infer the motion and parameters based on the task 
+        and ingredients input
+
+        return motion, parameters
+
+
+\end{lstlisting}
 \begin{itemize}
-    \item Lines 1 - 10: The classes are instantiated. The function takes parameters \textit{task}, corresponding to a task, and \textit{ingredients}, corresponding to a list of ingredients. In line 2, the ontology for the \textit{OWLReady2} library is instantiated to utilize the reasoner. In lines 3 and 4, the \textit{task} is instantiated. Since the task comes as input in the full \textit{IRI} format, it needs to be processed first. From lines 5 to 10, the same is done analogously for the ingredients, this time only for a list of ingredients. Subsequently, the instances of the \textit{ingredients} are added to the instance of \textit{task}.
-    \item Lines 12 - 13: A top-level \textit{Motion} is instantiated to indicate that the \textit{Motion} is inferred during reasoning. ???
-    \item Lines 14 - 18: Since the superclasses of the \textit{ingredients} are important for the rules, they are added to a set which will be used later for inference.
-    \item Lines 19 - 25: The existing rules are examined and matched with the input to infer the correct \textit{SWRL} rules.
-    \item Lines 27 - 45: Here, the reasoner is first started. The inferred motion is stored, and now it is about determining the required parameters based on the motion. These parameters are then stored in a dictionary. The function returns the motion, the parameters, and the instance of \textit{task}.
+    \item The classes are instantiated. The function takes parameters \textit{task}, corresponding to a task, and \textit{ingredients}, corresponding to a list of ingredients. The ontology for the \textit{OWLReady2} library is instantiated to utilize the reasoner. Next the \textit{task} is instantiated, since the task comes as input in the full \textit{IRI} format, it needs to be processed first. The same is done analogously for the ingredients, this time only for a list of ingredients. Subsequently, the instances of the \textit{ingredients} are added to the instance of \textit{task}.
+    \item A top-level \textit{Motion} is instantiated to indicate that the \textit{Motion} is inferred during reasoning.
+    \item The existing rules are examined and matched with the input to infer the correct \textit{SWRL} rules.
+    \item Lastly, the reasoner is executed. The inferred motion is stored, and now it is about determining the required parameters based on the motion. These parameters are then stored in a dictionary. The function returns the motion and the parameters.
 \end{itemize}
 
 \paragraph{Preparing the Output}
@@ -410,25 +451,29 @@ For clarity, we have decided to reduce the graph to only the classes used in the
 From this node, you can reach the other classes that are important for the inference. 
 These classes correspond to the classes of the ingredients, i.e., the ingredient instances selected by the user, the inferred motion along with parameters, 
 and each instance for the tools and containers, each of which can represent any possible combination if no selection has been made.
-\begin{figure}[H]
-    \includegraphics[scale=0.2]{Graphics/get_graph_data_new.png}
-    \caption{generating the visualized graph and task tree}
-\end{figure}
+\begin{lstlisting}[caption={generating the graph},captionpos=b]
+    def generate_task_tree_and_graph_data(task, ingredients):
+        motions, parameters = get_inference(task, ingredients)
+
+        initialize a graph
+        process through the inlcuded classes in the inference 
+        and add them to a set.
+        append the elements of this set to the graph and 
+        inlcude the edges by considering the corresponding 
+        relations
+        process the inferred parameters
+
+\end{lstlisting}
 
 \begin{itemize}
-    \item Line 3: The results of the inference function (see: \nameref{par:Inference}) are stored and used for further processing.
-    \item Lines 5 and 6: We initialize an empty graph, which will be filled with nodes and edges throughout the function. Additionally, a set is initialized for the set of nodes.
-    \item Lines 7 to 17: Based on the task instance, the graph is structured starting from this node. It checks which relations exist for this instance and accordingly inserts into the set of edges and nodes. Additionally, for the \textit{hasIngredient} relation, the superclass of the ingredient is considered. Finally, the edge labeling is chosen based on the relation, and the classes are added to the graph.
-    \item Lines 19 to 21: The task instance itself is processed and added to the graph.
-    \item Lines 23 and 24: Iterating over the set of nodes, they are added to the graph.
-    \item Lines 26 to 30: The inferred parameters are processed and added to the graph in the end.
+    \item The results of the inference function (see: \nameref{par:Inference}) are stored and used for further processing.
+    \item We initialize an empty graph, which will be filled with nodes and edges throughout the function. Additionally, a set is initialized for the set of nodes.
+    \item Based on the task instance, the graph is structured starting from this node. It checks which relations exist for this instance and accordingly inserts into the set of edges and nodes. Additionally, for the \textit{hasIngredient} relation, the superclass of the ingredient is considered. Finally, the edge labeling is chosen based on the relation, and the classes are added to the graph.
+    \item Iterating over the set of nodes, they are added to the graph.
+    \item The inferred parameters are processed and added to the graph in the end.
 \end{itemize}
 
 For the task tree, we create a 3-column table. The first column represents the step, the second column represents the action, and the third column represents the parameters used to illustrate them. The task tree is a list of entries, which can also contain dynamic data such as motions and ingredients.
-\begin{figure}[H]
-    \includegraphics[scale=0.2]{Graphics/get_graph_data_new2ä.png}
-    \caption{generating the visualized graph and task tree}
-\end{figure}
 
 \begin{itemize}
     \item 1: The first entry pertains to the robot's action, which is to choose a tool for the upcoming actions. The list of \textit{Tools} corresponds to the subclasses of \textit{Tools} from the ontology. (REFERENCE TO GET TOOLS LEAF)
