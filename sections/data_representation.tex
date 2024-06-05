@@ -2,24 +2,14 @@
 \label{chap:Data_representation}
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/overview_2.jpg}
-\end{figure}
-VON NASER: 
+\end{figure} 
 In this chapter we will present you the mixing knowledgegraph using \textit{OWL} as basis to formally define knowledge.
 This knowledge base defines domain knowledge about mixing, which encompasses several aspects derived from the data acquisition.
 Using assertional knowledge such as the task to execute, the set of ingredients as input for a mixing task, 
 and additional knowledge like which container to use, the knowledge base can infer facts about the motions that should be executed.
 Our goal is not to teach a robot how to execute a specific mixing motion, but rather infer a motion and relevant parameters for this motion. 
-
-
-In this chapter we are going to introduce our modeled knowledge graph which serves as our \textit{OWL} databasis. We modeled several aspects from the acquired data to cover up the full \textit{Mixing} domain. In other words we definde domain knowledge.
-
-Our main goal is to determine different mixing motions from asserted knowledge, like the given task, the set of ingredients used for mixing and additional knowledge like, which container and which tools are used.
-Our knowledge base is not overly abstract but not overly simplified either, the robot doesn't learn how to execute motions, but rather it infers motions and its parameters with asserted knowledge, where the inference rules are kept simple.
-By simplyfing the knowledgebase, the robot relies on less asserted knowledge, which can result in a higher success rate.
-
 \section{The Knowledgebase}
-We designed a Ontology in which we illustrated our needed classes. 
-The Knowledgebase is divided upon the superclasses \textit{Ingredient, DesignedTool, Tasks and Motions }
+Our knowledgebase consists of the superclasses \textit{Ingrediet, DesginedTool, Task} and \textit{Motion}. These are the concepets which we dervied from the \nameref{chap:Data_acquisition}. The following image illustrates the \textit{Mixing} ontology hierarchy.
 \begin{figure}[H]
     \includegraphics[scale=0.5]{Graphics/classHierarchy/taxonomy.png}
     \centering
@@ -122,7 +112,7 @@ It is equivalent to a motion which has a specific motion followedBy another spec
 
 
 
-\subsection{Motions (kein Feedback notwendig, muss grundartig geändert werden. - ALTER STAND)}
+\subsection{Motions (NASER MERGE DAS MIT DEINEN SACHEN UND LÖSCH REST)}
 The motions are necessary for the robotic system to know what has to be done?. The motions are inferred from Rules that regards a task component, combined with ingredients.
 The motion also contain parameters, which should determine the moving space available for the robotic system. As in the mixing world, most of the container have a circular formed base, our motions are defined with a radius.
 The most important parameters are:
@@ -138,7 +128,7 @@ Our implemented motions are:
     \item Vertical Circular Motion: The last motion can also be seen as the most difficult one. The main idea of this motion is to `wildly` mix the ingredients. Beschreibung fehlt, Bild hier rein.
 \end{itemize}
 
-\section{Rules}
+\section{Rules - Grafiken anpassen}
 In order to infer the right motion based on the ingredients and task input, rules have to be defined. This rules are \nameref{sec:SWRL}-rules.
 In this section we want to illustrate the inference on a high level.
 The rules can be thoguht as if conditions, which will then result in a motion, 

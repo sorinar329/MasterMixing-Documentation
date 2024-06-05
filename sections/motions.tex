@@ -1,4 +1,4 @@
-\chapter{Motions}
+\section{Motions}
 \label{chap:Motions}
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/overview_3.jpg}
@@ -8,7 +8,7 @@ To simplify the implementation of motions, we hold the following assumptions abo
 Firstly we assume, the container is symmetric in the x,y direction. We don't consider the descent of the container, we keep the height for the tool
 constant over the performed motion. We don't have collision detection.
 
-\section{Circular Motion}
+\subsection{Circular Motion}
 The circular motion is generated on a circular plane. 
 By having a center coordinate = $(x,y)$, which is the center coordinate of 
 the container to execute the Circular Motion, we generate a set of coordinates
@@ -31,7 +31,7 @@ converting them into radians, and using formulas to compute the circular coordin
     \caption{Top Down View - Circular Motion}
 \end{figure}
 
-\section{Folding Motion}
+\subsection{Folding Motion}
 The folding motion is not a circular motion but rather a linear motion. In its current implementation, the motion is a singular line having where one endpoint is on the edge of the container
 the other is center of the container. While the motion in itself is a straight line going through the container, the motion is executed by traversing from one end of the container to the center,
 and then repeating the motion flipped - from center to one of the end, which creates a folding effect.
@@ -68,7 +68,7 @@ Once the folding motion has been executed, to cover different parts of the conta
     \caption{Cover different areas of the container}
 \end{figure}
 
-\section{Horizontal Elliptic Motion}
+\subsection{Horizontal Elliptic Motion}
 The horizontal elliptic motion is executed on a horizontal plane and involves multiple ellipses.
 Using the function to compute x,y coordinates on a circle, we use two different radii.
 One radius equals the radius of a given container, and the other radius is sampled from an interval. The interval is defined as \[radii = [radius, \frac{radius} {2} ]\]
@@ -104,7 +104,7 @@ One horizontal elliptic motion consisting of multiple ellipses could look like t
 \end{figure}
 
 
-\section{Whirlstorm Motion}
+\subsection{Whirlstorm Motion}
 The whirlstorm motion uses the function to generate circle coordinates  with differing radii sampled from an interval:
 \[[upperBoundRadius, lowerBoundRadius]\]
 
