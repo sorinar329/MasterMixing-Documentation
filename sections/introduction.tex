@@ -1,30 +1,16 @@
 \chapter*{Introduction}
-
-VON Naser:
-
-Diese Masterarbeit befasst sich mit der Problmestellung das Mixing und ihre Variationen als high level tasks unter berücksichtung vom kontextuellen Wissen zu nutzen,
-um Aussagen ableiten zu können welche Mischbewegungen der Roboter ausführen soll unter Einsatz einer Wissensbasis.
-
-
-Diese Masterarbeit befasst sich mit der Problemstellung der Generierung von Roboterplänen im Kontext von Mixing Aktionen, welche aus einer Wissensbasis abgeleitet werden.
-Bevor wir mit der Vorstellung der Gliederung der Masterarbeit anfangen, möchten wir auf 5 essenzielle Fragen eingehen, um den Lesern einen besseren Überblick geben zu können:
+This master's thesis addresses the issue of mixing and its variations in the context of cooking as high-level tasks, taking into account contextual knowledge, in order to derive statements about which mixing movements a robotic agent should perform using a knowledge base.
+Before we begin presenting the structure of the master's thesis, we would like to address five essential questions to provide readers with a better overview:
 \begin{itemize}
-    \item \textbf{Was ist das Problem?} In der Welt des Kochen und Backen müssen verschiedene Tätigkeiten ausgeführt werden. Während ein Mensch im Laufe seines Lebens erlernt, wie Rezepte zubereitet werden und intuitiv die benötigten Aktionen ausführt, muss ein Roboter die benötigten Aktionen abrufbar haben. Die Aufgaben eines Roboters im Kontext vom Kochen können vielfältig sein, wie zum Beispiel das Schneiden, Gießen oder Rühren. In dieser Arbeit befassen wir uns mit der Aufgabe des Rührens und betrachten dabei das Problem der verschiedenen Rühraktionen und in welchem Zusammenhang diese ausgeführt werden. 
-    \item \textbf{Warum ist es wichtig?} Im Kontext des Mixen müssen verschiedene Bewegungen betrachtet werden um die gewünschten Resultate zu erzielen. Es reicht nicht eine einzelne Bewegung als Pauschalbewegung im Kontext des Mixings zu betrachten, da sonst verschiedene Ausgänge einer Mixingaktion nicht erreicht werden können. Deshalb muss man verschiedene Bewegungen in Betracht ziehen um gewünschte Resultate einer Mixingaktion erzielen zu können.
-    \item \textbf{Warum ist es schwierig?} Die Schwierigkeit liegt darin zu bestimmen unter welchen Umständen welche Bewegung ausgeführt wird. Dies erfordert eine genauere Analyse bestehender Quellen woraus die verschiedenen Bewegungen extrahiert werden können. Eine weitere Herausforderung liegt darin dieses Wissen dementsprechend zu repräsentieren.
-    \item \textbf{Warum ist es schwierig?} Zum aktuellen Stand der Forschung gibt es kein systematisches Vorgehen um zu bestimmen welche Mischbewegung unter bestimmten Umständen ausgeführt werden soll.
-    Ein systematisches Vorgehen wird daher notwendig sein, welches primär Videomaterial nutzt. Die Herausforderung ist die Zusammenhänge zwischen der Aktion die von Menschen ausgeführt werden mit 
-    den verwendeten Zutaten und welche Bewgegung dazu assoziiert wird herauszuarbeiten. Das größte Problem jedoch ist, sofern man sich entscheidet das Wissen in einer symbolischen Wissensbasis
-    zu modellieren, wie die Modellierungen aussehen, soll damit das relevante Wissen für den Roboter nutzbar ist.
-    \item \textbf{Wie wird das Problem gelöst?}  Durch die Analyse von Videos möchten wir herausfinden, wie von Einzelfällen auf allgemeine Prinzipien geschlossen werden kann, insbesondere in Bezug auf menschliche Handlungen während des Mischens von Zutaten. Dabei berücksichtigen wir sowohl die Art der Zutaten als auch die ausgeführten Bewegungen.
-    Die erfassten Zusammenhänge sollen in einer Wissensbasis modelliert werden, sodas ein Roboteragent eine mögliche Bewegung mit notwendigen Parametern zu Ausführung der Bewegung
-    ableiten kann. Die Wissensbasis ist symbolisch modelliert, sodass die Ausführung theoretisch von vielen Roboteragenten unterstützt werden kann.
-    \item \textbf{Wie wird das Problem gelöst?} Um dieses Problem zu lösen implementieren wir eine Wissensbasis, 
-    woraus ein Roboteragent die benötigte Bewegung samt Parameter ableiten kann. Die Bewegung leitet sich ab aus der angegeben Aufgabe und aus der Menge der genutzten Zutaten.
-    \item \textbf{Wie kann diese Arbeit zur Forschung beitragen?} Durch die Implementierung unserer Wissenbasis ist es dementsprechend möglich für Roboteragenten das benötigte Wissen für die Mixingaktionen abzufragen. Unser Beitrag richtet sich an die Entwicklung von Robotern, welche im Haushalt tätig sind und autonom nicht-triviale Aufgaben ausführen können ohne eine festgelegte Umgebung zu haben.
+    \item \textbf{What is the problem?} In the world of cooking and baking, various tasks need to be performed. While a human learns over their lifetime how to prepare recipes and intuitively execute the necessary actions, a robot must have these required actions readily available. A robot's tasks in the context of cooking can be diverse, such as cutting, pouring, or mixing. In this thesis, we focus on the task of mixing and examine the issue of different mixing actions and the context in which they are performed.    
+    \item \textbf{Why is it important?} In the context of mixing, various movements need to be considered to achieve the desired results. It is not sufficient to consider a single movement as a general movement in the context of mixing, as different outcomes of a mixing action cannot be achieved otherwise. Therefore, different movements must be taken into account to achieve the desired results of a mixing action.
+    \item \textbf{Why is it difficult?} At the current state of research, there is no systematic approach to determine which mixing movement should be performed under specific circumstances. Therefore, a systematic approach will be necessary, primarily utilizing video material. The challenge is to identify the relationships between the actions performed by humans, the ingredients used, and the associated movements. However, the biggest problem is deciding how to model this knowledge in a symbolic knowledge base so that the relevant knowledge is usable for the robot.
+    \item \textbf{How is the problem solved?} Through the analysis of videos, we aim to determine how general principles can be inferred from individual cases, especially regarding human actions during the mixing of ingredients. We consider both the nature of the ingredients and the movements executed. The identified relationships will be modeled in a knowledge base, allowing a robotic agent to derive a possible movement with necessary parameters for execution. The knowledge base is symbolically modeled, enabling theoretical support for execution by many robotic agents.
+    \item \textbf{How can this work contribute to research?} By implementing our knowledge base, it is possible for robotic agents to query the required knowledge for mixing actions. Our contribution is aimed at the development of robots capable of performing non-trivial tasks autonomously in household settings without having a predefined environment.
 \end{itemize}
 
 
+Our work is divided into multiple chapters that will cover every aspect of our research and practical work.
 First, we intend to analyze existing research, particularly examining studies that delve into diverse mixing motions and exploring related systems that contain a queryable knowledge graph.
 In the following section, we will introduce the reader with the frameworks employed to accomplish our objectives.	
 Subsequently, we will present our approach to data acquisition and data representation.
