@@ -1,6 +1,6 @@
 \section{Evaluation}
 
-In this chapter, we aim to present our implemented/adapted motions as a proof of concept. We consider all possible combinations of tasks and ingredients applied to every possible combination of tools and containers. Each task will showcase only one example in this chapter, with the rest available in the appendix. The respective task trees are located in Chapter \nameref{chap:Data_representation}, which illustrates which motions result from combinations of tasks and ingredients.
+In this section, we aim to present our implemented/adapted motions as a proof of concept. We consider all possible combinations of tasks and ingredients applied to every possible combination of tools and containers. Each task will showcase only one example in this chapter, with the rest available and more detailed in the appendix. The respective task trees are located in Chapter \nameref{chap:Data_representation}, which illustrates which motions result from combinations of tasks and ingredients.
 
 Through this evaluation, we aim to demonstrate that the knowledge base we have developed can aid in inferring dynamic motions along with parameters that adapt to both the tool and container. Our parameters are relative to the dimensions of the container, specifically the radius within which the motion is executed, as well as the dimensions of the tools used to execute the motion. It is crucial that the motion in the simulation does not exceed the predetermined dimensions, as this could have potentially serious consequences when applied in the real world.
 \subsection{Mixing Task}
@@ -9,19 +9,20 @@ Through this evaluation, we aim to demonstrate that the knowledge base we have d
     \centering
     \begin{tabular}{|c|c|c|c|c|}
       \hline
-      \textbf{Nr.} & \textbf{Ingredients} & \textbf{Tool} & \textbf{Container} & \textbf{Motion}  \\
+      \textbf{Nr.} & \textbf{Ingredients} & \textbf{Tool} & \textbf{Container} & \textbf{Inferred Motion}  \\
       \hline
       1 & Liquid & WoodenSpoon & Salad Bowl & Whirlstorm Motion \\
       \hline
-      2 & Dry & WoodenSpoon & Salad Bowl & Whirlstorm Motion \\
+      2 & Powder & WoodenSpoon & Salad Bowl & Whirlstorm Motion \\
       \hline
       3 & Liquid + Dry & WoodenSpoon & Salad Bowl & Whirlstorm Motion \\
       \hline
-      4 & Liquid + Wet & WoodenSpoon & Salad Bowl & Whirlstorm Motion \\
+      4 & Liquid + SemiLiquid & WoodenSpoon & Salad Bowl & Whirlstorm Motion \\
       \hline
-      5 & Dry + Wet & WoodenSpoon & Salad Bowl & Whirlstorm Motion \\
+      5 & Powder + Wet & WoodenSpoon & Salad Bowl & Whirlstorm Motion \\
       \hline
-      6 & Wet & WoodenSpoon & Salad Bowl & VerticalCircular + Whirlstorm Motion \\
+      6 & SemiLiquid & WoodenSpoon & Salad Bowl & VerticalCircular + 
+      \\ & & &  & Whirlstorm Motion \\
       \hline
     \end{tabular}
     \caption{Mixing Task}
@@ -50,8 +51,165 @@ Through this evaluation, we aim to demonstrate that the knowledge base we have d
 
 \subsection{Beating Task}
 
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Nr.} & \textbf{Ingredients} & \textbf{Tool} & \textbf{Container} & \textbf{Inferred Motion}  \\
+    \hline
+    1 & Liquid & Fork & Salad Bowl & Whirlstorm Motion \\
+    \hline
+    2 & Powder & Fork & Salad Bowl & Whirlstorm Motion +
+    \\ & & &  & Horizontal Eliptical Motion \\
+    \hline
+    3 & Liquid + Powder & Fork & Salad Bowl & Whirlstorm Motion \\
+    \hline
+    4 & Liquid + SemiLiquid & Fork & Salad Bowl & Whirlstorm Motion +
+    \\ & & &  & Horizontal Eliptical Motion \\
+    \hline
+    5 & Powder + SemiLiquid & Fork & Salad Bowl & Horizontal Eliptical 
+    \\ & & &  & Motion \\
+    
+    \hline
+    6 & SemiLiquid & Fork & Salad Bowl & Horizontal Eliptical 
+    \\ & & &  & Motion \\
+    \hline
+  \end{tabular}
+  \caption{Beating Task}
+  \label{tab:mixingtask}
+\end{table}
+
+\begin{itemize}
+\item Inferred Parameters for \textbf{1,3}: 
+ \begin{lstlisting}
+  => radius_lower_bound_relative = 0.0, 
+  radius_upper_bound_relative = 0.7
+\end{lstlisting}
+\item Inferred Parameters for \textbf{2,4,5,6}:
+\begin{lstlisting}
+  => radius_lower_bound_relative = 0.0, 
+  radius_upper_bound_relative = 0.7,
+  vertical_increment = 0.1
+\end{lstlisting}
+\end{itemize}
+
 \subsection{Stirring Task}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Nr.} & \textbf{Ingredients} & \textbf{Tool} & \textbf{Container} & \textbf{Inferred Motion}  \\
+    \hline
+    1 & Liquid & Wooden Spoon & Pot & Circular Motion \\
+    \hline
+    2 & Powder & Wooden Spoon & Pot & Whirlstorm Motion\\
+    \hline
+    3 & Liquid + Powder & Wooden Spoon & Pot & Whirlstorm Motion \\
+    \hline
+    4 & Liquid + Semi-Liquid & Wooden Spoon & Pot & Whirlstorm Motion \\
+    \hline
+    5 & Powder + Semi-Liquid & Wooden Spoon & Pot & Whirlstorm Motion +
+    \\ & & &  &Horizontal Eliptical Motion \\
+    \hline
+    6 & Semi-Liquid & Wooden Spoon & Pot & Whirlstorm Motion +
+    \\ & & &  &Horizontal Eliptical Motion \\
+    \hline
+  \end{tabular}
+  \caption{Stirring Task}
+  \label{tab:mixingtask}
+\end{table}
+
+\begin{itemize}
+\item Inferred Parameters for \textbf{1}: 
+ \begin{lstlisting}
+  => radius_lower_bound_relative = 0.7, 
+  radius_upper_bound_relative = 0.8
+\end{lstlisting}
+\item Inferred Parameters for \textbf{2,3,4}:
+\begin{lstlisting}
+  => radius_lower_bound_relative = 0.0, 
+  radius_upper_bound_relative = 0.7,
+  vertical_increment = 0.1
+\end{lstlisting}
+\item Inferred Parameters for \textbf{5,6}:
+\begin{lstlisting}
+  => radius_lower_bound_relative = 0.0, 
+  radius_upper_bound_relative = 0.7,
+  vertical_increment = 0.1
+\end{lstlisting}
+\end{itemize}
 
 \subsection{Whisking Task}
 
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Nr.} & \textbf{Ingredients} & \textbf{Tool} & \textbf{Container} & \textbf{Inferred Motion}  \\
+    \hline
+    1 & Liquid & Whisk & Bowl & Whirlstorm Motion \\
+    \hline
+    2 & Powder & Whisk & Bowl & Whirlstorm Motion\\
+    \hline
+    3 & Liquid + Powder & Whisk & Bowl & Whirlstorm Motion \\
+    \hline
+    4 & Liquid + Semi-Liquid & Whisk & Bowl & Whirlstorm Motion \\
+    \hline
+    5 & Powder + Semi-Liquid & Whisk & Bowl & Whirlstorm Motion \\
+    \hline
+    6 & Semi-Liquid & Whisk & Bowl & Horizontal
+    \\ & & &  &Eliptical Motion \\
+    \hline
+  \end{tabular}
+  \caption{Whisking Task}
+  \label{tab:mixingtask}
+\end{table}
+
+\begin{itemize}
+\item Inferred Parameters for \textbf{1,2,3,4,5}: 
+ \begin{lstlisting}
+  => radius_lower_bound_relative = 0.0, 
+  radius_upper_bound_relative = 0.7
+\end{lstlisting}
+\item Inferred Parameters for \textbf{6}:
+\begin{lstlisting}
+  => radius_lower_bound_relative = 0.0, 
+  radius_upper_bound_relative = 0.7,
+  vertical_increment = 0.1
+\end{lstlisting}
+\end{itemize}
+
 \subsection{Folding Task}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Nr.} & \textbf{Ingredients} & \textbf{Tool} & \textbf{Container} & \textbf{Inferred Motion}  \\
+    \hline
+    1 & Liquid & Wooden Spoon & Pan & Folding Motion \\
+    \hline
+    2 & Powder & Wooden Spoon & Pan & Folding Motion \\
+    \hline
+    3 & Liquid + Powder & Wooden Spoon & Pan & Folding Motion \\
+    \hline
+    4 & Liquid + Semi-Liquid & Wooden Spoon & Pan & Folding Motion \\
+    \hline
+    5 & Powder + Semi-Liquid & Wooden Spoon & Pan & Folding Motion \\
+    \hline
+    6 & Semi-Liquid & Wooden Spoon & Pan & Folding Motion \\
+    \hline
+  \end{tabular}
+  \caption{Folding Task}
+  \label{tab:mixingtask}
+\end{table}
+
+\begin{itemize}
+\item Inferred Parameters for \textbf{1-6}: 
+ \begin{lstlisting}
+  => radius_lower_bound_relative = 0.0, 
+  radius_upper_bound_relative = 0.7,
+  folding_rotation_shift = 90, 
+  repetitive_folding_rotation_shift = 22.5,
+\end{lstlisting}
+\end{itemize}
