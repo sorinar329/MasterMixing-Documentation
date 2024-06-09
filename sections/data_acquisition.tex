@@ -2,6 +2,7 @@
 \label{chap:Data_acquisition}
 \begin{figure}[H]
   \includegraphics[scale=0.25]{Graphics/structure_overview1.jpg}
+  \caption{Structure Overview: \textit{Data Acquisition}}
 \end{figure}
 Data acquisition involves understanding what mixing is, how it is performed by people, and how connections can be derived from video analyses. Essentially, it’s about discovering the various ways mixing is done, the contexts in which it occurs, and what insights we can draw from it. This includes identifying different mixing motions, determining which contexts are relevant, and which can be disregarded.
 First we have to ask ourselves for our context \textbf{What is Mixing?}
@@ -11,23 +12,23 @@ First we have to ask ourselves for our context \textbf{What is Mixing?}
   \textbf{Definition:} To put together or combine (two or more substances or things) so that the constituents or particles of each are interspersed or diffused more or less evenly among those of the rest; to unite (one or more substances or things) in this manner with another or others; to make a mixture of, to mingle, blend.
 
   Ultimately, this definition conveys that mixing requires at least two elements or substances, which are then combined (evenly) with each other, resulting in a (new) substance.
-  This definition is general and can be applied to various contexts. For our work, the aspect of cooking or mixing different (cooking) ingredients is important. Therefore, we consider some hyponyms of the verb \textit{mixing} irrelevant for our cause and do not take them into account.
+  This definition is general and can be applied to various contexts. For our work, the aspect of cooking or mixing different (cooking) ingredients is important. Therefore, we consider some hyponyms of the verb \textit{Mixing} irrelevant for our cause and do not take them into account.
   An adapted definition for our work could be: 
   
-  \textbf{Definition:} Mixing is the combination of various (cooking) ingredients through different motions in a container.
+  \textbf{Definition:} \textit{Mixing} is the combination of various (cooking) ingredients through different motions in a container.
   
 
 \section{Task variations}
-Now that we have defined what \textit{mixing} means in our context, we aim to identify the various types of \textit{mixing} and determine which ones are important for our work. We will also specify which types of \textit{mixing} we will not consider further, providing arguments for our decisions.
+Now that we have defined what \textit{Mixing} means in our context, we aim to identify the various types of \textit{Mixing} and determine which ones are important for our work. We will also specify which types of \textit{Mixing} we will not consider further, providing arguments for our decisions.
 	As our main focus is to represent the knowledge about mixing, first we had to acquire the different types and variations of mixing in order to create a complete Knowldegerepresentation. The first step in acquiring the needed data, was to acknowledge which task varations of mixing are actually important. 
   So we had to analyze the word \textit{Mixing} and its hyponyms. 
 \subsection{Hyponyms} 
-	Hyponyms are subordered words of a given word, for example one hyponym of \textit{mixing} could be \textit{beating}\cite{oxford_hyponym}.
+	Hyponyms are subordered words of a given word, for example one hyponym of \textit{Mixing} could be \textit{Beating}\cite{oxford_hyponym}.
   To conduct this analysis, one can utilize tools from various websites, such as FrameNet\cite{FrameNet} and WordNet\cite{WordNet}. These platforms provide users with the ability to search for specific words and obtain various associations for those words, including synonyms, acronyms, or, crucial for our case, hyponyms.	
   A full list of the considered hyponyms can be seen in table \ref{tab:hyponyms}.
 \subsubsection{WikiHow Extraction}
-  For all those hyponyms, we delegated a \textit{WikiHow} extraction search (see: \nameref{sec:WikiHow}) which should show us, how many times one of these words occur, in the context of cooking.
-	To execute the search, we define a new Class \textit{MixingVerb}, which represents the verb \textit{mixing} and its hyponyms.
+  For all those hyponyms, we delegated a \textit{WikiHow} extraction search (see:\nameref{sec:WikiHow}) which should show us, how many times one of these words occur, in the context of cooking.
+	To execute the search, we define a new Class \textit{MixingVerb}, which represents the verb \textit{Mixing} and its hyponyms.
   
   For the search, we consider each verb and a triple consisting of the verb forms. We consider three forms of the verbs: the infinitive, the past tense, and the present progressive. An example of such a search would be:
   \begin{lstlisting}
@@ -36,7 +37,7 @@ Now that we have defined what \textit{mixing} means in our context, we aim to id
 
     After we have defined the desired verbs that we ultimately want to search for, we want to adjust some search parameters. The crucial parameters involve filtering the categories; in our case, we want to focus on mixing in the cooking domain. Therefore, we filter out all articles that do not exist in the \textit{Food and Entertaining} category.
   \subsubsection{Hyponyms Occurance}
-    For each defined verb, a search is initiated to determine how often this verb appears in the \textit{WikiHow} articles \cite{wikihow}. This is done to ascertain which verbs are ultimately relevant for our implementation and which ones we can exclude, as they are infrequently used in everyday language.
+    For each defined verb, a search is initiated to determine how often this verb appears in the \textit{WikiHow} \cite{wikihow} articles. This is done to ascertain which verbs are ultimately relevant for our implementation and which ones we can exclude, as they are infrequently used in everyday language.
     In the table below the results can be seen.
     \begin{table}[H]
         \centering
@@ -104,7 +105,7 @@ The second condition excludes another task: \textit{Blend. Blend} is mostly used
 
 Upon closer examination, we will also not consider the verb \textit{Whip} because it is mostly used as an adjective for ingredients, such as whipped cream. This highlights that only the verb \textit{Whip} has relatively low frequency. The same applies to \textit{Pair}, where the past tense is used to describe a combination of different ingredients, such as wine paired with cheese.
 
-The verb \textit{combine} is not informative regarding the executed movement of an action and is equated to the verb  \textit{mix}.
+The verb \textit{Combine} is not informative regarding the executed movement of an action and is equated to the verb \textit{Mix}.
 
 Thus, the tasks we consider are: \textit{Mix, Beat, Fold, Stir, and Whisk.}
 
@@ -146,10 +147,10 @@ In the following, we aim to structure the extracted information from the videos 
 
 Based on the extracted information, we conclude that for our goals, the following aspects, in addition to the task, are important and will be further considered:
 \begin{itemize}
-  \item Ingredients: The ingredients play a crucial role in the movement decision associated with the tasks and will be defined more precisely.
-  \item Tools: The tools used may not be decisive in the movement decision. Since we do not consider electric tools, every motion can be performed with any tool.
-  \item Container: As conducted with the tools, the container wont play a crucial in the motion decision. 
-  \item Motions: The motions ultimately represent the movement of the robot for our implementation. These movements are extracted from the videos and defined in alignment with robot motions.
+  \item \textbf{Ingredients}: The ingredients play a crucial role in the movement decision associated with the tasks and will be defined more precisely.
+  \item \textbf{Tools}: The tools used may not be decisive in the movement decision. Since we do not consider electric tools, every motion can be performed with any tool.
+  \item \textbf{Container}: As conducted with the tools, the container wont play a crucial in the motion decision. 
+  \item \textbf{Motions}: The motions ultimately represent the movement of the robot for our implementation. These movements are extracted from the videos and defined in alignment with robot motions.
 \end{itemize}
 
 \subsubsection{Ingredients}
