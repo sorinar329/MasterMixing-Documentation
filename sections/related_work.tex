@@ -3,28 +3,28 @@
 There are some approaches for mixing tasks in the kitchen domain. From high level symbolic to low level motions and 
 learning approaches, these different approaches, tries to tackle the challenge of solving mixing in the kitchen environment.
 
-\textit{FoodCutting} (HIER REF aber wie?) aims to equip robotic agents with necessary information about how to 
-execute  cutting tasks in unknown environments for the household domain. From high level plans \textit{FoodCutting} breaks down 
+\textit{FoodCutting}\cite{Kuempel2024} aims to equip robotic agents with necessary information about how to 
+execute  cutting tasks in unknown environments for the household domain. From high level plans \textit{FoodCutting}\cite{Kuempel2024} breaks down 
 the cutting task, part of some robot plan, into executable motions regarding cutting fruits and vegetables. These motions are parameterized 
 by some technique and repetitions to achieve the agents objective. 
-\textit{FoodCutting} does not require fully available knowledge
+\textit{FoodCutting}\cite{Kuempel2024} does not require fully available knowledge
 about the agents environment, instead the robot should be capable of recognizing certain objects for cutting 
 operations. 
 
 
-\textit{BakeBot} \cite{Bollini2011BakebotBC} realised on the \textit{\nameref{sec:pr2}}  robotics platform attempts to achieve baking cookies. An implementation of locating relevant things for mixing tasks
+\textit{BakeBot}\cite{Bollini2011BakebotBC} realised on the \textit{\nameref{sec:pr2}}  robotics platform attempts to achieve baking cookies. An implementation of locating relevant things for mixing tasks
 like a bowl and ingredients has been realised for semi-structured environments. An algorithm to perform mixing motions has been implemented as well, to mix 
 ingredients with different characteristics into an uniform dough. These motions are limited to a simple circular and linear mixing motion.
 The authors follow an bottom-up approach which is inherently motion driven rather than a
 symbolic one which attempts to break down high level tasks into executable low level motions. 
 
-\textit{Robotic roommates making pancakes} \cite{beetzrrmp} is another Paper which shows how robot behave in a baking environment. This article is about two robots that bake pancakes through collaboration. 
+\textit{Robotic roommates making pancakes}\cite{beetzrrmp} is another paper which shows how robot behave in a baking environment. This article is about two robots that bake pancakes through collaboration. 
 Although the mixing motions are not explicitly mentioned in this article, it shows an approach to actions through reasoning. This approach is similar to our work. As a result, the agent is able to reason a sequence of actions based on an input.
 
-Some interesting approaches pursue robot learning by tracking human movement \cite{10.1007/978-3-030-95892-3_22}. By learning these movements, they can be transferred to primitive motions and parameterized based on tracking.
+Some interesting approaches pursue robot learning by tracking human movement\cite{10.1007/978-3-030-95892-3_22}. By learning these movements, they can be transferred to primitive motions and parameterized based on tracking.
 In our work, we do not pursue learning through demonstrations; however, this paper mentions parameterizing motion primitives (such as a radius), which is similarly addressed in our work.
  
-\textit{FluidLab} \cite{xian2023fluidlab} is a simulation environment for different kinds of manipulation tasks regarding liquids. Its underlying engine uses differentiable physics 
+\textit{FluidLab}\cite{xian2023fluidlab} is a simulation environment for different kinds of manipulation tasks regarding liquids. Its underlying engine uses differentiable physics 
 enabling reinforcement learning and optimization techniques in manipulation to utilize the engine, to achieve several tasks 
 including liquids and solids, like mixing tasks. 
 
@@ -33,10 +33,10 @@ mixing tasks, which technique should be used and infering parameters for the exe
 
 As we also developed a graph visualization framework, we have to consider existing frameworks that work similary.
 
-\textit{Stardog Explorer} \cite{StardogExplorer} is a tool designed to help users visualize and query data in the \textit{Stardog} graph database. It has a user-friendly interface, a drag-and-drop \textit{SPARQL} query builder, and several options for visualizing data, like graphs, charts, and tables. These features make it easier for users to understand complex data relationships without needing advanced technical skills.
+\textit{Stardog Explorer}\cite{StardogExplorer} is a tool designed to help users visualize and query data in the \textit{Stardog} graph database. It has a user-friendly interface, a drag-and-drop \textit{SPARQL} query builder, and several options for visualizing data, like graphs, charts, and tables. These features make it easier for users to understand complex data relationships without needing advanced technical skills.
 
-\textit{Neo4j Bloom} \cite{neo4j} is a visualization and exploration tool designed for the \textit{Neo4j} graph database. It provides an intuitive interface for users to query and explore their data visually. \textit{Neo4j Bloom} supports natural language search, allowing users to construct queries in plain English, which are then translated into \textit{Cypher}, \textit{Neo4j's} query language.
+\textit{Neo4j Bloom}\cite{neo4j} is a visualization and exploration tool designed for the \textit{Neo4j} graph database. It provides an intuitive interface for users to query and explore their data visually. \textit{Neo4j Bloom}\cite{neo4j} supports natural language search, allowing users to construct queries in plain English, which are then translated into \textit{Cypher}, \textit{Neo4j's} query language.
 
-\textit{Gephi} \cite{gephi} is an open-source network analysis and visualization software that is widely used for exploring and understanding complex networks. It offers dynamic filtering, real-time network manipulation, and a variety of layout algorithms to help users visualize their data in meaningful ways. \textit{Gephi} is particularly popular in research and academic settings due to its flexibility and extensibility.
+\textit{Gephi}\cite{gephi} is an open-source network analysis and visualization software that is widely used for exploring and understanding complex networks. It offers dynamic filtering, real-time network manipulation, and a variety of layout algorithms to help users visualize their data in meaningful ways. \textit{Gephi} \cite{gephi} is particularly popular in research and academic settings due to its flexibility and extensibility.
 
 The tool developed in this thesis shares some features with the mentioned frameworks, such as data visualization and query building. However, it is specifically tailored to our use case. It provides customized visualization and querying capabilities that better meet the unique needs of our dataset, while also including a custom inference builder, making data analysis more efficient and effective for our particular application.
