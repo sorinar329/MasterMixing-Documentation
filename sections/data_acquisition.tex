@@ -185,14 +185,165 @@ kitchen tools.
 
 
 \subsubsection{Motions}
-	From this videos we extracted informations about the executed motions. A detailled explanation of the motion can be found in the \nameref{chap:Motions} chapter. The following motions can be defined:
-	\begin{itemize}
-		\item \textbf{Circular}: Moving the tool in a defined circular movement in the container
-		\item \textbf{Whirlstorm}: Moving from the inside to the outside of the container with the tool, like a whirlstorm.
-		\item \textbf{Folding}: The folding motion in mixing involves lifting part of the material and folding it over the rest. This action helps blend the ingredients thoroughly. By repeating this motion, it will be ensured that everything is mixed evenly. It's a controlled and gentle way to combine ingredients.
-		\item \textbf{Horizontal Eliptic}: We draw circles along a horizontal axis, trying to cover the entire container. This would look like covering the whole container from a bird's-eye view. This motion is commonly used by the beating task.
-		\item \textbf{Circular Diving To Inner}: Starting from the outerside, moving the tool in the container arround its edge for about 3/4 of its circumference, before diving to the middle of the container. This motion is used by certain tasks where is required to turn the ingredients over.
-	\end{itemize}
+From these videos, we extracted information about the executed motions. In this section, we will describe what the extracted motions are. 
+Additionally, an abstract description is provided of how each motion is implemented in pycram2, using formulas and plots for visualization.
+
+\begin{itemize}
+  \item Each container has a symmetric shape in the x and y directions, considering z as pointing either upwards or downwards.
+  \item The height of the executed motion remains constant.
+  \item There is no collision detection."
+\end{itemize}
+
+These motions were extracted during analysis of the videos:
+
+\begin{enumerate}
+  \item Circular Motion
+  \item Folding Motion
+  \item Horizontal Elliptical Motion
+  \item Whirlstorm Motion
+  \item Circular Diving To Inner Motion 
+\end{enumerate}
+
+\paragraph{Circular Motion}
+The circular motion is generated on a circular plane, which effectively moves the tool in a circle. 
+By having a center coordinate = $(centerX, centerY)$, which is the center coordinate of 
+the container to execute the Circular Motion, we generate a set of coordinates
+with the following functions: 
+
+\[x = centerX + radius * cos(radian)\]
+\[y = centerY + radius * sin(radian)\]
+
+We retrieve the respective radians using the following function:
+
+\[radian = angle * \frac{\pi}{180}\]
+
+Generating a sequence of points lying inside a circle is accomplished by generating a sequence of angles starting from 0 to 360 degrees, 
+converting them into radians, and using formulas to compute the circular coordinates.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/circular_motion.png}
+    \centering
+    \label{fig:circularMotion}
+    \caption{Top Down View - Circular Motion}
+\end{figure}
+
+\paragraph{Folding Motion}
+The folding motion differs from circular motion; instead, it follows a linear path.
+This technique entails lifting a portion of the ingredients and gently folding it over the remainder. 
+Such action facilitates thorough blending of the ingredients. Repetition of this method ensures even distribution throughout the mixture. 
+It's a methodical and delicate approach to ingredient integration.
+\newline
+\newline
+In its current implementation, the motion follows a singular line. One endpoint rests on the edge of the container, while the other is positioned at the center.
+Although the motion itself is a straight line traversing the container, it is executed by moving from one end to the center and then repeating 
+the motion in reverse—from the center to one of the ends, creating a folding effect.
+While this line covers only part of the container, its direction needs realignment to mix different sections of the container thoroughly
+
+This can be accomplished by a 2D transformation, constructing a 2D rotation matrix for some angle $\theta$, where $\theta$ determines the rotation of the line.
+\[R(\theta) = \begin{bmatrix}
+    \cos(\theta) & -\sin(\theta) \\
+    \sin(\theta) & \cos(\theta)
+     \end{bmatrix}
+ \] 
+
+and applying the transformation to the line using this function:
+
+\[\begin{bmatrix} x' \\ y' \end{bmatrix} = R(\theta) * \begin{bmatrix} x \\ y \end{bmatrix}\]
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/folding0.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Top Down View - Folding 4 areas of a container}
+\end{figure}
+
+In this example, the folding motion is applied to four different sections of the circular container.
+The number of areas covered or the angle at which the folding line is adjusted is not critical.
+The fundamental movement remains consistent: the motion proceeds along a line and then reverses."
+
+After executing the folding motion to cover various parts of the container, we apply a transformation with a different angle $\phi$.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/folding1.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Cover different areas of the container}
+\end{figure}
+
+\paragraph{Horizontal Elliptic Motion}
+The horizontal elliptic motion is executed on a horizontal plane and involves multiple ellipses to cover the entire container.
+This motion is commonly employed in the task of beating, where ingredients within a container are thoroughly mixed through stirring or beating.
+\newline
+\newline
+Using the function to compute x,y coordinates on a circle, we use two different radii.
+One radius equals the radius of a given container, and the other radius is sampled from an interval. The interval is defined as \[radii = [radius, \frac{radius} {2} ]\]
+meaning the sampled radius ranges from the full radius of the container to half of that radius.
+
+A sampled radius from this interval is taken, if the following condition is true for all resulting circle coordinates:
+\[\sqrt{(xCord - xCenter)^2 + (yCord - yCenter)^2} < radius\] 
+
+A generated ellipse inside a container, considering the above defined condition, could look like this:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/ellipse.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Top Down View - Single Ellipse}
+\end{figure}
+
+
+To cover most areas of any container and assuming that generating y-coordinates used a constant radius, all y-coordinates are shifted after generating the ellipses. 
+To check if the y-coordinates are within the container's bounds, the following condition is checked for every y-coordinate:
+
+\[\sqrt{(yCord)^2 + (yCenter)^2} < radius\]
+
+If this condition is met, the direction of the shift is reversed, switching from incrementing to decrementing and vice versa.
+
+One horizontal elliptic motion consisting of multiple ellipses could look like this:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/horizontal_elliptical.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Multiple ellipses covering the containers area}
+\end{figure}
+
+
+\paragraph{Whirlstorm Motion}
+The whirlstorm motion uses the function to generate circle coordinates  with differing radii sampled from an interval:
+\[[upperBoundRadius, lowerBoundRadius]\]
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/whirlstorm1.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Multiple ellipses covering the containers area}
+\end{figure}
+
+
+The whirlstorm motion is a dynamic and complex swirling pattern that simulates a series of interconnected spiral motions. 
+This motion starts outwardly gradually moving to the inner part of a container, creating a visual effect reminiscent of a whirlpool or tornado. 
+The movement alternates in direction and shape periodically, ensuring a diverse and comprehensive coverage within the containers bounds.
+This results in a fluid, spiraling trajectory, effectively mimicking natural swirling motions.
+
+In total four whirlstorm patterns are generated, where the first two pattern look like this:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/whirlstorm2.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Multiple ellipses covering the containers area}
+\end{figure}
+The third and fourth look like this:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.35]{Graphics/motions/whirlstorm3.png}
+    \centering
+    \label{fig:foldingMotion1}
+    \caption{Multiple ellipses covering the containers area}
+\end{figure}
+
+\paragraph{Circular Diving To Inner}
 
 \section{Data Acquision Conclusion}
 
