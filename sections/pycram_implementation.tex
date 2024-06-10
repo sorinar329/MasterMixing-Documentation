@@ -1,9 +1,22 @@
 \section{Implementation in PyCram}
 
-\subsection{Workflow}
+\subsection{Robots Plan Execution}
+The robots plan used for implementing the MixingActionDesignator and its evaluation is 
+a simple plan, including the following steps:
 
+\begin{itemize}
+    \item Park Arms
+    \item Elevate the robots torso
+    \item Navigate to the tool used for mixing
+    \item Pick up tool
+    \item Park arms
+    \item Move to kitchen counter
+    \item Look at the container to mix the ingredients
+    \item Mix ingredients
+\end{itemize}
 
-
+In the following subsections we will explain, how the robot uses its knowledge during task execution, 
+to mix. 
 
 \subsection{Asserted Knowledge}
 Any robot capable of executing mixing motions need to have knowledge before executing a mixing task. 
@@ -12,25 +25,38 @@ respective places. It needs to know which ingredients have to be mixed, in simul
 It needs to know which task to execute, since we differentiate between different mixing tasks as discussed in this section. 
 
 
-\subsection{Inferring parameters}
-The robot doesn't know what kind of motion with fitting parameters it has to execute. Once all the assertional knowledge is available
-to the robot, it is then capable of inferring motion and parameters through reasoning. 
-
+\subsection{Inferring Knowledge}
+As of now, the robot doesn't know what kind of mixing motion it has to perform. Its associated parameters are also unknown. Therefore, the robot needs to reason about its assertional knowledge.
+Once it has access to all relevant information, it can infer the appropriate mixing motion and the corresponding parameters through logical reasoning.
+Logical reasoning is performed inside the custom resolver \textit{MixingActionSWRL}.
 
 \subsection{MixingActionSWRL}
-This class has multiple functionalities to infer the relevant motion or compound motions to execute, with its associated 
-parameters. This class needs asserted knowledge by the robot, which tool has to be used, which ingredients have to be mixed 
-which task has to be executed. To enable inference on the Mixing knowledgegraph, we have to first initialize instances of 
-all ingredients, task, tool and container. Additionally a motion instance is initialized using the top-level concept \textit{Motion}. 
-SWRL rules are only applied onto instances, not on classes. 
+\textit{MixingActionSWRL} is a custom resolver using \textit{mixing} ontology to infer motions from the robots assertional knowledge.
+The resolvers task is to fill the missing descriptions of which motion should be executed with its associated parameters.
 
-Once the initialization has been completed, we run the inference, which either uses a reasoner like pellet or HermIt. 
-Running the inference will cause a reclasification on the motion instance, i.e a motion becomes a circular motion or something else. 
-Since we know which class it has been reclassified to, we can then extract all parameters from the respective class and set the motion to be executed as well.
+\paragraph{Initialization}
+The resolver loads the mixing ontology, initializes the task to execute and initializes all ingredients which are being mixed. 
+All names need to be available for later instantiation.
+The high level class \textit{Motion} is instantiated, representing the individual of all possible motions. 
+The resolver attempts to reclassify this motion into a specific one that will be executed on the robot.
 
-The inferred knowledge is passed onto the MixingAction which executes the actual mixing motion. 
+First container, tool and ingredients are instantiated, additionally a task instance is created and its relations with 
+the other individuals are assigned. To find the proper corresponding class, to the names of the container, ingredients, task and tool
+we perform fuzzy string matching to find a matching class to the name. 
 
+\paragraph{Fuzzy String Matching}
+Using the levenshtein distance, syntactic similarity of two different strings is computed. A low distance score
+indicates a higher similarity than a high score. However, this metric does not account for semantic similarities, 
+as the words meanings are not considered in the computation of distance.
 
+\paragraph{Inference}
+Once the relations have been assigned, using \textit{OWLReady} with builtin functions calling reasoners like \textit{Pellet} or \textit{HermIt},
+reclassifies the motion instance using the defined \textit{SWRL} rules inside the \textit{mixing} ontology.
+Since the individual instantiated from the class \textit{Motion} has been reclassified the motion parameters can be extracted from the class.
+
+Finally, the resolver completes the missing description regarding the intended motion and its associated parameters and forwards it to the MixingAction.
+
+\subsection{MixingAction}
 
 
 
