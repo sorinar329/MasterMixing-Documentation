@@ -90,16 +90,17 @@
 		\item \textbf{Built-in Predicates and Functions:} Includes operations such as arithmetic, string manipulation, and comparison functions that can be used in the rule conditions.
 	\end{itemize}
 
-	HIER NASER
 	Here's a simple example of a \textit{SWRL} \cite{Horrocks2004} rule:
-	\newline
-	$Person(?x) ^ hasChild(?x, ?y) -> Grandparent(?x, ?z) ^ hasChild(?y, ?z)$
-	\newline
-	In this example:
-
-	If an individual (?x) is a Person and has a child (?y),
 	
-	Then, infer that the individual (?x) is a Grandparent of another individual (?z), and the child (?y) is the parent of (?z).
+	\[
+	\begin{aligned}
+	&\text{Person}(?x) \land \text{Person}(?y) \land \text{Man}(?z) \land \text{hasParent}(?x, ?y) \land\\
+	&\text{hasBrother}(?y, ?z) \rightarrow \text{hasUncle}(?x, ?z)
+	\end{aligned}
+	\]
+	
+	This rule expresses the following statement:
+	Whenever an individual (?x) is a person, has a parent (?y), and that parent (?y) has a brother (?z), where the brother of the parent is a man, then (?z) is the uncle of (?x).
 	
 	\textit{SWRL} \cite{Horrocks2004} rules are useful for expressing complex relationships and constraints within ontologies, enabling automated reasoning systems to make inferences and derive new knowledge from existing data.
 
