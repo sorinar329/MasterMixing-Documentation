@@ -40,9 +40,8 @@ There does not exist a single hierarchy of ingredients, but rather many hierarch
 
 For each specific ingredient, a respective \textit{FoodOn} class is used. By using \textit{FoodOn}, we directly include all available subclasses of the 
 \textit{FoodOn} class once the ontology is imported into the \textit{mixing} ontology.
-Different variations of the same ingredient are then covered in case a finer differentiation is needed. This approach applies similarly to 
-\nameref{sec} by leveraging \textit{SOMA}, and it can be extended to ingredients through integration with \textit{FoodOn}.
-
+Different variations of the same ingredient are then covered in case a finer differentiation is needed. 
+Extending the hierarchy of ingredients can be done by for example integrating \textit{FoodOn} classes.  
 
 \subsection{Tools and containers}
 \label{sec:toolsandcontainers}
@@ -53,13 +52,18 @@ Different variations of the same ingredient are then covered in case a finer dif
     \caption{Tools and Container Hierarchy in Mixing Ontology}
 \end{figure}
 
-By identifying common occuring containers and tools, 
-a generalization can be made and this is where \textit{SOMA} helps. \textit{SOMA-Home} is a taxonomy modelling concepts for a kitchen environment.
-Top level concepts from \textit{SOMA-Home} can help us identify specific tools and containers without going through dozens of videos. 
-Another advantage is, when \textit{SOMA-Home} is extended with new concepts, those concepts can be easily included into the mixing task procedure. 
+Using the identified tools and containers from the data acquisition, we partially use \textit{SOMA} to define parts of the containers and tools hierarchy.
+We use the class \textit{DesignedTool} from \textit{SOMA-Home}, which consists of all kinds of container and tool classes. 
+\textit{Crockery}, which is subsumed by \textit{DesignedTool}, is included with each container we identified. 
+To include all kinds of cutlery, we use the class \textit{Cutlery}, which subsumes the classes \textit{Fork} and \textit{Spoon}. 
+Mixers and whisks are not represented in \textit{SOMA-Home}, so we introduce a new class, \textit{KitchenTool}, which includes both of these tools.
 
-The tools can be also divided in multiple categories. \textit{Cutlery} consists of \textit{Fork} and \textit{Spoon}, while \textit{Spoon} also has subclasses like a \textit{Wooden Spoon and Tea Spoon}.
-Then we have kitchen tools where we can find different types of \textit{mixers} and \textit{whisks}. Last we got the superclass \textit{Crockery} in which our containers we will be saved, like different \textit{Bowls, Pot and Mugs}.
+Using \textit{SOMA-Home} has a few advantages:
+\begin{enumerate}
+    \item Using an existing hierarchy can be reused in other taxonomies.
+    \item If \textit{SOMA-Home} is extended with new containers and tools, these concepts can be easily included.
+    \item The \textit{mixing} ontology can be used by \textit{Soma-Home}, because both ontologies share classes.
+\end{enumerate}
 
 \subsection{Tasks}
 
@@ -81,10 +85,10 @@ VON NASER
 \end{figure}
 
 
-Top level class motion is the class of all possible motions which can be performed. MixingMotion a subclass of motion, are all mixing motions 
+The top level class \textit{Motion} is the class of all possible motions which can be performed. MixingMotion a subclass of motion, are all mixing motions 
 which were found during data acquisiton. To make a distinction between one singular mixing motion and motions consisting of at least two motions
-we created the class CompoundMotions, where more then one motion is performed. 
-Mixing Motion is comprised of the following motions:
+we created the class \textit{CompoundMotions}, which defines a sequence of motions to be performed.
+\textit{MixingMotion} is comprised of the following motions:
 
 \begin{itemize}
     \item \textit{Circular Motion}: Simple Circular Motion
@@ -99,34 +103,37 @@ Each motion has class restrictions with different kinds of motion parameters.
 The following motion parameters are modelled in the \textit{mixing} ontology:
 
 \begin{itemize}
-    \item \textit{Radius lower Bound Relative}: The smallest possible radius percentage wise
-    \item \textit{Radius Upper Bound Relative}: The maximum possible radius percentage wise
-    \item \textit{Folding Rotation Shift}: How much the folding line has to be rotated around 
-    \item textit{Repetetive Folding Rotation Shift}: After the folding motion has been executed this parameter sets realigns all folding motions
+    \item \textit{Radius lower Bound Relative}: The smallest possible radius relative to an object.
+    \item \textit{Radius Upper Bound Relative}: The maximum possible radius relative to an object.
+    \item \textit{Folding Rotation Shift}: An angle value of how much the folding line has to be rotated around .
+    \item textit{Repetetive Folding Rotation Shift}: After the folding motion has been executed this parameter rotates all folding lines.
      to cover similar areas of a container. 
-    \item \textit{Ellipse Shift}: How much the ellipse has to be shifted.
+    \item \textit{Ellipse Shift}: How much the ellipse has to be moved in meters. For example, if the ellipse shift is 0.04, then the ellipse
+     is shifted 4 cm in the positive or negative direction along the x or y axes.
 \end{itemize}
 
-The modelled CompoundMotions have a restriction: 
-It is equivalent to a motion which has a specific motion followedBy another specific motion, where that can exactly be one motion.
-
-
-
-\subsection{Motions (NASER MERGE DAS MIT DEINEN SACHEN UND LÖSCH REST)}
-The motions are necessary for the robotic system to know what has to be done?. The motions are inferred from Rules that regards a task component, combined with ingredients.
-The motion also contain parameters, which should determine the moving space available for the robotic system. As in the mixing world, most of the container have a circular formed base, our motions are defined with a radius.
-The most important parameters are:
+\textit{CompoundMotion} is comprised of the following classes:
 \begin{itemize}
-    \item Radius Lower Bound: This parameter describes the smallest possible radius for a motion. For example if the used container is a bowl, that has a radius of 10 cm, a radius lower bound of 0.1 would imply that the smallest possible radius on which the robot can perform its motion is 1 cm.
-    \item Radius Upper Bound: Similar to the radius lower bound, the upper bound determines the maximum radius on which the robot can execute motions.
+    \item \textit{WhirlstormThenCircularDivingToInner}: Execute whirlstorm motion followed by circular diving to inner motion.
+    \item \textit{WhirlstormThenHorizontal}: Execute whirlstorm motion followed by horizontal elliptical motion.
 \end{itemize}
-Our implemented motions are:
-\begin{itemize}
-    \item Circular Motion: A circular motion is a motion defined on a circular with a constant radius. This motion has an equal lower und upper bound radius to keep the radius of the motion constant.  \newline HIER BILD
-    \item Whirlstorm Motion: The Whirlstorm motion covers multiple parts of the container, the motion starts on the center of the container and increments its radius until it reaches the radius upper bound parameter, before turning back to the center. \newline HIER BILD
-    \item Folding Motion: Folding is a special motion which is mostly used in the context of the folding task. The motion's goal is to mix the ingredients gently without overmixing the mixture. The motion starts on a point on the circle with the radius of the upper bound parameter, from there the motion draws a straight line to the middle point of the container, then getting back to the start point, next the tool will be moved 90 degrees on the defined circle and it moves back to the middle, this motion is repeteadet 4 times, and then you move the tool 20 degrees to cover all of the ingredients before starting the cycle again. \newline HIER BILD
-    \item Vertical Circular Motion: The last motion can also be seen as the most difficult one. The main idea of this motion is to `wildly` mix the ingredients. Beschreibung fehlt, Bild hier rein.
-\end{itemize}
+
+Each of these compound motions have an OWL expression stating which motion is executed and which motions if following:
+
+\[
+	\begin{aligned}
+	&\text{Motion}\\
+    &\text{ and (hasMotion some}\\
+    &\text{      (WhirlstormMotion}\\
+    &\text{       and (followedBy some HorizontalEllipticalMotion)}\\
+	&\text{     and (followedBy exactly 1 Motion)))}\\
+	\end{aligned}
+\]
+
+This compound motion is equivalent to a \textit{Motion}, which has a motion \textit{WhirlstormMotion} followed by 
+\textit{HorizontalEllipticalMotion}, where \textit{WhirlstormMotion} is exactly followed by one motion. 
+
+How each of these motions is related to a task and the set of ingredients will be explained in the next section.
 
 \section{Rules - Grafiken anpassen}
 In order to infer the right motion based on the ingredients and task input, rules have to be defined. This rules are \nameref{sec:SWRL}-rules.
