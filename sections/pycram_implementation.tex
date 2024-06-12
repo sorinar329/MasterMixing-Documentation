@@ -26,13 +26,15 @@ It needs to know which task to execute, since we differentiate between different
 
 
 \subsection{Inferring Knowledge}
-As of now, the robot doesn't know what kind of mixing motion it has to perform. Its associated parameters are also unknown. Therefore, the robot needs to reason about its assertional knowledge.
-Once it has access to all relevant information, it can infer the appropriate mixing motion and the corresponding parameters through logical reasoning.
+As of now, the robot doesn't know what kind of mixing motion it has to perform. Its associated parameters are also unknown. 
+Therefore, the robot needs to reason about its assertional knowledge.
+Once it has access to all relevant information, it can infer the appropriate mixing motion or motions, in case a compound motion has been
+inferred, with its corresponding parameters through logical reasoning.
 Logical reasoning is performed inside the custom resolver \textit{MixingActionSWRL}.
 
 \subsection{MixingActionSWRL}
 \textit{MixingActionSWRL} is a custom resolver using \textit{mixing} ontology to infer motions from the robots assertional knowledge.
-The resolvers task is to fill the missing descriptions of which motion should be executed with its associated parameters.
+The resolvers task is to fill the missing descriptions of which motions should be executed with its associated parameters.
 
 \paragraph{Initialization}
 The resolver loads the mixing ontology, initializes the task to execute and initializes all ingredients which are being mixed. 
@@ -54,9 +56,27 @@ Once the relations have been assigned, using \textit{OWLReady} with builtin func
 reclassifies the motion instance using the defined \textit{SWRL} rules inside the \textit{mixing} ontology.
 Since the individual instantiated from the class \textit{Motion} has been reclassified the motion parameters can be extracted from the class.
 
-Finally, the resolver completes the missing description regarding the intended motion and its associated parameters and forwards it to the MixingAction.
+Finally, the resolver completes the sequence of motions to be executed with its associated parameters and 
+forwards it to the MixingAction.
 
 \subsection{MixingAction}
+The MixingAction expects the following designator description:
+\begin{itemize}
+    \item \textit{object\_designator}: The container used for mixing action.
+    \item \textit{object\_tool\_designator}: The tool is to perform the mixing action.
+    \item \textit{arm}: Which arm to use.
+    \item \textit{motions}: The list of motions to be executed in sequence.
+    \item \textit{motion\_parameters}: The list of motion parameters used for each motion.
+\end{itemize}
+
+The MixingAction does the following in sequence
+\begin{enumerate}
+    \item Get bounds of container and tool.
+    \item Compute absolute lower and upper boundary using the motion parameters and bounds of container and tool.
+    \item Retrieve pose of container and transform into the containers coordinate system.
+    \item Create 3D coordinates based on the current motion, where its implementation is described in section \nameref{sec:Motions}
+    \item Adjust rotation of pose and execute each motion with \textit{MoveTCPMotion}
+\end{enumerate}
 
 
 
