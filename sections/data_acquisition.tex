@@ -175,23 +175,37 @@ In the chapter \nameref{chap:Data_representation} these classes will be categori
 
 \subsubsection{Containers and Tools}
 \label{sec:ContainersAndToolsAcquisition}
-Throughout the analysis of \textit{WikiHow} videos common tools and containers were identied during mixing task execution.
-The most dominant occuring container was a bowl, followed by a pan, cup and then lastly a mug. Some common tools were used, like a whisk, spoon, spatula and mixer.
-Since all of the containers can be used to serve or store food, this can be summarised in a single concept - crockery. \textbf{Crockery} is a concept in the \textit{SOMA-Home} \cite{soma}
-ontology, by subsuming all of the subclasses of \textbf{Crockery}, we acquire in an instant many containers for mixing. Identified tools are partially represented by \textit{SOMA-Home},
-mainly cutleries like spoons are belonging to this concept. Using \textbf{Cutlery} we can acquire a set of tools for mixing. Tools like whisks and mixers neither belong 
-to the \textbf{Cutlery} concept nor have a representation in \textit{SOMA}, thus a higher level concept can't be acquired for these tools, to retrieve a set of tools resembling
-kitchen tools.   
+Throughout the analysis of \textit{WikiHow} videos common tools and containers were identied during the exuecution of various mixing tasks.
+The most dominant occuring container was a bowl, followed by a pan, cup and then lastly a mug.
+Those objects can be used to store and serve food for everyday meals. Thus these objects can be summarised 
+into a single concept - \textit{Crockery} HIER crockery zitieren. 
 
+Common occuring tools like a mixer, spatula, spoon and whisk were used. 
+To acquire different kinds of tools and containers, we look into ontologies like \textit{SOMA-Home} \cite{soma},
+where an hierarchy of containers and tools is defined. \textit{SOMA-Home} uses the class \textbf{Crockery}, the class of all kinds of containers.
+Via subsumption over \textbf{Crockery}, we acquire different kinds of containers for mixing.
 
+Identified tools from the video analysis are partially represented by \textit{SOMA-Home}, where mainly cutleries is defined in that ontology.
+Some tools like mixers and whisks neither belong to the class of all cutleries nor are they represented in \textit{SOMA}. Retrieving a set of tools
+for these exceptions can't be achieved.
+
+To summarize, the following tools where identified: 
+\begin{itemize}
+  \item Cutlery
+  \item Mixer
+  \item Whisk
+\end{itemize}
+
+Containers are summarized into the concept of crockery. 
 \subsubsection{Motions}
 From these videos, we extracted information about the executed motions. In this section, we will describe what the extracted motions are. 
 Additionally, an abstract description is provided of how each motion is implemented in pycram2, using formulas and plots for visualization.
+We hold the following assumptions about each motion:
 
 \begin{itemize}
   \item Each container has a symmetric shape in the x and y directions, considering z as pointing either upwards or downwards.
   \item The height of the executed motion remains constant.
-  \item There is no collision detection."
+  \item There is no collision detection.
 \end{itemize}
 
 These motions were extracted during analysis of the videos:
@@ -267,7 +281,7 @@ After executing the folding motion to cover various parts of the container, we a
     \includegraphics[scale=0.35]{Graphics/motions/folding1.png}
     \centering
     \label{fig:foldingMotion1}
-    \caption{Cover different areas of the container}
+    \caption{Cover different areas of the container with $\phi=22.5$}
 \end{figure}
 
 \paragraph{Horizontal Elliptic Motion}
@@ -276,13 +290,15 @@ This motion is commonly employed in the task of beating, where ingredients withi
 \newline
 \newline
 Using the function to compute x,y coordinates on a circle, we use two different radii.
-One radius equals the radius of a given container, and the other radius is sampled from an interval. The interval is defined as \[radii = [radius, \frac{radius} {2} ]\]
+One radius is a small value, whether it is an absolute value or relative to the dimensions of the container. The other radius is sampled from an interval. 
+The interval is defined as \[radii = [radius, \frac{radius} {2} ]\]
 meaning the sampled radius ranges from the full radius of the container to half of that radius.
 
 A sampled radius from this interval is taken, if the following condition is true for all resulting circle coordinates:
 \[\sqrt{(xCord - xCenter)^2 + (yCord - yCenter)^2} < radius\] 
 
-A generated ellipse inside a container, considering the above defined condition, could look like this:
+The end result will be ellipses that are narrow on one axis and conform to the shape of the container on the other axis.
+A generated ellipse considering the above conditions can look like this:
 
 \begin{figure}[H]
     \includegraphics[scale=0.35]{Graphics/motions/ellipse.png}
@@ -344,10 +360,21 @@ The third and fourth look like this:
 \end{figure}
 
 \paragraph{Circular Diving To Inner}
+This motion is a circular motion, where the tool is dipped into the container, causing the ingredients to be stirred up and down.
+This creates a consistent mixture. However, since dipping is involved, 
+which directly contradicts our assumption that height remains constant over the course of the motion, and eventually leaves the boundaries of the used container, 
+we don't provide an abstract implementation of this motion. This motion will have a representation in our \textit{mixing} ontology but won't be implemented in pycram2.
 
-\section{Data Acquision Conclusion}
 
-In the data acquisition phase, our focus was on creating a foundation of the necessary data and information required for a robot to perform various mixing tasks. After identifying the tasks, we were able to analyze videos to examine the movements associated with each task. We concluded that not only the task itself but also the selection of ingredients is crucial for determining the movement.
+\section{Data Acquisition Conclusion}
+The data acquisition lays the foundation to create a model, mainly an \textit{OWL} ontology, to define relationships between the identified actors for various mixing tasks.
+By identifying several tasks which were executed in the \textit{WikiHow} videos \cite{wikihow}, we were able to define specific motions from different 
+kinds of mixing tasks. 
 
-The ingredients are divided into four different categories, and we were able to define five motions that the robot should perform in a manner consistent with everyday use. In the next chapter, we will present how we intend to represent this knowledge and create a system that enables the robot to know which movement to execute based on a given task and set of ingredients.
+The motions that need to be executed are heavily dependent on the task and the set of ingredients used for mixing.
+Tools and containers are more or less negligible for the execution of the motions. 
+However, they are still considered, since each container can store different kinds of food, and tools are limited to the container being used.
+
+In total five different motions were identified, which will be executed onto four subcategories of ingredients. 
+In the following chapter we will present a taxonomy of mixing with all relevant actors, which enables the robot to execute various mixing tasks in simulation. 
 \newpage
