@@ -94,13 +94,16 @@
 	
 	\[
 	\begin{aligned}
-	&\text{Person}(?x) \land \text{Person}(?y) \land \text{Man}(?z) \land \text{hasParent}(?x, ?y) \land\\
-	&\text{hasBrother}(?y, ?z) \rightarrow \text{hasUncle}(?x, ?z)
+	&\text{StirringTask}(?task) \land \text{LiquidIngredient}(?ing) \land \text{hasIngredient}(?task, ?ing)\\
+	&\land \text{Motion}(?motion) \land \text{performMotion}(?task, ?motion)\\
+	&\rightarrow \text{CircularMotion}(?motion)
 	\end{aligned}
 	\]
 	
 	This rule expresses the following statement:
-	Whenever an individual (?x) is a person, has a parent (?y), and that parent (?y) has a brother (?z), where the brother of the parent is a man, then (?z) is the uncle of (?x).
+	Whenever a stirring task is executed with the task having any kinds of liquid ingredients the motion it performs is going to be a circular motion.
+	This rule effectively reclassifies the instance of \textit{Motion} to \textit{CircularMotion}.
+	
 	
 	\textit{SWRL} \cite{Horrocks2004} rules are useful for expressing complex relationships and constraints within ontologies, enabling automated reasoning systems to make inferences and derive new knowledge from existing data.
 
