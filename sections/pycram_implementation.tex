@@ -33,6 +33,7 @@ inferred, with its corresponding parameters through logical reasoning.
 Logical reasoning is performed inside the custom resolver \textit{MixingActionSWRL}.
 
 \subsection{MixingActionSWRL}
+\label{subsection:MixingActionSWRL}
 \textit{MixingActionSWRL} is a custom resolver using \textit{mixing} ontology to infer motions from the robots assertional knowledge.
 The resolvers task is to fill the missing descriptions of which motions should be executed with its associated parameters.
 
@@ -59,25 +60,60 @@ Since the individual instantiated from the class \textit{Motion} has been reclas
 Finally, the resolver completes the sequence of motions to be executed with its associated parameters and 
 forwards it to the MixingAction.
 
-\subsection{MixingAction}
-The MixingAction expects the following designator description:
-\begin{itemize}
-    \item \textit{object\_designator}: The container used for mixing action.
-    \item \textit{object\_tool\_designator}: The tool is to perform the mixing action.
-    \item \textit{arm}: Which arm to use.
-    \item \textit{motions}: The list of motions to be executed in sequence.
-    \item \textit{motion\_parameters}: The list of motion parameters used for each motion.
-\end{itemize}
+\subsection{MixingActionDesignator}
+The \textit{MixingActionDesignator} is a newly implemented action designator 
+designed to perform various types of mixing motions or sequences of motions within a specific container using a specific tool. 
+This designator generates poses that follow a trajectory, simulating the process of mixing in the bulletworld environment.
+To effectively break down the action into executable motions, certain designator descriptions are required.
 
-The MixingAction does the following in sequence
+
+\paragraph{Designator Description}
 \begin{enumerate}
-    \item Get bounds of container and tool.
-    \item Compute absolute lower and upper boundary using the motion parameters and bounds of container and tool.
-    \item Retrieve pose of container and transform into the containers coordinate system.
-    \item Create 3D coordinates based on the current motion, where its implementation is described in section \nameref{sec:Motions}
-    \item Adjust rotation of pose and execute each motion with \textit{MoveTCPMotion}
+    \item \textit{Container Object Designator}:
+    \begin{itemize}
+        \item This object designator contains information about its name and its bulletword internal represnation.
+            Its bulletworld representations holds information like the current objects pose and its 3D axis aligned bounding box.
+            This bounding box can be used to compute the dimensions of the container along each axis. 
+            Knowing the bounds and the pose of the container is crucial, because the motion has to performed inside 
+            the container within its boundaries.
+    \end{itemize}
+    \item \textit{Tool Object Designator}:
+    \begin{itemize}
+        \item Analogous to the container this designator contains the same type of information.
+        Knowing the dimensions of the tool is crucial in avoiding collision with the container.
+    \end{itemize}
+    \item \textit{Arm}:
+    \begin{itemize}
+        \item Which arm should be used to perform the mixing action
+    \end{itemize}
+    \item \textit{Motions}:
+    \begin{itemize}
+        \item A list of motions as strings to be performed. 
+    \end{itemize}
+    \item \textit{Motion Parameters}:
+    \begin{itemize}
+        \item Each motion has its own key value pairs of parameters.
+        These parameters alongside the motion are resolved by the \nameref*{subsection:MixingActionSWRL}
+    \end{itemize}
 \end{enumerate}
 
+\paragraph*{Sequential Processing in MixingActionDesignator}
+Once all descriptions are available for the \textit{MixingActionDesignator}, it attempts the following steps in sequence:
+Retrieve BulletWorld Objects:
+    The BulletWorld objects for both the container and the tool are retrieved from the object designator. 
+    Each BulletWorld object has a 3D axis-aligned bounding box. Using this bounding box, the dimensions can be computed. 
+    The implemented function \textit{get\_object\_dimensions()} returns the three dimensions of each BulletWorld object.
 
+Calculate Radius Bounds:
+    The upper and lower radius bounds, which are relative values, are accessed to compute the absolute radius for the respective mixing motion.
 
+Determine Container Pose:
+    The container's pose is retrieved and transformed into its own coordinate system from the world coordinate system to compute mixing poses fitted to the container in its coordinate system.
 
+Now that \textit{MixingActionDesignator} has everything relevant to generate mixing poses dependent on the inferred motion
+from the \textit{MixingActionSWRL} resolver.
+
+Generating 3D coordinates is done using the functions explained in the section HIER REFERENZIEREN: MOTIONS,
+where the necessary paramteres are retrieved from the motion parameters to compute these coordiantes.
+
+The rotations of the folding motions and the shift of the ellipses for horizontal elliptical motion are retrieved from the motion parameters. 
