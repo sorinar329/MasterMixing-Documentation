@@ -52,7 +52,7 @@ Extending the hierarchy of ingredients can be done by for example integrating \t
     \caption{Tools and Container Hierarchy in Mixing Ontology}
 \end{figure}
 
-Using the identified tools and containers from the data acquisition, we partially use \textit{SOMA} to define parts of the containers and tools hierarchy.
+Using the identified tools and containers from the data acquisition, we partially use \textit{SOMA} \cite{soma} to define parts of the containers and tools hierarchy.
 We use the class \textit{DesignedTool} from \textit{SOMA-Home}, which consists of all kinds of container and tool classes. 
 \textit{Crockery}, which is subsumed by \textit{DesignedTool}, is included with each container we identified. 
 To include all kinds of cutlery, we use the class \textit{Cutlery}, which subsumes the classes \textit{Fork} and \textit{Spoon}. 
@@ -73,8 +73,13 @@ Using \textit{SOMA-Home} has a few advantages:
     \caption{Task Hierarchy in Mixing Ontology}
 \end{figure}
 
-Mixing task variations are subclasses \textit{Task} superclass, where \textit{Task} is \textit{DUL} concept. The tasks consists of \textit{Mixing}, which can be regarded as the umbrela term of all tasks, \textit{Stirring} which is mostly a task that includes a circular motion, \textit{Beating} will be mostly used in context with eggs and other wet ingredients, \textit{Folding} which represents a gentle type of mixing and the last task is \textit{Whisking} which is similar to the beating task.
-While some of these tasks have only one motion that can be dervied, like the \textit{Folding} task, we discovered that the others tasks can have multiple motions associated to them. This decision is influenced by the set of ingredients on which the motion will be performed
+Mixing tasks are subclasses of the \textit{Task} superclass, where \textit{Task} is a \textit{DUL} concept. 
+All variations of mixing tasks, which were acquired during our data acquisition, are included in the superclass \textit{Task}. 
+These tasks include Stirring, which mostly involves a circular motion, Beating, which is mainly used in the context of eggs and other wet ingredients, 
+Folding, which represents a gentle type of mixing, and Whisking, which is similar to beating. 
+While some of these tasks have only one motion associated with them, like the Folding task, 
+we discovered that the other tasks can have multiple motions associated with them. 
+This decision is influenced by the set of ingredients on which the motion will be performed.
 
 \subsection{Motions}
 \begin{figure}[H]
@@ -82,7 +87,6 @@ While some of these tasks have only one motion that can be dervied, like the \te
     \centering
     \caption{Motion Hierarchy in Mixing Ontology}
 \end{figure}
-
 
 The top level class \textit{Motion} is the class of all possible motions which can be performed. MixingMotion a subclass of motion, are all mixing motions 
 which were found during data acquisiton. To make a distinction between one singular mixing motion and motions consisting of at least two motions
