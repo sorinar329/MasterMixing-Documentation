@@ -2,12 +2,58 @@
 \label{chap:conclusion}
 
 \section{Summary}
+This master thesis is a proof of concept in which we explained in detail how a robotic system like the PR2 
+using the robotic cognitive architecture \textit{CRAM} is able to mix in simulation. 
+
+Implementing various motions in \textit{Cram} could only be done through.
+
+The underlying model - a knowledgebase models several relevant aspects of a mixing action. 
+Ingredients which are being mixed, the types of motion which can be executed, the type of container to 
+store the ingredients and to mix in and the tools to perform the mixing actions. By keeping the model simple we achieve that the robot 
+is able to infer motions through the rules based language SWRL. 
+
+Our modelled motions don't implement how a motion is executed but rather it gives capabilities via parameters to adapt 
+to various containers and tools. The implemenation of each motion - \textbf{Circular}, \textbf{Folding}, \textbf{Horizontal Elliptical} 
+and \textbf{Whirlstom}, is available in pycram, any robotic system able to employ \textit{Cram}, can execute these motions. 
+
+Additionally to this proof a concept we implemented a different way of visualizing ontologies, by focusing 
+on complex class expressions which haven't been done before. Using the \textit{OWLVisualizer} a user is able to query 
+complex class expressions without knowing how to write \textit{SPARQL} queries. The \textit{OWLVisualizer} will generate A
+\textit{SPARQL} query for the user applying triple matching to get the queried graph. This query can be adjusted 
+to the needs of the user, by changing the contents of the query without changing the triple matching. 
+
+
 - Data aqcuired and Structured.
 - Modelled a queryable Knowledgebase
 - Adapted motions
 - Proof Of Concept
 - Graphviz
 \section{Future Work}
+This proof of concept was established in \textit{Cram} in simulation. In simulations many things are simple.
+The robot has ground truth for each available object, the ingredients to mix, the tools to perform mixing, the container to mix in. 
+To move ahead, our proof of concept should be implemented on a real robot, to see how much more difficult it will 
+be in real world scenarios.
+
+With regards to future work many limitations arose during implementation of our proof of concept.
+Our motions are effectively 2D motions, where one axis is not changing over the course of the motion.
+Moving from simulation to real world, it will be necessary to include dives into each motion, so that 
+the substances are properly mixed. 
+
+Another limiting aspect is the lack of collision detection. As of now, we ensure that the tool is not colliding 
+with objects only with respect to 2 out of 3 axes. If the tool is placed to low, and the container has a spherical shape and not 
+cuboid shape, the tool will eventually collide with the object. To tackle this limitation, we require depth-based perception
+and various techniques to find out optimal height for the tool during execution of a mixing action.
+
+Once we move to real world we loose ground truth on all relevant objects required for mixing.
+Here we will need perception frameworks capable of detecting and locating objects in a scene, 
+picking and placing objects and different kinds of actions for example pouring, to fill a container
+with ingredients.
+
+In simulation the robot will not fail unless the inference fails. As long as a motion is inferred, mixing will be executed.
+This has to be adjusted
+
+
+
 - Diving motions
 - Prediction substances
 - Deployment on real robot
