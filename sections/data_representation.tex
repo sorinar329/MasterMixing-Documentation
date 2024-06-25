@@ -6,7 +6,7 @@
 In this chapter we will present you the mixing knowledgegraph using \textit{OWL} as basis to formally define knowledge.
 This knowledge base defines domain knowledge about mixing, which encompasses several aspects derived from the data acquisition.
 Using assertional knowledge such as the task to execute, the set of ingredients as input for a mixing task, 
-and additional knowledge like which container to use, the knowledge base can infer facts about the motions that should be executed.
+and additional knowledge like which container to use, the knowledge base can infer motions which should be executed via \textit{SWRL} rules.
 Our goal is not to teach a robot how to execute a specific mixing motion, but rather infer a motion and relevant parameters for this motion. 
 \section{The Knowledgebase}
 Our knowledgebase consists of the superclasses \textit{Ingrediet, DesginedTool, Task} and \textit{Motion}. These are the concepets which we dervied from the \nameref{chap:Data_acquisition}. The following image illustrates the \textit{Mixing} ontology hierarchy.
@@ -38,7 +38,7 @@ There does not exist a single hierarchy of ingredients, but rather many hierarch
     \item \textit{Solid: Onions, Pork, Chicken, Minced meat, Bacon}.
   \end{itemize}
 
-For each specific ingredient, a respective \textit{FoodOn} class is used. By using \textit{FoodOn}, we directly include all available subclasses of the 
+For each specific ingredient, a respective \textit{FoodOn}\cite{dooley2018foodon} class is used. By using \textit{FoodOn}, we directly include all available subclasses of the 
 \textit{FoodOn} class once the ontology is imported into the \textit{mixing} ontology.
 Different variations of the same ingredient are then covered in case a finer differentiation is needed. 
 Extending the hierarchy of ingredients can be done by for example integrating \textit{FoodOn} classes.  
