@@ -84,95 +84,33 @@ We use a modified version of \textit{bootstrap} for styling the \textit{HTML}-pa
 \ref{sec:Libraries}) library to process data from the knowledge base. The \textit{JavaScript} functions are responsible for visualizing the graph, which is done using the \textit{vis.js}(section not yet written, 
 \ref{sec:Libraries}) library. The following graphics are intended to visually represent a simple description of the architecture, as well as display the folder structure.
 \begin{figure}[H]
-    \includegraphics[scale=0.35]{Graphics/OWLViz_architecture.jpg}
+    \includegraphics[scale=0.35]{Graphics/architecture_simplified.jpg}
     \label{fig:OWLViz_architecture}
     \caption{Architecture chart for the OWLVisualizer framework}
 \end{figure}
 
-\dirtree{%
-.1 main.py.
-.1 templates.
-.2 index.html.
-.1 data.
-.1 static.
-.2 graphviz.js.
-.2 query\_builder.js.
-.1 src.
-.2 graph.
-.3 graph.py.
-.3 coloring.py.
-.3 graph\_utility.py.
-.2 inference\_builder.py.
-.2 query\_builder.py.
-}
 Below, we want to take a closer look at the individual points of the architecture from a top-level perspective.
 
-\subsection{WebApp StartUp} 
+\paragraph{WebApp-StartUp}  \mbox{} \\
 
-To start the application, the Python script \textit{main.py} has to be executed. This can be done using the following command, provided that the necessary libraries have been installed:
-\textit{\$: python main.py}
-
-This will start the \textit{flask} web application and open the homepage \textit{index.html}.
-
-\begin{lstlisting}[caption={Application StartUp},captionpos=b]
-    @app.route('/')
-    def index():
-        return render_template("index.html")
-\end{lstlisting}
+A python script will start the \textit{flask} web application and open the homepage.
 
 
-\begin{itemize}
-        \item \textit{@app.route("/")} indicates which function is executed first when the framework is started.
-        \item \textit{render\_template("index.html")} indicates which \textit{HTML} page is being called, in this case, \textit{index.html}.
-\end{itemize}
-
-\subsection{Upload Ontology}
-
-The web app initially starts with a (almost) blank \textit{HTML} page, which only contains a navigation bar. 
 \begin{figure}[H]
     \includegraphics[scale=0.25]{Graphics/webapp_startupt_html.png}
     \caption{Landingpage of the framework}
 \end{figure}
+The web app initially starts with a (almost) blank \textit{HTML} page, which only contains a navigation bar. 
+Now, the user has the option to upload an ontology to work with.
 
-Now, the user has the option to upload an ontology to work with. The function \textit{upload\_graph()} saves the ontology in the \textit{data} folder.
+\paragraph{Visualized Graph}   \mbox{} \\
 
-\begin{lstlisting}[caption={Uploading a Ontology file},captionpos=b]
-    @app.route('/upload')
-    def upload_graph():
-        check if an ontology file is already present
-        check if the given file is valid 
-        save the file in the data folder
-        return filename
-\end{lstlisting}
-
-
-\subsection{Visualized Graph}
-Once the ontology has been uploaded, the \textit{JavaScript} function \textit{viz\_graph()} is executed, 
-which ultimately visualizes the graph. This function fetches the required sets of nodes and edges from the backend function \textit{get\_graph\_data()}.
-
-\begin{lstlisting}[caption={Function for visualizing the graph},captionpos=b]
-    function viz_graph() {
-        fetch('/get_graph_data')
-        .then data => {
-            network = new vis.Network(data);
-        }
-    }
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Proccesing through the ontology},captionpos=b]
-    @app.route('/get_graph_data'):
-        initialize the graph
-        get the nodes and edges from the uploaded ontology
-        return graph_data
-        
-\end{lstlisting}
-
-
-
+Once the ontology has been uploaded the selected ontology will be visualized as a graph.
 The data processing is complex and will be further elaborated in the \nameref{sec:Implementation} section. 
 Additionally, we have written a section intended to provide a simple introduction to our framework, which can be found in the section 
 \nameref{sec:Introducing the framework with a trivial example} . This section aims to illustrate the functionality through a trivial example.
-\subsection{Nodes Highlightning}
+
+\paragraph{Nodes Highlightning} \mbox{} \\
 
 For large graphs, it can become difficult to maintain an overview of the nodes and their associated relations. 
 Therefore, we are implementing a function that highlights a node as well as its neighboring nodes. 
@@ -180,21 +118,6 @@ This is intended to make it easier to understand the relationships between a cla
 
 The required function is a \textit{JavaScript} function that takes a clicked node as a parameter and calculates its neighboring nodes based on that. 
 Subsequently, all nodes are grayed out, and the selected node and its neighbors are restored to their original color. This makes the selected nodes appear "highlighted".
-
-\begin{lstlisting}[caption={Neighbourhood highlighting},captionpos=b]
-    function neighbourhoodHighlight(params) {
-        if (params.nodes.length > 0){
-            Mark and highlight neighbourhood nodes
-        }
-        else if (params.nodes.length === true) {
-            Reset node colors and labels
-        }
-        Update node dataset with changes
-    }
-        
-        
-\end{lstlisting}
-
 Here is an example of a graph with highlighted nodes:
 
 \begin{figure}[H]
@@ -269,28 +192,15 @@ be able to do the triple matching.
 
 
 
-\subsection{Inference Builder}
-The last option for the user to execute functions on a graph is the Inference Builder. 
-It's important to note that the Inference Builder is not a generic use case and in this version, it's tailored to the Mixing Graph (see \nameref{chap:Data_representation}). 
+\subsection{Custom Inference}
+The last option for the user to execute functions on a graph is the Custom Inference Builder. 
+It's important to note that the Custom Inference Builder is not a generic use case and in this version, it's tailored to the Mixing Graph (see \nameref{chap:Data_representation}). 
 In the \nameref{sec:Implementation} section, the implementation is further explained, demonstrating how it could potentially be implemented for other ontologies as well. 
 In our case, we infer a motion and its corresponding parameters based on a given task and a list of ingredients. 
 The Inference Builder then generates a graph that only displays the corresponding nodes for clarity, as well as a task tree that can be followed by an agent.
 In the first step, the task and the ingredients are sent to the backend for inference, which in turn sends back the inferred motion and parameters to the frontend.
-
-
 The backend function processes the inference with the received parameters, which are then used for visualization.
-
-
-\begin{lstlisting}[caption={Inference Builder pipeline},captionpos=b]
-    def get_data():
-        request the data from the frontend
-        initialize task variable
-        initialize list of ingredients
-        generate taskTree and graph based on the requested data
-        return graphData, taskTree
-\end{lstlisting}
-In the frontend, the data is processed using an \textit{AJAX} request. After sending the task and the list of ingredients, the response, which includes the generated graph and task tree, is returned to the frontend and processed. A \textit{JavaScript}-function then creates a graph with the nodes and edges received from the backend and generates a table with a variable number of rows based on the backend's output.
-
+In the frontend, the data is processed using an request. After sending the task and the list of ingredients, the response, which includes the generated graph and task tree, is returned to the frontend and processed. A \textit{JavaScript}-function then creates a graph with the nodes and edges received from the backend and generates a table with a variable number of rows based on the backend's output.
 After processing the data, the graph and the task tree are visualized based on the user input.
 
 \begin{figure}[H]
