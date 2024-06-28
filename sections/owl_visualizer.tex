@@ -1,10 +1,12 @@
 \chapter{Knowledge Graph Visualization Tool}
+Many existing knowledge graph visualizations are restricted to displaying certain types of relationships. 
+Most commonly, a class hierarchy of an ontology is visualized for the user. Other graph visualization tools are capable of visualizing data.
+ A few of these graph visualizers are mentioned in \nameref{chap:Related_work}.
 
-During the process of working on the master's thesis, we were searching for a framework that could visually represent our implemented knowledge graph. Our aim was to clarify the connections and relationships between individual classes. In our search, we found several interesting frameworks that seemed suitable for our needs, which are also mentioned in the \nameref{chap:Related_work} chapter.
+What we didn't find is a graph visualizer capable of displaying complex class constructs, and a few features were missing as well.
+Therefore, we decided to develop our own graph visualizer, which is capable of displaying class hierarchies with complex constructs.
 
-However, these solutions weren't entirely satisfactory for us because they lacked some features that we deemed important. Therefore, we decided to develop our own framwework, which should serve as a good visualization framework for our and similar use cases.
-
-In this chapter, we present the framework we developed, from the initial idea to the implementation and the functionalities of our tool.
+This chapter will present the main features of our \textit{OWLVisualizer} and explain its capabilities and limitations.
 
 \section{Main concept}
 \label{sec:MainConceps}
@@ -13,8 +15,68 @@ We decided on 3 main components that the new framework should include:
 \begin{itemize}
     \item Clear Visualization: Our first goal was to facilitate navigation through the knowledge graph by highlighting the relations and classes of the graph as clearly as possible. This could be achieved, for example, by using different colors for different classes or by highlighting a class and its associated classes to which a relation exists. Additionally, we aim to make the graph as clear as possible and reduce the number of nodes to those that are ultimately essential for visualization.
     \item To clarify the relations between the queries, we implement a query builder that, given a class, can point to other classes through the relation, which in turn can point to further classes through another relation, as long as the user desires or there are no further relations. This should be done without having to use the SPARQL query language, making it much easier for the user. The Query Builder outputs a filtered graph with the selected triples.
-    \item Inference Query: Since a part of our work relies on inferences, we want to implement an inference query that can indicate inferred parameters based on the input of certain classes. This use case is quite specific to our scenario, but it should also be able to map to other ontologies. The output should be an action tree with the inferred parameters and a visualized graph with the associated classes that play a role in the inference.
+    \item Rule Based Inference: Since a part of our work relies on inferences, we want to implement an inference query that can indicate inferred parameters based on the input of certain classes. This use case is quite specific to our scenario, but it should also be able to map to other ontologies. The output should be an action tree with the inferred parameters and a visualized graph with the associated classes that play a role in the inference.
 \end{itemize}
+
+\section{Features}
+
+\subsection{Graph Visualization}
+In this section, we present a simple example of our framework, from processing the ontology to visualization in the web application. 
+This is intended to facilitate the reader's understanding of our framework. 
+For this purpose, we create a small and simple ontology to explain the program flow in a straightforward manner. 
+Additionally, we aim to demonstrate how this ontology is processed and what the interface between the frontend and backend looks like.
+
+The visualization library \cite{visjs} has been used to create graph visualization in web-browsers.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.4]{Graphics/simple_ontology.jpg}
+    \caption{Trivial example of an ontology}
+    \end{figure}
+    
+The ontology created for this purpose aims to provide a simple representation of various animal species. It includes superclass categories such as \textit{Fruits, Vegetables, Meat, and Dairy Products}, as well as subclasses like \textit{Apple} and \textit{Orange}, which are subclasses of the \textit{Fruits} superclass. This ontology does not depict complicated relations; rather, the individual classes are only connected to each other through the \textit{subClassOf} relation.
+    
+
+
+
+\subsection{Load Ontology}
+
+\subsection{Search Nodes}
+
+\subsection{Custom Inference - Mixing}
+
+The last option for the user to execute functions on a graph is the Inference Builder. 
+It's important to note that the Inference Builder is not a generic use case and in this version, it's tailored to the Mixing Graph (see \nameref{chap:Data_representation}). 
+In the \nameref{sec:Implementation} section, the implementation is further explained, demonstrating how it could potentially be implemented for other ontologies as well. 
+In our case, we infer a motion and its corresponding parameters based on a given task and a list of ingredients. 
+The Inference Builder then generates a graph that only displays the corresponding nodes for clarity, as well as a task tree that can be followed by an agent.
+In the first step, the task and the ingredients are sent to the backend for inference, which in turn sends back the inferred motion and parameters to the frontend.
+
+
+The backend function processes the inference with the received parameters, which are then used for visualization.
+
+
+\begin{lstlisting}[caption={Inference Builder pipeline},captionpos=b]
+    def get_data():
+        request the data from the frontend
+        initialize task variable
+        initialize list of ingredients
+        generate taskTree and graph based on the requested data
+        return graphData, taskTree
+\end{lstlisting}
+In the frontend, the data is processed using an \textit{AJAX} request. After sending the task and the list of ingredients, the response, which includes the generated graph and task tree, is returned to the frontend and processed. A \textit{JavaScript}-function then creates a graph with the nodes and edges received from the backend and generates a table with a variable number of rows based on the backend's output.
+
+After processing the data, the graph and the task tree are visualized based on the user input.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{Graphics/new_inference_graph.png}
+    \caption{inferred graph and task tree.}
+    \label{fig:graph_inferred}
+\end{figure}
+
+The data processing and the detailed implementation of the Inference Builder will be further explained in the \nameref{sec:Implementation} section.
+\subsection{QueryBuilder}
+
+
 
 \section{Architecture}
 \label{sec:Architecture}
