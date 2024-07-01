@@ -3,12 +3,12 @@
 
 \section{Video Analysis}
 \section{Evaluation}
-Im Anhang möchten wir an der im \nameref{sec:evaluation} vorgestellten Konzept anknüpfen.
-Hier werden wir die Tabellen detaillierter darstellen und möglichst viele Szenarios abdecken.
-Nochmal zur Erinnerung: Eine Kombination von einer Task und einer Menge von Ingredients inferriert Motions, welche wiederrum mit Parameter verbunden sind.
-Diese Parameter dienen zur Motionanpassung abhänging vom gewählten Tool und Container. 
-Letzendlich muss berechnet werden in welchem Bereich die Motion ausgeführt werden kann.
-Die Berechnung lautet wie folgt:
+In the appendix, we would like to build on the concept presented in \nameref{sec:evaluation}.
+Here we will present the tables in more detail and cover as many scenarios as possible.
+As a reminder: A combination of a task and a set of ingredients infers motions, which are in turn associated with parameters.
+These parameters are used to adjust the motion depending on the chosen tool and container.
+Ultimately, it must be calculated in which range the motion can be executed.
+The calculation is as follows:
 \begin{lstlisting}
     radius_upper_bound = ((dim[0] * radius_bounds[0]) - 
         max(dim2[0], dim2[1])) / 2
@@ -16,7 +16,7 @@ Die Berechnung lautet wie folgt:
     radius_lower_bound = max(0, ((dim[0] * radius_bounds[1]) - 
         max(dim2[0], dim2[1])) / 2)
 \end{lstlisting}
-wobei die Dimensionsparameter wie folgt definiert werden: 
+where the dimensional parameters are defined as follows:
 \begin{lstlisting}
     dim = [max(obj_dim[0], obj_dim[1]), 
         min(obj_dim[0], obj_dim[1]), obj_dim[2]]
@@ -25,18 +25,18 @@ wobei die Dimensionsparameter wie folgt definiert werden:
         min(tool_dim[0], tool_dim[1]), tool_dim[2]]
 \end{lstlisting}
 
-\textit{tool\_dim} und \textit{obj\_dim} entsprechen jeweils der Dimension des Tools und des Containers.
-Mit dieser Berechnung ist es dann möglich einen Aktionsradius zu definieren, um die Motion gefahrlos auszuführen, also ohne dass der Tool zum Beispiel gegen die Kante des Containers schlagen würde.
+\textit{tool\_dim} and \textit{obj\_dim} correspond to the dimensions of the tool and the container, respectively.
+With this calculation, it is then possible to define an action radius to perform the motion safely, meaning without the tool, for example, hitting the edge of the container.
 
-Im Folgenden möchten wir beweisen, dass unser System sich der Umgebung anpasst und die Aktionsradien abhänging von den gegebenen Dimensionen berechnet.
+In the following, we would like to prove that our system adapts to the environment and calculates the action radii depending on the given dimensions.
 
-Anmerkungen: 
+Notes:
 \begin{itemize}
-    \item Die Radius Bounds ist eine Liste von zwei Elementen wobei das erste Element, dem Radius der oberen Schranke entspricht und das zweite Element dem Radius der unteren Schranke.
-    \item Manche Kombinationen von Task und Ingredient ergeben die selbe Motion und werden in diesem Fall zusammengefasst. 
-    \item Es kann vorkommen, dass der Aktionsradius negativ ist, hierbei ist Finetuning notwending, allgemein sollte bei negativem Aktionsradius die Bewegung nicht ausgeführt werden. Allerdings könnte man für relativ kleine Radien, eine Ausnahmen einfügen.
-    \item Die Tools Spoon und Fork werden nicht getrennt betrachtet, da diese in der relevanten Form und Größe sich sehr ähneln.
-    \item Folding Task inferriert die selben Parameter unabhängig der Zutaten.
+    \item The radius bounds are a list of two elements where the first element corresponds to the radius of the upper bound and the second element corresponds to the radius of the lower bound.
+    \item Some combinations of task and ingredient result in the same motion and are therefore summarized in this case.
+    \item It can happen that the action radius is negative; in this case, fine-tuning is necessary. Generally, a motion should not be performed with a negative action radius. However, for relatively small radii, an exception could be made.
+    \item The tools spoon and fork are not considered separately as they are very similar in relevant form and size.
+    \item The folding task infers the same parameters regardless of the ingredients.
     \item \textbf{Whisk Dimensions:} \textit{0.11, 0.08, 0.31}
     \item \textbf{Wooden Spoon Dimensions:} \textit{0.09, 0.095, 0.29}
     \item \textbf{Fork Dimensions:} \textit{0.06, 0.04, 0.25}
@@ -44,6 +44,7 @@ Anmerkungen:
     \item \textbf{Pot Dimensions:} \textit{0.31, 0.37, 0.11}
     \item \textbf{Small Bowl Dimensions:} \textit{0.14, 0.14, 0.07}
 \end{itemize}
+
 
 \subsection{Mixing Task}
 \subsubsection{Liquid, Powder, Liquid and Powder, Liquid and Semi-Liquid}
