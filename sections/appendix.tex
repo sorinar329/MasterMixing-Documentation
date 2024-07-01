@@ -1,5 +1,117 @@
-\chapter*{Appendix}
+\chapter{Appendix}
 \label{chap:appendix}
 
-\section*{Video Analysis}
-\section*{Evaluation}
+\section{Video Analysis}
+\section{Evaluation}
+Im Anhang möchten wir an der im \nameref{sec:evaluation} vorgestellten Konzept anknüpfen.
+Hier werden wir die Tabellen detaillierter darstellen und möglichst viele Szenarios abdecken.
+Nochmal zur Erinnerung: Eine Kombination von einer Task und einer Menge von Ingredients inferriert Motions, welche wiederrum mit Parameter verbunden sind.
+Diese Parameter dienen zur Motionanpassung abhänging vom gewählten Tool und Container. 
+Letzendlich muss berechnet werden in welchem Bereich die Motion ausgeführt werden kann.
+Die Berechnung lautet wie folgt:
+\begin{lstlisting}
+    radius_upper_bound = ((dim[0] * radius_bounds[0]) - 
+        max(dim2[0], dim2[1])) / 2
+
+    radius_lower_bound = max(0, ((dim[0] * radius_bounds[1]) - 
+        max(dim2[0], dim2[1])) / 2)
+\end{lstlisting}
+wobei die Dimensionsparameter wie folgt definiert werden: 
+\begin{lstlisting}
+    dim = [max(obj_dim[0], obj_dim[1]), 
+        min(obj_dim[0], obj_dim[1]), obj_dim[2]]
+
+    dim2 = [max(tool_dim[0], tool_dim[1]), 
+        min(tool_dim[0], tool_dim[1]), tool_dim[2]]
+\end{lstlisting}
+
+\textit{tool\_dim} und \textit{obj\_dim} entsprechen jeweils der Dimension des Tools und des Containers.
+Mit dieser Berechnung ist es dann möglich einen Aktionsradius zu definieren, um die Motion gefahrlos auszuführen, also ohne dass der Tool zum Beispiel gegen die Kante des Containers schlagen würde.
+
+Im Folgenden möchten wir beweisen, dass unser System sich der Umgebung anpasst und die Aktionsradien abhänging von den gegebenen Dimensionen berechnet.
+
+Anmerkungen: 
+\begin{itemize}
+    \item Die Radius Bounds ist eine Liste von zwei Elementen wobei das erste Element, dem Radius der oberen Schranke entspricht und das zweite Element dem Radius der unteren Schranke.
+    \item Manche Kombinationen von Task und Ingredient ergeben die selbe Motion und werden in diesem Fall zusammengefasst. 
+    \item Es kann vorkommen, dass der Aktionsradius negativ ist, hierbei ist Finetuning notwending, allgemein sollte bei negativem Aktionsradius die Bewegung nicht ausgeführt werden. Allerdings könnte man für relativ kleine Radien, eine Ausnahmen einfügen.
+    \item \textbf{Whisk Dimensions:} \textit{0.11, 0.08, 0.31}
+    \item \textbf{Wooden Spoon Dimensions:} \textit{0.09, 0.095, 0.29}
+    \item \textbf{Fork Dimensions:} \textit{0.06, 0.04, 0.25}
+    \item \textbf{Salad Bowl Dimensions:} \textit{0.25, 0.25, 0.11}
+    \item \textbf{Pot Dimensions:} \textit{0.31, 0.37, 0.11}
+    \item \textbf{Small Bowl Dimensions:} \textit{0.14, 0.14, 0.07}
+\end{itemize}
+
+\subsection{Mixing Task}
+\subsubsection{Liquid, Powder, Liquid and Powder, Liquid and Semi-Liquid}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0}
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+      \hline
+      Whisk & Salad Bowl & [0.033, 0] \\
+      \hline
+      Whisk & Pot & [0.075, 0] \\
+      \hline
+      Whisk & Small Bowl & [-0.004, 0]\\
+      \hline
+      Wooden Spoon & Salad Bowl & [0.04, 0] \\
+      \hline
+      Wooden Spoon & Pot & [0.082, 0] \\
+      \hline
+      Wooden Spoon & Small Bowl & [0.003, 0] \\
+      \hline
+      Fork & Salad Bowl & [0.058, 0] \\
+      \hline
+      Fork & Pot & [0.1, 0] \\
+      \hline
+      Fork & Small Bowl & [0.03, 0] \\
+      \hline
+    \end{tabular}
+    \caption{Mixing Task which infer Whirlstorm Motion}
+    
+  \end{table}
+
+
+
+\subsubsection{Semi-Liquid, Powder and Semi-Liquid}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion, Horizontal Eliptical Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0} and \textit{ellipse shift: 0.04}
+\end{itemize}
+  
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+    \hline
+    Whisk & Salad Bowl & [0.033, 0] \\
+    \hline
+    Whisk & Pot & [0.075, 0] \\
+    \hline
+    Whisk & Small Bowl & [-0.004, 0]\\
+    \hline
+    Wooden Spoon & Salad Bowl & [0.04, 0] \\
+    \hline
+    Wooden Spoon & Pot & [0.082, 0] \\
+    \hline
+    Wooden Spoon & Small Bowl & [0.003, 0] \\
+    \hline
+    Fork & Salad Bowl & [0.058, 0] \\
+    \hline
+    Fork & Pot & [0.1, 0] \\
+    \hline
+    Fork & Small Bowl & [0.03, 0] \\
+    \hline
+\end{tabular}
+\caption{Mixing Task that infer Whirlstorm and Horizontal Eliptical Motion}
+
+\end{table}
