@@ -1,5 +1,530 @@
-\chapter*{Appendix}
+\chapter{Appendix}
 \label{chap:appendix}
 
-\section*{Video Analysis}
-\section*{Evaluation}
+\section{Video Analysis}
+In the section \nameref{sec:task_analysis}, a simplified table was presented, which is intended to represent a video analysis. From this analysis, we extract important information that is used for modeling the knowledge base.
+In the appendix, we present more video analyses and provide the corresponding sources.
+
+\textbf{Note:}
+\begin{itemize}
+    \item We provide each table entry with a number, and the corresponding sources are mentioned after the table.
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|p{4,5cm}|p{5,5cm}|}
+        \hline
+        \textbf{Nr.} & \textbf{Task} &  \textbf{Ingredients} & \textbf{Description} \\
+        \hline
+        1 & Mixing &  Eggs, melted butter & Circular, from the inside to the outside. \\
+        \hline
+        2 & Mixing &  dry yeast, water & Whirlstorm-like motion.\\
+        \hline
+        3 & Mixing &  dry yeast, water, flour, salt & Whirlstorm-like motion.\\
+        \hline
+        4 & Mixing &  milk, egg, flour & Whirlstorm-like motion.\\
+        \hline
+        5 & Whisking & milk, egg, flour, salt & Whirlstorm-like motion. \\
+        \hline
+        6 & Stirring & Semi-Liquid batter, milk & Whirlstorm-like motion. \\
+        \hline
+        7 & Whisking & Powder ingredients & Whirlstorm-like motion. \\
+        \hline
+        8 & Beating & Semi-Liquid ingredients, Powder ingredients & Horizontal Eliptical motion \\
+        \hline
+        9 & Mixing & milk, Powder ingredients & Whirlstorm-like motion. \\
+        \hline
+        10 & Whisking & flour, salt, baking soda & Whirlstorm-like motion. \\
+        \hline
+        11 & Beating & egg yolk & Horizontal Eliptical motion. \\
+        \hline
+        12 & Stirring & egg yolk, parmesan, pepper & Horizontal Eliptical and Whirlstorm motion. \\
+        \hline
+        13 & Mixing & brown sugar, butter & Whirlstorm-like motion. \\
+        \hline
+    \end{tabular}
+    \caption{Video analysis}
+    \label{tab:videoanalysis}
+  \end{table}
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|p{4,5cm}|p{5,5cm}|}
+        \hline
+        14 & Stirring & eggs, smashed bananas, Powder ingredients & Horizontal Eliptical and Whirlstorm motion. \\
+        \hline
+        15 & Beating & egg yolk, sugar & Horizontal Eliptical motion. \\
+        \hline
+        16 & Stirring & Liquid mixture, vanilla extract & Circular motion. \\
+        \hline
+        17 & Beating & egg white & Horizontal Eliptical motion. \\
+        \hline
+        18 & Folding & Semi-Liquid mixture & Folding motion. \\
+        \hline
+        19 & Whisking & Liquid mixture & Whirlstorm-like motion. \\
+        \hline
+        20 & Whisking & Semi-Liquid mixture & Whirlstorm-like motion. \\
+        \hline
+        21 & Folding & Semi-Liquid, powder ingredients & Folding motion. \\
+        \hline
+        22 & Stirring & sugar, liquid & Whirlstorm-like motion. \\
+        \hline
+        23 & Beating & butter, sugar & Horizontal Eliptical motion. \\
+        \hline
+        24 & Beating & Semi-Liquid mixture, liquid & Horizontal Eliptical motion and Whirlstorm-like motion. \\
+        \hline
+        25 & Mixing & butter, cream cheese & Whirlstorm and Horizontal Eliptical Motion. \\
+        \hline
+      \end{tabular}
+    \caption{Video analysis}
+    \label{tab:videoanalysis}
+  \end{table}
+
+\subsection*{Source}
+\begin{itemize}
+    \item \textbf{1}: https://www.youtube.com/watch?v=s9r-CxnCXkg
+    \item \textbf{2,3}: https://www.youtube.com/watch?v=1-SJGQ2HLp8
+    \item \textbf{4}: https://www.wikihow.com/Make-Pancakes
+    \item \textbf{5,6}: https://www.youtube.com/watch?v=iwxJTIxIoFo
+    \item \textbf{7,8,9}: https://www.youtube.com/watch?v=vkcHmpKxFwg
+    \item \textbf{10}: https://www.youtube.com/watch?v=loqCY9b7aec
+    \item \textbf{11,12}: https://www.youtube.com/watch?v=3AAdKl1UYZs
+    \item \textbf{13,14}: https://www.wikihow.com/Make-Banana-Bread
+    \item \textbf{15-20}:https://www.wikihow.life/Make-a-Sponge-Cake
+    \item \textbf{21}: https://www.wikihow.com/Make-an-Easy-Sponge-Cake
+    \item \textbf{22-25}: https://www.wikihow.com/Make-Cake-Icing
+\end{itemize}
+\section{Evaluation}
+In the appendix, we would like to build on the concept presented in \nameref{sec:evaluation}.
+Here we will present the tables in more detail and cover as many scenarios as possible.
+As a reminder: A combination of a task and a set of ingredients infers motions, which are in turn associated with parameters.
+These parameters are used to adjust the motion depending on the chosen tool and container.
+Ultimately, it must be calculated in which range the motion can be executed.
+The calculation is as follows:
+\begin{lstlisting}
+    radius_upper_bound = ((dim[0] * radius_bounds[0]) - 
+        max(dim2[0], dim2[1])) / 2
+
+    radius_lower_bound = max(0, ((dim[0] * radius_bounds[1]) - 
+        max(dim2[0], dim2[1])) / 2)
+\end{lstlisting}
+where the dimensional parameters are defined as follows:
+\begin{lstlisting}
+    dim = [max(obj_dim[0], obj_dim[1]), 
+        min(obj_dim[0], obj_dim[1]), obj_dim[2]]
+
+    dim2 = [max(tool_dim[0], tool_dim[1]), 
+        min(tool_dim[0], tool_dim[1]), tool_dim[2]]
+\end{lstlisting}
+
+\textit{tool\_dim} and \textit{obj\_dim} correspond to the dimensions of the tool and the container, respectively.
+With this calculation, it is then possible to define an action radius to perform the motion safely, meaning without the tool, for example, hitting the edge of the container.
+
+In the following, we would like to prove that our system adapts to the environment and calculates the action radii depending on the given dimensions.
+
+Notes:
+\begin{itemize}
+    \item The radius bounds are a list of two elements where the first element corresponds to the radius of the upper bound and the second element corresponds to the radius of the lower bound.
+    \item Some combinations of task and ingredient result in the same motion and are therefore summarized in this case.
+    \item It can happen that the action radius is negative; in this case, fine-tuning is necessary. Generally, a motion should not be performed with a negative action radius. However, for relatively small radii, an exception could be made.
+    \item The tools spoon and fork are not considered separately as they are very similar in relevant form and size.
+    \item The folding task infers the same parameters regardless of the ingredients.
+    \item \textbf{Whisk Dimensions:} \textit{0.11, 0.08, 0.31}
+    \item \textbf{Wooden Spoon Dimensions:} \textit{0.09, 0.095, 0.29}
+    \item \textbf{Fork Dimensions:} \textit{0.06, 0.04, 0.25}
+    \item \textbf{Salad Bowl Dimensions:} \textit{0.25, 0.25, 0.11}
+    \item \textbf{Pot Dimensions:} \textit{0.31, 0.37, 0.11}
+    \item \textbf{Small Bowl Dimensions:} \textit{0.14, 0.14, 0.07}
+\end{itemize}
+
+
+\subsection{Mixing Task}
+\subsubsection{Liquid, Powder, Liquid and Powder, Liquid and Semi-Liquid}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0}
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+      \hline
+      Whisk & Salad Bowl & [0.033, 0] \\
+      \hline
+      Whisk & Pot & [0.075, 0] \\
+      \hline
+      Whisk & Small Bowl & [-0.004, 0]\\
+      \hline
+      Wooden Spoon & Salad Bowl & [0.04, 0] \\
+      \hline
+      Wooden Spoon & Pot & [0.082, 0] \\
+      \hline
+      Wooden Spoon & Small Bowl & [0.003, 0] \\
+      \hline
+      Fork & Salad Bowl & [0.058, 0] \\
+      \hline
+      Fork & Pot & [0.1, 0] \\
+      \hline
+      Fork & Small Bowl & [0.03, 0] \\
+      \hline
+    \end{tabular}
+    \caption{Mixing Task which infer Whirlstorm Motion}
+    
+  \end{table}
+
+
+
+\subsubsection{Semi-Liquid, Powder and Semi-Liquid}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion, Horizontal Eliptical Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0} and \textit{ellipse shift: 0.04}
+\end{itemize}
+  
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+    \hline
+    Whisk & Salad Bowl & [0.033, 0] \\
+    \hline
+    Whisk & Pot & [0.075, 0] \\
+    \hline
+    Whisk & Small Bowl & [-0.004, 0]\\
+    \hline
+    Wooden Spoon & Salad Bowl & [0.04, 0] \\
+    \hline
+    Wooden Spoon & Pot & [0.082, 0] \\
+    \hline
+    Wooden Spoon & Small Bowl & [0.003, 0] \\
+    \hline
+    Fork & Salad Bowl & [0.058, 0] \\
+    \hline
+    Fork & Pot & [0.1, 0] \\
+    \hline
+    Fork & Small Bowl & [0.03, 0] \\
+    \hline
+\end{tabular}
+\caption{Mixing Task that infer Whirlstorm and Horizontal Eliptical Motion}
+
+\end{table}
+
+\subsection{Stirring Task}
+
+\subsubsection{Liquid, Liquid and Powder}
+
+\begin{itemize}
+    \item \textbf{Inferred Motion:} \textit{Circular Motion}
+    \item \textbf{Inferred Parameters:} \textit{0.7, 0.7}
+\end{itemize}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+      \hline
+      Whisk & Salad Bowl & [0.033, 0.033] \\
+      \hline
+      Whisk & Pot & [0.075, 0.075] \\
+      \hline
+      Whisk & Small Bowl & [-0.004, -0.004]\\
+      \hline
+      Wooden Spoon & Salad Bowl & [0.04, 0.04] \\
+      \hline
+      Wooden Spoon & Pot & [0.082, 0.082] \\
+      \hline
+      Wooden Spoon & Small Bowl & [0.003, 0.003] \\
+      \hline
+      Fork & Salad Bowl & [0.058, 0.058] \\
+      \hline
+      Fork & Pot & [0.1, 0.1] \\
+      \hline
+      Fork & Small Bowl & [0.03, 0.03] \\
+      \hline
+    \end{tabular}
+    \caption{Stirring Task which infer Circular Motion}
+    
+  \end{table}
+
+\subsubsection*{Powder}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0}
+\end{itemize}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+      \hline
+      Whisk & Salad Bowl & [0.033, 0] \\
+      \hline
+      Whisk & Pot & [0.075, 0] \\
+      \hline
+      Whisk & Small Bowl & [-0.004, 0]\\
+      \hline
+      Wooden Spoon & Salad Bowl & [0.04, 0] \\
+      \hline
+      Wooden Spoon & Pot & [0.082, 0] \\
+      \hline
+      Wooden Spoon & Small Bowl & [0.003, 0] \\
+      \hline
+      Fork & Salad Bowl & [0.058, 0] \\
+      \hline
+      Fork & Pot & [0.1, 0] \\
+      \hline
+      Fork & Small Bowl & [0.03, 0] \\
+      \hline
+    \end{tabular}
+    \caption{Stirring Task which infer Whirlstorm Motion}
+    
+  \end{table}
+
+\subsubsection{Semi-Liquid, Semi-Liquid and Liquid, Semi-Liquid and Powder}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion, Horizontal Eliptical Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0} and \textit{ellipse shift: 0.04}
+\end{itemize}
+  
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+    \hline
+    Whisk & Salad Bowl & [0.033, 0] \\
+    \hline
+    Whisk & Pot & [0.075, 0] \\
+    \hline
+    Whisk & Small Bowl & [-0.004, 0]\\
+    \hline
+    Wooden Spoon & Salad Bowl & [0.04, 0] \\
+    \hline
+    Wooden Spoon & Pot & [0.082, 0] \\
+    \hline
+    Wooden Spoon & Small Bowl & [0.003, 0] \\
+    \hline
+    Fork & Salad Bowl & [0.058, 0] \\
+    \hline
+    Fork & Pot & [0.1, 0] \\
+    \hline
+    Fork & Small Bowl & [0.03, 0] \\
+    \hline
+\end{tabular}
+\caption{Stirring Task that infer Whirlstorm and Horizontal Eliptical Motion}
+
+\end{table}
+
+\subsection{Beating Task}
+\subsubsection{Liquid, Liquid and Powder}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0}
+\end{itemize}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+      \hline
+      Whisk & Salad Bowl & [0.033, 0] \\
+      \hline
+      Whisk & Pot & [0.075, 0] \\
+      \hline
+      Whisk & Small Bowl & [-0.004, 0]\\
+      \hline
+      Wooden Spoon & Salad Bowl & [0.04, 0] \\
+      \hline
+      Wooden Spoon & Pot & [0.082, 0] \\
+      \hline
+      Wooden Spoon & Small Bowl & [0.003, 0] \\
+      \hline
+      Fork & Salad Bowl & [0.058, 0] \\
+      \hline
+      Fork & Pot & [0.1, 0] \\
+      \hline
+      Fork & Small Bowl & [0.03, 0] \\
+      \hline
+    \end{tabular}
+    \caption{Beating Task which infer Whirlstorm Motion}
+    
+  \end{table}
+
+\subsubsection*{Powder, Semi-Liquid, Liquid and Semi-Liquid}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion, Horizontal Eliptical Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0} and \textit{ellipse shift: 0.04}
+\end{itemize}
+  
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+    \hline
+    Whisk & Salad Bowl & [0.033, 0] \\
+    \hline
+    Whisk & Pot & [0.075, 0] \\
+    \hline
+    Whisk & Small Bowl & [-0.004, 0]\\
+    \hline
+    Wooden Spoon & Salad Bowl & [0.04, 0] \\
+    \hline
+    Wooden Spoon & Pot & [0.082, 0] \\
+    \hline
+    Wooden Spoon & Small Bowl & [0.003, 0] \\
+    \hline
+    Fork & Salad Bowl & [0.058, 0] \\
+    \hline
+    Fork & Pot & [0.1, 0] \\
+    \hline
+    Fork & Small Bowl & [0.03, 0] \\
+    \hline
+\end{tabular}
+\caption{Beating Task which infer Whirlstorm and Horizontal Eliptical Motion}
+
+\end{table}
+
+\subsubsection*{Powder and Semi-Liquid}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Horizontal Eliptical Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0} and \textit{ellipse shift: 0.04}
+\end{itemize}
+  
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+    \hline
+    Whisk & Salad Bowl & [0.033, 0] \\
+    \hline
+    Whisk & Pot & [0.075, 0] \\
+    \hline
+    Whisk & Small Bowl & [-0.004, 0]\\
+    \hline
+    Wooden Spoon & Salad Bowl & [0.04, 0] \\
+    \hline
+    Wooden Spoon & Pot & [0.082, 0] \\
+    \hline
+    Wooden Spoon & Small Bowl & [0.003, 0] \\
+    \hline
+    Fork & Salad Bowl & [0.058, 0] \\
+    \hline
+    Fork & Pot & [0.1, 0] \\
+    \hline
+    Fork & Small Bowl & [0.03, 0] \\
+    \hline
+\end{tabular}
+\caption{Beating Task which infer Horizontal Eliptical Motion}
+
+\end{table}
+
+
+\subsection{Whisking Task}
+\subsubsection{Liquid, Powder, Liquid and Powder, Liquid and Semi-Liquid, Semi-Liquid and Powder}
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Whirlstorm Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0}
+\end{itemize}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+      \hline
+      Whisk & Salad Bowl & [0.033, 0] \\
+      \hline
+      Whisk & Pot & [0.075, 0] \\
+      \hline
+      Whisk & Small Bowl & [-0.004, 0]\\
+      \hline
+      Wooden Spoon & Salad Bowl & [0.04, 0] \\
+      \hline
+      Wooden Spoon & Pot & [0.082, 0] \\
+      \hline
+      Wooden Spoon & Small Bowl & [0.003, 0] \\
+      \hline
+      Fork & Salad Bowl & [0.058, 0] \\
+      \hline
+      Fork & Pot & [0.1, 0] \\
+      \hline
+      Fork & Small Bowl & [0.03, 0] \\
+      \hline
+    \end{tabular}
+    \caption{Whisking Task which infer Whirlstorm Motion}
+    
+  \end{table}
+
+  \subsubsection*{Semi-Liquid}
+  \begin{itemize}
+      \item \textbf{Inferred Motions:} \textit{Horizontal Eliptical Motion}
+      \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0} and \textit{ellipse shift: 0.04}
+  \end{itemize}
+    
+  \begin{table}[H]
+      \centering
+      \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+      \hline
+      Whisk & Salad Bowl & [0.033, 0] \\
+      \hline
+      Whisk & Pot & [0.075, 0] \\
+      \hline
+      Whisk & Small Bowl & [-0.004, 0]\\
+      \hline
+      Wooden Spoon & Salad Bowl & [0.04, 0] \\
+      \hline
+      Wooden Spoon & Pot & [0.082, 0] \\
+      \hline
+      Wooden Spoon & Small Bowl & [0.003, 0] \\
+      \hline
+      Fork & Salad Bowl & [0.058, 0] \\
+      \hline
+      Fork & Pot & [0.1, 0] \\
+      \hline
+      Fork & Small Bowl & [0.03, 0] \\
+      \hline
+  \end{tabular}
+  \caption{Whisking Task which infer Horizontal Eliptical Motion}
+  
+  \end{table}
+
+\subsection{Folding Task}
+\subsubsection{Every Ingredient}
+
+\begin{itemize}
+    \item \textbf{Inferred Motions:} \textit{Folding Motion}
+    \item \textbf{Inferred Parmaters:} \textit{0.7, 0.0}; \textit{repetitive folding rotation shift: 22.5} and \textit{folding rotation shift: 90}
+\end{itemize}
+  
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Tool} & \textbf{Container} & \textbf{Action Radius}\\
+    \hline
+    Whisk & Salad Bowl & [0.033, 0] \\
+    \hline
+    Whisk & Pot & [0.075, 0] \\
+    \hline
+    Whisk & Small Bowl & [-0.004, 0]\\
+    \hline
+    Wooden Spoon & Salad Bowl & [0.04, 0] \\
+    \hline
+    Wooden Spoon & Pot & [0.082, 0] \\
+    \hline
+    Wooden Spoon & Small Bowl & [0.003, 0] \\
+    \hline
+    Fork & Salad Bowl & [0.058, 0] \\
+    \hline
+    Fork & Pot & [0.1, 0] \\
+    \hline
+    Fork & Small Bowl & [0.03, 0] \\
+    \hline
+\end{tabular}
+\caption{Folding Task}
+
+\end{table}
