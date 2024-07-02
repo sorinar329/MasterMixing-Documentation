@@ -37,14 +37,83 @@ The visualization library \cite{visjs} has been used to create graph visualizati
 \begin{figure}[H]
     \includegraphics[scale=0.4]{Graphics/simple_ontology.jpg}
     \caption{Trivial example of an ontology}
-    \end{figure}
+\end{figure}
     
 The ontology created for this purpose aims to provide a simple representation of various animal species. It includes superclass categories such as \textit{Fruits, Vegetables, Meat, and Dairy Products}, as well as subclasses like \textit{Apple} and \textit{Orange}, which are subclasses of the \textit{Fruits} superclass. This ontology does not depict complicated relations; rather, the individual classes are only connected to each other through the \textit{subClassOf} relation.
-    
+
+\subsection{Graph Processing}
+The core component of the graph visualizer is the visualization of a hierarchy of classes. In this hierarchy, two nodes are connected by a directed edge, 
+where the source node is the child node and the target node is the parent node. All edges are labeled either as \textit{subClassOf} or \textit{equivalentClass}.
+
+To create the visualization from the graph, the ontology is parsed, and a triple matching process is applied to identify 
+all classes that use \textit{subClassOf} or \textit{equivalentClass} as predicates.
+
+By default, all nodes are uniformly colored green. However, in the \textit{mixing} and \textit{FoodCutting} ontologies, 
+additional colors are used to highlight differences.
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{Graphics/OwlVisualizer/graphProcessing1.png}
+    \centering
+    \caption{Processed Class Hierarchy}
+\end{figure}
+
+The graph visualizer is also capable of visualizing complex class expressions. 
+However, it is essential to understand why the parsed expressions should not be used directly, as illustrated in figure \ref{fig:graphProcessing2}. 
+Blank nodes and meta information associated with these expressions are generally useless to the user. 
+This type of visualization is not compact, and users unfamiliar with ontology parsing will find it confusing and uninformative. 
+Additionally, visualizing each parsed node increases the number of nodes and edges, which degrades performance. 
+Therefore, a more compact visualization of complex restrictions is necessary to ensure clarity and maintain optimal performance.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{Graphics/OwlVisualizer/graphProcessing2.png}
+    \centering
+    \caption{Visualize parsed class restrictions}
+    \label{fig:graphProcessing2}
+\end{figure}
+
+To achieve a compact representation of class expressions, we recursively traverse the parsed class expression, 
+searching for essential information such as the relations used and their corresponding values. 
+All blank nodes are implicitly skipped and not visualized. Additionally, meta information is excluded.
+
+The visualizer can also handle nested expressions, as well as intersections and unions. Each \textbf{AND} node indicates that all connected elements belong to the intersection.
+Similarly, each \textbf{OR} node indicates that all connected elements belong to the union.
+
+In the figure \ref{fig:graphProcessing3}, the following expression is visualized:
+
+CircularMotion \textit{subClassOf} (radius upper bound relative value 0.7) and (radius lower bound relative value 0.7)
+
+\begin{figure}[H]
+    \includegraphics[scale=0.3]{Graphics/OwlVisualizer/graphProcessing3.png}
+    \centering
+    \caption{Visualize parsed class restrictions}
+    \label{fig:graphProcessing3}
+\end{figure}
 
 \subsection{Load Ontology}
 
-\subsection{Search Nodes}
+\subsection{Search Classes}
+The \textit{OwlVisualizer} includes a feature that suggests classes, which are visualized as nodes, 
+for users to focus on, improving their ability to navigate and understand complex networks.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{Graphics/OwlVisualizer/searchClass1.png}
+    \centering
+    \caption{Search bar suggesting available classes}
+\end{figure}
+
+The key implementation for this feature is a search bar that suggests all visualized classes. 
+Any nodes belonging to a class restriction are not suggested. 
+The available suggestions are sorted in descending order, allowing users to easily search
+for classes and explore the class hierarchy without assuming prior familiarity with the ontology.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.25]{Graphics/OwlVisualizer/searchClass2.png}
+    \centering
+    \caption{Focus node}
+\end{figure}
+
+Users can press Enter inside the search bar or click the search button to immediately focus on the chosen class. 
+Focusing on the class is achieved by zooming to the respective node and highlighting it. 
+This allows users to quickly identify the corresponding node along with all of its parent and child nodes.
 
 \subsection{Custom Inference - Mixing}
 
@@ -69,8 +138,6 @@ After processing the data, the graph and the task tree are visualized based on t
 
 The data processing and the detailed implementation of the Inference Builder will be further explained in the \nameref{sec:Implementation} section.
 \subsection{QueryBuilder}
-
-\subsection{Data Preparation}
 
 \section{Implementation}
 \label{sec:Implementation}
