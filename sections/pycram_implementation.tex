@@ -34,7 +34,7 @@ Logical reasoning is performed inside the custom resolver \textit{MixingActionSW
 
 \subsection{MixingActionSWRL}
 \label{subsection:MixingActionSWRL}
-\textit{MixingActionSWRL} is a custom resolver using \textit{mixing} ontology to infer motions from the robots assertional knowledge.
+\textit{MixingActionSWRL} is a custom resolver using our \textit{mixing} ontology to infer motions from the robots assertional knowledge.
 The resolvers task is to fill the missing descriptions of which motions should be executed with its associated parameters.
 
 \paragraph{Initialization}
@@ -111,9 +111,12 @@ Determine Container Pose:
     The container's pose is retrieved and transformed into its own coordinate system from the world coordinate system to compute mixing poses fitted to the container in its coordinate system.
 
 Now that \textit{MixingActionDesignator} has everything relevant to generate mixing poses dependent on the inferred motion
-from the \textit{MixingActionSWRL} resolver.
+from the \textit{MixingActionSWRL} resolver, with its impelmentation described in this section 
 
 Generating 3D coordinates is done using the functions explained in the section HIER REFERENZIEREN: MOTIONS,
 where the necessary paramteres are retrieved from the motion parameters to compute these coordiantes.
 
 The rotations of the folding motions and the shift of the ellipses for horizontal elliptical motion are retrieved from the motion parameters. 
+
+\paragraph*{Failure Handling}
+
