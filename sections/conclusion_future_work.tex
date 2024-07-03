@@ -5,7 +5,12 @@
 This master thesis is a proof of concept in which we explained in detail how a robotic system like the PR2 
 using the robotic cognitive architecture \textit{CRAM} is able to mix in simulation. 
 
+Geht vielleicht besser der erste Satz.
+
 Implementing various motions in \textit{Cram} could only be done through.
+
+through was?
+
 
 The underlying model - a knowledgebase models several relevant aspects of a mixing action. 
 Ingredients which are being mixed, the types of motion which can be executed, the type of container to 
@@ -23,6 +28,21 @@ complex class expressions without knowing how to write \textit{SPARQL} queries. 
 to the needs of the user, by changing the contents of the query without changing the triple matching. 
 
 
+The model we use—a knowledgebase—captures various important aspects of a mixing action. It includes information about the ingredients being mixed, the types of motions that can be performed, the type of container used for storing and mixing ingredients, and the tools needed for mixing. By keeping the model simple, we ensure that the robot can infer motions using the rule-based language SWRL.
+
+Our modeled motions do not specify how a motion is executed but provide capabilities via parameters to adapt to different containers and tools. The implementation of each motion—\textbf{Circular}, \textbf{Folding}, \textbf{Horizontal Elliptical}, and \textbf{Whirlstorm}—is available in pycram, and any robotic system that can use \textit{Cram} can perform these motions.
+
+In addition to this proof of concept, we developed a new way to visualize ontologies by focusing on complex class expressions, which hasn't been done before. With the \textit{OWLVisualizer}, a user can query complex class expressions without needing to know how to write \textit{SPARQL} queries. The \textit{OWLVisualizer} generates a \textit{SPARQL} query for the user, using triple matching to get the desired graph. This query can be customized by changing its contents without altering the triple matching.
+
+
+To complete our master thesis, we want to give a brief overview of our workflow.
+Initially, the focus was on data acquisition, primarily conducted through video analyses of various cooking videos. In this phase, we also examined the meaning of the term \textit{mixing} and its variations to establish a robust data foundation.
+
+Following data acquisition, we turned our attention to the modeling and structuring of the knowledge base. This involved defining our classes, including motions and their associated parameters.
+
+In the next section, we transitioned from theory to practice by applying the defined classes in a simulation. As a proof of concept, we tested as many scenarios as possible to demonstrate how the knowledge base we created could be applied to a robot.
+
+Finally, we introduced a new framework designed for visualizing graphs. This framework boasts several features, such as an integrated query and inference builder.
 - Data aqcuired and Structured.
 - Modelled a queryable Knowledgebase
 - Adapted motions
