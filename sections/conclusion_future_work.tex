@@ -2,31 +2,9 @@
 \label{chap:conclusion}
 
 \section{Summary}
-This master thesis is a proof of concept in which we explained in detail how a robotic system like the PR2 
-using the robotic cognitive architecture \textit{CRAM} is able to mix in simulation. 
+This master's thesis serves as a proof of concept to demonstrate how a robotic system like the PR2, utilizing the cognitive architecture CRAM, can make knowledge-based decisions and perform mixing actions in a simulation.
 
-Geht vielleicht besser der erste Satz.
-
-Implementing various motions in \textit{Cram} could only be done through.
-
-through was?
-
-
-The underlying model - a knowledgebase models several relevant aspects of a mixing action. 
-Ingredients which are being mixed, the types of motion which can be executed, the type of container to 
-store the ingredients and to mix in and the tools to perform the mixing actions. By keeping the model simple we achieve that the robot 
-is able to infer motions through the rules based language SWRL. 
-
-Our modelled motions don't implement how a motion is executed but rather it gives capabilities via parameters to adapt 
-to various containers and tools. The implemenation of each motion - \textbf{Circular}, \textbf{Folding}, \textbf{Horizontal Elliptical} 
-and \textbf{Whirlstom}, is available in pycram, any robotic system able to employ \textit{Cram}, can execute these motions. 
-
-Additionally to this proof a concept we implemented a different way of visualizing ontologies, by focusing 
-on complex class expressions which haven't been done before. Using the \textit{OWLVisualizer} a user is able to query 
-complex class expressions without knowing how to write \textit{SPARQL} queries. The \textit{OWLVisualizer} will generate A
-\textit{SPARQL} query for the user applying triple matching to get the queried graph. This query can be adjusted 
-to the needs of the user, by changing the contents of the query without changing the triple matching. 
-
+In order to implement the motions in CRAM, one must first understand the relationship of the motions to the overall context of the task the robot needs to solve. What we have discovered is that the motions are primarily dependent on the ingredients in the context of mixing tasks. The containers and tools used do not directly influence the motion itself, but they do modify the action range of the motions.
 
 The model we use—a knowledgebase—captures various important aspects of a mixing action. It includes information about the ingredients being mixed, the types of motions that can be performed, the type of container used for storing and mixing ingredients, and the tools needed for mixing. By keeping the model simple, we ensure that the robot can infer motions using the rule-based language SWRL.
 
@@ -35,7 +13,7 @@ Our modeled motions do not specify how a motion is executed but provide capabili
 In addition to this proof of concept, we developed a new way to visualize ontologies by focusing on complex class expressions, which hasn't been done before. With the \textit{OWLVisualizer}, a user can query complex class expressions without needing to know how to write \textit{SPARQL} queries. The \textit{OWLVisualizer} generates a \textit{SPARQL} query for the user, using triple matching to get the desired graph. This query can be customized by changing its contents without altering the triple matching.
 
 
-To complete our master thesis, we want to give a brief overview of our workflow.
+To conclude our master thesis, we want to give a brief overview of our workflow.
 Initially, the focus was on data acquisition, primarily conducted through video analyses of various cooking videos. In this phase, we also examined the meaning of the term \textit{mixing} and its variations to establish a robust data foundation.
 
 Following data acquisition, we turned our attention to the modeling and structuring of the knowledge base. This involved defining our classes, including motions and their associated parameters.
