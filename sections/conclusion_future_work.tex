@@ -22,31 +22,37 @@ The robot has ground truth for each available object, the ingredients to mix, th
 To move ahead, our proof of concept should be implemented on a real robot, to see how much more difficult it will 
 be in real world scenarios.
 
+This proof of concept was developed in \textit{CRAM} in simulation. Simulations simplify many aspects: the robot has ground truth for each available object, the ingredients to mix, the tools for mixing, and the container to mix in. To advance our work, this proof of concept should be implemented on a real robot to assess the increased challenges in real-world scenarios.
+
+
 With regards to future work many limitations arose during implementation of our proof of concept.
 Our motions are effectively 2D motions, where one axis is not changing over the course of the motion.
 Moving from simulation to real world, it will be necessary to include dives into each motion, so that 
 the substances are properly mixed. 
+
+Regarding future work, several limitations emerged during the implementation of our proof of concept. Our motions are essentially 2D, with one axis remaining unchanged throughout the motion. Transitioning from simulation to the real world will require incorporating depth into each motion to ensure the substances are properly mixed.
 
 Another limiting aspect is the lack of collision detection. As of now, we ensure that the tool is not colliding 
 with objects only with respect to 2 out of 3 axes. If the tool is placed to low, and the container has a spherical shape and not 
 cuboid shape, the tool will eventually collide with the object. To tackle this limitation, we require depth-based perception
 and various techniques to find out optimal height for the tool during execution of a mixing action.
 
+Another limiting aspect is the lack of collision detection. Currently, we ensure that the tool does not collide with objects concerning only 2 out of 3 axes. If the tool is placed too low and the container has a spherical rather than a cuboid shape, the tool will eventually collide with the object. To address this limitation, we need depth-based perception and various techniques to determine the optimal height for the tool during the execution of a mixing action.
+
+
 Once we move to real world we loose ground truth on all relevant objects required for mixing.
 Here we will need perception frameworks capable of detecting and locating objects in a scene, 
 picking and placing objects and different kinds of actions for example pouring, to fill a container
 with ingredients.
 
+Once we transition to the real world, we lose the ground truth on all relevant objects needed for mixing. We will need perception frameworks capable of detecting and locating objects in a scene, picking and placing objects, and performing various actions, such as pouring, to fill a container with ingredients.
+
 In simulation the robot will not fail unless the inference fails. As long as a motion is inferred, mixing will be executed.
 This has to be adjusted
 
+In simulation, the robot will not fail unless the inference fails. As long as a motion is inferred, the mixing will be executed. This approach needs to be adjusted for real-world application.
 
-
-- Diving motions
-- Prediction substances
-- Deployment on real robot
-- Uncertainity. -> Object Detection
-- Failure Handling
+One last important aspect is the implementation of failure handling, which is currently completely absent. Failure handling should address various aspects of robot actions, such as scenarios where the robot plan cannot proceed due to reasons like incorrect perception or grasping of an object. Countermeasures should be developed for such potential scenarios to still allow plan execution.
 
 \section{Last Words}
 
