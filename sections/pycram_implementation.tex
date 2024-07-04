@@ -97,26 +97,31 @@ To effectively break down the action into executable motions, certain designator
     \end{itemize}
 \end{enumerate}
 
+\paragraph*{Resolving motion and parameters}
+The \textit{MixingActionDesignator} calls the \textit{MixingActionSWRL} resolver, to infer the motion with its 
+associated parameters. 
+
 \paragraph*{Sequential Processing in MixingActionDesignator}
 Once all descriptions are available for the \textit{MixingActionDesignator}, it attempts the following steps in sequence:
-Retrieve BulletWorld Objects:
-    The BulletWorld objects for both the container and the tool are retrieved from the object designator. 
+
+\begin{enumerate}
+    \item \textbf{Retrieve BulletWorld Objects}: The BulletWorld objects for both the container and the tool are retrieved from the object designator. 
     Each BulletWorld object has a 3D axis-aligned bounding box. Using this bounding box, the dimensions can be computed. 
     The implemented function \textit{get\_object\_dimensions()} returns the three dimensions of each BulletWorld object.
-
-Calculate Radius Bounds:
-    The upper and lower radius bounds, which are relative values, are accessed to compute the absolute radius for the respective mixing motion.
-
-Determine Container Pose:
-    The container's pose is retrieved and transformed into its own coordinate system from the world coordinate system to compute mixing poses fitted to the container in its coordinate system.
-
-Now that \textit{MixingActionDesignator} has everything relevant to generate mixing poses dependent on the inferred motion
-from the \textit{MixingActionSWRL} resolver, with its impelmentation described in this section 
-
-Generating 3D coordinates is done using the functions explained in the section HIER REFERENZIEREN: MOTIONS,
-where the necessary paramteres are retrieved from the motion parameters to compute these coordiantes.
-
-The rotations of the folding motions and the shift of the ellipses for horizontal elliptical motion are retrieved from the motion parameters. 
-
+    \item \textbf{Motions}: Access the motion names and find out which motion has to be executed.
+    \item \textbf{Calculate Radius Bounds}: The upper and lower radius bounds, which are relative values, 
+    are accessed to compute the absolute radius for the respective mixing motion, using the dimensions of container and tool, to ensure
+    that any mixing motion is executed inside the container.
+    \item \textbf{Transform Container Pose}: The container's pose is retrieved and transformed into its own coordinate frame from the world coordinate frame to 
+    compute mixing poses fitted to the container in its coordinate frame.
+    \item \textbf{Generate Motion Trajectory}: Based on the current motion, 3D coordinates are generated using the functions defined in the section \nameref{sec:Motions},
+    the values inside the motion parameters list are used for computation.
+    \item \textbf{MoveTCP}: For each generated pose, that pose is elevated by a constant value and the execution of motion is done with MoveTCP, which 
+    moves the tool center point of the robots arm.
+    
+\end{enumerate}
 \paragraph*{Failure Handling}
-
+The MixingAction lacks error handling implementation. It was primarily developed for simulation in a vacuum, where no ingredients are actually mixed
+and some physical laws regarding ingredient interaction do not apply. As soon as the robot collides with the container in any way, 
+causing the ingredients or the mixture to spill, 
+the mixing process fails accordingly. Additionally, other potential issues that could arise include improper alignment of the mixing tools
