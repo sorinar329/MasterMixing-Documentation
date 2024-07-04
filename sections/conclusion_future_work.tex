@@ -4,28 +4,18 @@
 \section{Summary}
 This master's thesis serves as a proof of concept to demonstrate how a robotic system like the PR2, utilizing the cognitive architecture CRAM, can make knowledge-based decisions and perform mixing actions in a simulation.
 
-In order to implement the motions in CRAM, one must first understand the relationship of the motions to the overall context of the task the robot needs to solve. What we have discovered is that the motions are primarily dependent on the ingredients in the context of mixing tasks. The containers and tools used do not directly influence the motion itself, but they do modify the action range of the motions.
+In order to implement the motions in CRAM, one must first understand the relationship of the motions to the overall context of the task the robot needs to solve. What we have discovered, primarily conducted through video analyses of various cooking videos, is that the motions are primarily dependent on the ingredients in the context of mixing task, which variations we highlighted in our work. The containers and tools used do not directly influence the motion itself, but they do modify the action range of the motions.
 
 The model we use—a knowledgebase—captures various important aspects of a mixing action. It includes information about the ingredients being mixed, the types of motions that can be performed, the type of container used for storing and mixing ingredients, and the tools needed for mixing. By keeping the model simple, we ensure that the robot can infer motions using the rule-based language SWRL.
 
 Our modeled motions do not specify how a motion is executed but provide capabilities via parameters to adapt to different containers and tools. The implementation of each motion—\textbf{Circular}, \textbf{Folding}, \textbf{Horizontal Elliptical}, and \textbf{Whirlstorm}—is available in pycram, and any robotic system that can use \textit{Cram} can perform these motions.
 
-In addition to this proof of concept, we developed a new way to visualize ontologies by focusing on complex class expressions, which hasn't been done before. With the \textit{OWLVisualizer}, a user can query complex class expressions without needing to know how to write \textit{SPARQL} queries. The \textit{OWLVisualizer} generates a \textit{SPARQL} query for the user, using triple matching to get the desired graph. This query can be customized by changing its contents without altering the triple matching.
+We also transitioned from theory to practice by utilizing our knowledgebase in simulation, where we also tested our newly implemented \textit{Mixing Action Designator}, which considers every theoretical knowledge we have acquired in the previeous sections. As a proof of concept, we tested as many scenarios as possible to demonstrate how the knowledge base we created could be applied to a robot.
 
-
-To conclude our master thesis, we want to give a brief overview of our workflow.
-Initially, the focus was on data acquisition, primarily conducted through video analyses of various cooking videos. In this phase, we also examined the meaning of the term \textit{mixing} and its variations to establish a robust data foundation.
-
-Following data acquisition, we turned our attention to the modeling and structuring of the knowledge base. This involved defining our classes, including motions and their associated parameters.
-
-In the next section, we transitioned from theory to practice by applying the defined classes in a simulation. As a proof of concept, we tested as many scenarios as possible to demonstrate how the knowledge base we created could be applied to a robot.
-
-Finally, we introduced a new framework designed for visualizing graphs. This framework boasts several features, such as an integrated query and inference builder.
-- Data aqcuired and Structured.
-- Modelled a queryable Knowledgebase
-- Adapted motions
-- Proof Of Concept
-- Graphviz
+In addition to this proof of concept, we developed a new way to visualize ontologies by focusing on complex class expressions, which hasn't been done before. 
+With the \textit{OWLVisualizer}, a user can query complex class expressions without needing to know how to write \textit{SPARQL} queries. 
+The \textit{OWLVisualizer} generates a \textit{SPARQL} query for the user, using triple matching to get the desired graph. 
+This query can be customized by changing its contents without altering the triple matching. Another feature of the OWLVisualizer is the Custom Inference Builder, which serves as an inference tool for our knowledge base, creating a task tree based on its input.
 \section{Future Work}
 This proof of concept was established in \textit{Cram} in simulation. In simulations many things are simple.
 The robot has ground truth for each available object, the ingredients to mix, the tools to perform mixing, the container to mix in. 
