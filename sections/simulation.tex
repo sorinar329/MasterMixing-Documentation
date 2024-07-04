@@ -15,10 +15,10 @@ We utilize the simulation environment \textit{BulletWorld}, which is already int
 
 
 The agent that will execute the various motions in the simulation is the  \textit{PR2} \hyperref[sec:pr2]{(PR2)}.
-This robot model has 2 movable arms, which is important for our work, as one hand executes the motion while the other arm holds the container in which the action is performed. In addition to the fact that the \textit{PR2} model is already available in the \textit{PyCram} framework,
+This robot model has 2 movable arms, as one hand executes the motion. In addition to the fact that the \textit{PR2} model is already available in the \textit{PyCram} framework,
 the \textit{PR2} model also has enough joints and degrees of freedom to execute the motions we have adapted.
 
-The agent operates in a kitchen-like environment, the model of which is already included in the \textit{PyCRAM}-core and therefore particularly suitable for our use case. The kitchen also features elements such as drawers that can be opened, indicating an approximation to a real kitchen. Additionally, the kitchen model includes a table on which the agent's actions are ultimately executed. Other furniture is also present in this environment, but is not relevant to our use case.
+The agent operates in a kitchen-like environment, the model of which is already included in the \textit{PyCRAM}-core and therefore particularly suitable for our use case. The kitchen also features elements such as drawers that can be opened, which are part of real world interactions. Additionally, the kitchen model includes a table on which the agent's actions are ultimately executed. Other furniture is also present in this environment, but is not relevant to our use case.
 
 \begin{figure}[H]
     \includegraphics[scale=0.35]{Graphics/bulletworldexample.png}
@@ -30,7 +30,7 @@ For the simulation, we use the objects that have also been defined in the ontolo
 The following objects are available:
 \begin{itemize}
 	\item Container: small and large bowls (defined in the ontology as \textit{SaladBowl} and \textit{PastaBowl}), pan, pot, cup, and mug.
-	\item Tools: whisk (even though it is not defined in the ontology, we still use it as it is a very commonly used mixing instrument), spoon, wooden spoon, and fork.
+	\item Tools: whisk, spoon, wooden spoon, and fork.
 \end{itemize}
 
 \begin{figure}[H]
@@ -39,8 +39,8 @@ The following objects are available:
     \caption{Used models for the simulation: \textit{Fork, WoodenSpoon, Spoon, Whisk, Mug, Cup, Pan, Pot, Small Bowl, Big Bowl}}
 \end{figure}
 
-In the simulation itself, there are no ingredients. When executing the motion, we assume a set of given ingredients, which ultimately play a role in selecting the parameters (see \hyperref[chap:Data_representation]{Data Representation}). Representing ingredients in a simulation proves to be challenging, in addition to the fact that modeling the creation of the mixed ingredients would also be necessary. This approach is also addressed in the section \nameref*{sec:Future Work} (REFERENCE FUTURE WORK).
-
+NASER NASER NASER
+In the simulation itself, there are no ingredients. When executing the motion, we assume a set of given ingredients, which ultimately play a role in selecting the parameters (see \hyperref[chap:Data_representation]{Data Representation}). Representing ingredients in a simulation proves to be challenging, in addition to the fact that modeling the creation of the mixed ingredients would also be necessary.
 \section{Control Primitives}
 The framework \nameref{sec:pycram} offers a variety of pre-implemented control primitives. These primitives can be used as building blocks to structure the entire execution of a task. These primitives are also defined as \textit{Action Designators}, and the following ones are relevant for our use case:
 
