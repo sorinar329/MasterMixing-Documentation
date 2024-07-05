@@ -183,7 +183,7 @@ At the beginning of the triple matching process, all classes are available as su
 \begin{figure}[H]
     \includegraphics[scale=0.4]{Graphics/OwlVisualizer/queryBuilder1.png}
     \centering
-    \caption{Focus node}
+    \caption{View Possible Subjects for Selection}
 \end{figure}
 
 Only predicates that appear as edge labels connected to the subject in the graph are suggested. 
@@ -191,14 +191,14 @@ Only predicates that appear as edge labels connected to the subject in the graph
 \begin{figure}[H]
     \includegraphics[scale=0.4]{Graphics/OwlVisualizer/queryBuilder2.png}
     \centering
-    \caption{Focus node}
+    \caption{View Possible Predicates for Selection}
 \end{figure}
 Similarly, only objects connected to the subject via the selected edge are proposed. 
 
 \begin{figure}[H]
     \includegraphics[scale=0.4]{Graphics/OwlVisualizer/queryBuilder3.png}
     \centering
-    \caption{Focus node}
+    \caption{View Possible Objects for Selection}
 \end{figure}
 Once a triple is selected, the user can continue to explore the graph based on the previously chosen triples.
 
@@ -215,9 +215,9 @@ The class hierarchy has its own view, which can be incrementally updated with ne
 Separating the views ensures that users can navigate and explore different aspects of the graph, while also improving their comprehension of the ontology.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.4]{Graphics/OwlVisualizer/queryBuilder4.png}
+    \includegraphics[scale=0.5]{Graphics/OwlVisualizer/queryBuilder4.png}
     \centering
-    \caption{Focus node}
+    \caption{Graph View}
 \end{figure}
 
 \paragraph{SPARQL Query}
@@ -230,19 +230,33 @@ This feature will help users unfamiliar with querying ontologies by providing th
 \begin{figure}[H]
     \includegraphics[width=0.5\textwidth]{Graphics/OwlVisualizer/queryBuilder5.png}
     \centering
-    \caption{Focus node}
+    \caption{SPARQL View}
 \end{figure}
 
 \section{Limiations}
 
 \paragraph{Using vis.js}
-Using the graph visualization library \textit{vis.js} yields poor performance on large graphs.
-This reason is known to the developers of \textit{vis.js} \cite{visjs} and the cause of the problem is coming
-from the physics simulation. The visualized graph is a force directed graph and the physics simulation attempts to make a user readable graph 
-by seperating and clustering nodes who don't or belong to each other. This is done iteratively and consumes a lot of time for large sets of nodes
-connected via many edges. The more interconnected the graph is the more terrible the performance gets. 
+
+The graph visualization library \textit{vis.js} suffers from poor performance when handling large graphs, 
+a known issue acknowledged by its developers \cite{visjs}. 
+This performance limitation primarily stems from the physics simulation used in its force-directed graph layout. 
+The simulation iteratively attempts to arrange nodes to form a readable graph by separating and clustering nodes based on their connections. 
+However, this process becomes increasingly time-consuming as the number of interconnected nodes and edges grows. 
+Consequently, the more densely interconnected the graph is, the more pronounced the degradation in performance becomes.
 
 \paragraph{Data Visualizer}
-This framework in its core is not a graph data visualizer. While it is absolutely able to display relationships and attributes of instance data, visualizing 
-large datasets defined as ontology is not feasible. It is limited by \textit{vis.js} which is poorly optimised for large sets of nodes and edges. 
-Thus this framework can't be a graph data visualizer. 
+
+While capable of displaying relationships and attributes of instance data effectively, 
+this framework is not designed as a graph data visualizer. 
+It utilizes \textit{vis.js} for graph visualization, which is not optimized for handling large datasets defined as ontologies with numerous instantiated classes.
+Due to these limitations, we have opted against implementing functionality for visualizing such ontologies. 
+The performance of \textit{vis.js} deteriorates significantly with an increasing number of nodes and edges, 
+making it impractical for visualizing complex ontological structures.
+
+\paragraph{Inference and Reasoning}
+
+Although we have developed a custom reasoner tailored specifically for the \textit{mixing} ontology, 
+the current implementation does not support reasoning over other ontologies apart from \textit{mixing}. 
+This decision was made due to runtime concerns, particularly regarding the computational complexity of \textit{SWRL} rules. 
+Loading an ABox ontology, characterized by numerous NamedIndividuals and a complex class hierarchy, into this framework could severely impact performance.
+Such intensive computations could potentially disrupt the usability of other features within the \textit{OwlVisualizer} tool.
