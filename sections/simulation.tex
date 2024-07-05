@@ -31,8 +31,20 @@ The agent operates in a kitchen-like environment, the model of which is already 
 For the simulation, we use the objects that have also been defined in the ontology (see \hyperref[sec:ContainersAndToolsAcquisition]{Containers and Tools Acquisition}).
 The following objects are available:
 \begin{itemize}
-	\item Container: \textit{Small and Large Bowls} (defined in the ontology as \textit{SaladBowl} and \textit{PastaBowl}), \textit{Pan, Pot, Cup} and \textit{Mug}.
-	\item Tools: \textit{Whisk, Spoon, Wooden Spoon} and \textit{Fork}.
+	\item Container: 
+        \begin{itemize} 
+            \item \textit{Small and Large Bowls} - Defined in the ontology as \textit{SaladBowl} and \textit{PastaBowl}
+            \item \textit{Pan}
+            \item \textit{Pot}
+            \item \textit{Cup}
+            \item \textit{Mug}
+        \end{itemize}
+	\item Tools: 
+        \begin{itemize}
+            \item \textit{Whisk}
+            \item \textit{Spoon}/\textit{Wooden Spoon}
+            \item \textit{Fork}
+        \end{itemize}
 \end{itemize}
 
 \begin{figure}[H]
@@ -40,8 +52,10 @@ The following objects are available:
     \label{fig:toolscontainersmodels}
     \caption{Used models for the simulation: \textit{Fork, WoodenSpoon, Spoon, Whisk, Mug, Cup, Pan, Pot, Small Bowl, Big Bowl}}
 \end{figure}
-
 NASER NASER NASER
+In the simulation environment there are no models of ingredients included. Executing motions in the simulation is done as if the motion is executed in 
+the vacuum, physical laws regarding ingredient interaction do not apply. The set of ingredients are nonetheless relevant because those ingredients have to be mixed.
+LIES DAS OBEN DURCH SORIN
 In the simulation itself, there are no ingredients. When executing the motion, we assume a set of given ingredients, which ultimately play a role in selecting the parameters (see \hyperref[chap:Data_representation]{Data Representation}). Representing ingredients in a simulation proves to be challenging, in addition to the fact that modeling the creation of the mixed ingredients would also be necessary.
 \section{Control Primitives}
 The framework \nameref{sec:pycram} \cite{pycram} offers a variety of pre-implemented control primitives. These primitives can be used as building blocks to structure the entire execution of a task. These primitives are also defined as \textit{Action Designators}, and the following ones are relevant for our use case:
@@ -87,17 +101,144 @@ The last \textit{Action Designator} is a modified version of the existing \texti
     \caption{Feautured \textit{Control Primitives}}
 \end{figure}
 
+\section{Implementation in PyCram}
 
-\section{Simulated Motions}
+\subsection{Robots Plan Execution}
+The robots plan used for implementing the MixingActionDesignator and its evaluation is 
+a simple plan, including the following steps:
+
+\begin{itemize}
+    \item Park Arms
+    \item Elevate the robots torso
+    \item Navigate to the tool used for mixing
+    \item Pick up tool
+    \item Park arms
+    \item Move to kitchen counter
+    \item Look at the container to mix the ingredients
+    \item Mix ingredients
+\end{itemize}
+
+In the following subsections we will explain, how the robot uses its knowledge during task execution, 
+to mix. 
+
+\subsection{Asserted Knowledge}
+Any robot capable of executing mixing motions need to have knowledge before executing a mixing task. 
+The robot needs to know where the container and tools are located, for picking up and for navigation to Theoretically
+respective places. It needs to know which ingredients have to be mixed, in simulation only their existence have to be known. 
+It needs to know which task to execute, since we differentiate between different mixing tasks as discussed in this section. 
+
+
+\subsection{Inferring Knowledge}
+As of now, the robot doesn't know what kind of mixing motion it has to perform. Its associated parameters are also unknown. 
+Therefore, the robot needs to reason about its assertional knowledge.
+Once it has access to all relevant information, it can infer the appropriate mixing motion or motions, in case a compound motion has been
+inferred, with its corresponding parameters through logical reasoning.
+Logical reasoning is performed inside the custom resolver \textit{MixingActionSWRL}.
+
+\subsection{MixingActionSWRL}
+\label{subsection:MixingActionSWRL}
+\textit{MixingActionSWRL} is a custom resolver using our \textit{mixing} ontology to infer motions from the robots assertional knowledge.
+The resolvers task is to fill the missing descriptions of which motions should be executed with its associated parameters.
+
+\paragraph{Initialization}
+The resolver loads the mixing ontology, creates \textbf{NamedIndividuals} of the task to execute and of all ingredients which are being mixed.
+Since we wanna infer facts from SWRL rules, every actor in the mixing process has to be created as a \textbf{NamedIndivuidual} 
+All names need to be available for later instantiation.
+A \textbf{NamedIndividual} is created from the high level class \textit{Motion}, representing the individual of all possible motions. 
+The resolver attempts to reclassify this motion into a specific motion that is going to be executed on the robot.
+
+First container, tool and ingredients are instantiated, additionally a task instance is created and its relations with 
+the other individuals are assigned. To find the proper corresponding class, to the names of the container, ingredients, task and tool
+we perform fuzzy string matching to find a matching class to the name. 
+
+\paragraph{Fuzzy String Matching}
+Using the levenshtein distance, syntactic similarity of two different strings is computed. A low distance score
+indicates a higher similarity than a high score. However, this metric does not account for semantic similarities, 
+as the words meanings are not considered in the computation of distance.
+
+\paragraph{Inference}
+Once the relations have been assigned, using \textit{OWLReady} with builtin functions calling reasoners like \textit{Pellet} or \textit{HermIt},
+reclassifies the motion instance using the defined \textit{SWRL} rules inside the \textit{mixing} ontology.
+Since the individual instantiated from the class \textit{Motion} has been reclassified the motion parameters can be extracted from the class.
+
+Finally, the resolver completes the sequence of motions to be executed with its associated parameters and 
+forwards it to the MixingAction.
+
+\subsection{MixingActionDesignator}
+The \textit{MixingActionDesignator} is a newly implemented action designator 
+designed to perform various types of mixing motions or sequences of motions within a specific container using a specific tool. 
+This designator generates poses that follow a trajectory, simulating the process of mixing in the bulletworld environment.
+To effectively break down the action into executable motions, certain designator descriptions are required.
+
+\subsection{Implementation}
+
+\paragraph{Designator Description}
+\begin{enumerate}
+    \item \textit{Container Object Designator}:
+    \begin{itemize}
+        \item This object designator contains information about its name and its bulletword internal represnation.
+            Its bulletworld representations holds information like the current objects pose and its 3D axis aligned bounding box.
+            This bounding box can be used to compute the dimensions of the container along each axis. 
+            Knowing the bounds and the pose of the container is crucial, because the motion has to performed inside 
+            the container within its boundaries.
+    \end{itemize}
+    \item \textit{Tool Object Designator}:
+    \begin{itemize}
+        \item Analogous to the container this designator contains the same type of information.
+        Knowing the dimensions of the tool is crucial in avoiding collision with the container.
+    \end{itemize}
+    \item \textit{Arm}:
+    \begin{itemize}
+        \item Which arm should be used to perform the mixing action
+    \end{itemize}
+    \item \textit{Motions}:
+    \begin{itemize}
+        \item A list of motions as strings to be performed. 
+    \end{itemize}
+    \item \textit{Motion Parameters}:
+    \begin{itemize}
+        \item Each motion has its own key value pairs of parameters.
+        These parameters alongside the motion are resolved by the \nameref*{subsection:MixingActionSWRL}
+    \end{itemize}
+\end{enumerate}
+
+\paragraph*{Resolving motion and parameters}
+The \textit{MixingActionDesignator} calls the \textit{MixingActionSWRL} resolver, to infer the motion with its 
+associated parameters. 
+
+\paragraph*{Sequential Processing in MixingActionDesignator}
+Once all descriptions are available for the \textit{MixingActionDesignator}, it attempts the following steps in sequence:
+
+\begin{enumerate}
+    \item \textbf{Retrieve BulletWorld Objects}: The BulletWorld objects for both the container and the tool are retrieved from the object designator. 
+    Each BulletWorld object has a 3D axis-aligned bounding box. Using this bounding box, the dimensions can be computed. 
+    The implemented function \textit{get\_object\_dimensions()} returns the three dimensions of each BulletWorld object.
+    \item \textbf{Motions}: Access the motion names and find out which motion has to be executed.
+    \item \textbf{Calculate Radius Bounds}: The upper and lower radius bounds, which are relative values, 
+    are accessed to compute the absolute radius for the respective mixing motion, using the dimensions of container and tool, to ensure
+    that any mixing motion is executed inside the container.
+    \item \textbf{Transform Container Pose}: The container's pose is retrieved and transformed into its own coordinate frame from the world coordinate frame to 
+    compute mixing poses fitted to the container in its coordinate frame.
+    \item \textbf{Generate Motion Trajectory}: Based on the current motion, 3D coordinates are generated using the functions defined in the section \nameref{sec:Motions},
+    the values inside the motion parameters list are used for computation.
+    \item \textbf{MoveTCP}: For each generated pose, that pose is elevated by a constant value and the execution of motion is done with MoveTCP, which 
+    moves the tool center point of the robots arm.
+    
+\end{enumerate}
+\subsection{Simulated Motions}
 \label{sec:simulated motions}
+\textbf{VON NASER}
+This section will illustrate the results of our implemented motions in the \textit{MixingActionDesignator}. 
+We will contrast each motion with a plot and a picture, which contain the generated poses with their visualized axes.
+
+\textbf{ALTER STAND}
 In this section, we aim to illustrate how the motions we have implemented.
 We will discuss the respective movements as well as the parameters involved. In \nameref{sec:pycram} \cite{pycram}, each generated pose used for executing 
 a mixing motion can be visualised via a visual axes. Each new axis added to the visualization shows the direction of the trajectory. 
 In this section, we therefore showcase the various motions as they appear in the simulation with these axes, along with a plot of the implemented movements.
 
 
-
-\subsection{Whirlstorm Motion}
+\subsection*{Whirlstorm Motion}
 The \textit{Whirlstorm} motion was already an implemented motion in \nameref{sec:pycram} \cite{pycram}. In our version, we have slightly modified the motion (see \ref{sec:Motions}).
 
 \begin{figure}[H]
@@ -108,7 +249,7 @@ The \textit{Whirlstorm} motion was already an implemented motion in \nameref{sec
 
 In this Figure, it can be observed that the \textit{Whirlstorm} motion has two starting points. Initially, the motion starts at the edge of the container and then moves counterclockwise to the second starting point, from which the motion continues analogously.
 
-\subsection{Circular Motion}
+\subsection*{Circular Motion}
 The \textit{Circular} motion is a newly implemented mixing variation that represents a simple circular movement along the container.
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/circular_showcase.jpg}
@@ -116,23 +257,57 @@ The \textit{Circular} motion is a newly implemented mixing variation that repres
     \caption{Feautured \textit{Circular} Motion}
 \end{figure}
 NASER NASER NASER
-\subsection{Horizontal Eliptical}
+\subsection*{Horizontal Eliptical}
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/horizontal_eliptical_chart.jpg}
     \label{fig:circularshowcase}
     \caption{Feautured \textit{Horizontal Eliptical} Motion}
 \end{figure}
 
-\subsection{Folding Motion}
+\subsection*{Folding Motion}
 The \textit{Folding} motion represents a gentle variation of the mixing motion. This motion starts at the edge of the container and moves toward the center. This is then repeated three more times until the cycle restarts with a slight shift.
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/folding_showcase.jpg}
     \label{fig:foldingshowcase}
     \caption{Feautured \textit{Folding} Motion}
-\end{figure}
+\end{figure} 
 
-\section{Simulation to Real-World gap}
+\section{Simulation to Real-World Gap}
 \label{sec: simulation to real world gap}
+Robots operating in the kitchen domain face numerous challenges when using the \textit{MixingActionDesignator} in real-world scenarios. 
+Unlike in simulations, where each executed movement of the mixing action follows precise trajectories, 
+the complexity of executing mixing tasks and their associated motions in real-world conditions rises tremendously. 
+The \textit{MixingActionDesignator} lacks any form of failure handling to address potential challenges in real-world scenarios
+
+When mixing different ingredients in the real world, the physical properties of the ingredients must be considered, 
+as the motion can no longer be executed in a vacuum. Properties such as viscosity, density, 
+and texture will influence the ability to mix these ingredients, potentially leading to inefficient mixing and 
+unsatisfactory results for the user. 
+The mixing process is further complicated by the mechanical limitations of the robot, 
+where applied force, speed, and other characteristics will affect the outcome.
+
+A robotic system relying on ground truth loses this certainty when transitioning to the real world, 
+encountering various types of uncertainty instead. 
+The robot loses knowledge about the locations of ingredients, tools, and containers. 
+Consequently, it requires a functioning perception system capable of identifying and locating objects in a scene. 
+Additionally, the computation of object boundaries must be done via approximation, which is a critical requirement for the \textit{MixingActionDesignator}.
+
+The robot's ability to perceive all required objects for the mixing task can be limited by 
+visual phenomena such as poor lighting conditions, reflections, occlusions, and other visual challenges. 
+Moreover, the inherent variability in the appearance and shape of ingredients can challenge object recognition algorithms, resulting in misidentification or ambiguity.
+
+In real world scenarios, object poses are no longer known to the robot, 
+making reliable pose estimation essential. 
+A good grasp pose is crucial for all objects to ensure they are picked up properly and transported safely to their destination. 
+For instance, a tool should generally be picked up by the handle rather than the head to ensure proper handling. 
+Without accurate pose estimation, the robot might misalign with objects, leading to failed grasp attempts, dropped items,
+or even damage to the objects or the robot itself. The variability in object shapes, sizes, 
+and textures requires the robot to continuously adapt its grasping strategy, further emphasizing the need for precise and reliable pose estimation 
+to maintain efficiency and accuracy in the task.
+
+
+
+\textbf{SORINS TEXT}
 
 In a kitchen setting, a robot faces many challenges when it comes to \textit{Mixing Motions}, especially in the real world compared to a simulation.
 Unlike simulations where movements are precise and predictable, real-world scenarios throw unexpected obstacles, different surface textures, and possible interruptions from human interactions at the robot.
@@ -157,8 +332,6 @@ Lighting conditions, reflections, and occlusions can obscure the robot's view, l
 Additionally, the inherent variability in appearance and shape of ingredients can pose challenges for object recognition algorithms, resulting in misidentification or ambiguity.
 Furthermore, sensory noise and drift may affect the consistency of sensor readings over time, further complicating perception.
 In contrast to the controlled conditions of simulation where sensor inputs are pristine, real-world perception introduces a level of uncertainty that necessitates robust perception algorithms capable of handling noise, ambiguity, and environmental variability to ensure accurate understanding and representation of the mixing task.
-
-
 \section{Challenges and Difficutlies, Summary of the Simulation}
 Overall, we are satisfied with the results of the simulation. In the following section \nameref{sec:evaluation}, the various motions are tested and evaluated with different combinations of tasks, ingredients, tools, and containers. One point we would like to address is the initially planned motions, which have a height increment, meaning the motions would not only be executed in 2 dimensions but in 3. Implementing this in the simulation proved to be challenging, so we decided against further consideration of these motions due to the effort involved.
 
