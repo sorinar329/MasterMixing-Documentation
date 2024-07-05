@@ -12,14 +12,15 @@ Finally, we will showcase some of our motions (in \nameref{sec:simulated motions
 \section{Simulation Environment}
 \label{sec:simulation environment}
 
-We utilize the simulation environment \textit{BulletWorld}, which is already integrated into the framework \textit{PyCRAM} \hyperref[sec:pycram]{(PyCRAM)}. In this environment, physics is simulated, which is advantageous for executing the motions we have defined or customized. Additionally, leveraging the \textit{PyCRAM} framework allows us to utilize various existing control primitives, such as \textit{Pick and Place}. Communication between the simulation and framework is facilitated by \textit{ROS1} \hyperref[sec:ROS]{(ROS)}, which communicates via various nodes, each representing a joint, for instance. Through these nodes, one can obtain information about the joints or transmit commands to modify the parameters of the joints accordingly.
+We utilize the simulation environment \textit{BulletWorld} (\ref{sec:pybullet}), which is already integrated into the framework \hyperref[sec:pycram]{PyCRAM} \cite{pycram} . 
+In this environment, physics is simulated, which is advantageous for executing the motions we have defined or customized. Additionally, leveraging the \textit{PyCRAM} \cite{pycram} framework allows us to utilize various existing control primitives, such as \textit{Pick and Place}. Communication between the simulation and framework is facilitated by \hyperref[sec:ROS]{ROS} \cite{ros} , which communicates via various nodes, each representing a joint, for instance. Through these nodes, one can obtain information about the joints or transmit commands to modify the parameters of the joints accordingly.
 
 
-The agent that will execute the various motions in the simulation is the  \textit{PR2} \hyperref[sec:pr2]{(PR2)}.
-This robot model has 2 movable arms, as one hand executes the motion. In addition to the fact that the \textit{PR2} model is already available in the \textit{PyCram} framework,
-the \textit{PR2} model also has enough joints and degrees of freedom to execute the motions we have adapted.
+The agent that will execute the various motions in the simulation is the \hyperref[sec:pr2]{PR2} \cite{pr2}.
+This robot model has 2 movable arms, as one hand executes the motion. In addition to the fact that the \textit{PR2} \cite{pr2} model is already available in the \textit{PyCram} \cite{pycram} framework,
+the \textit{PR2} \cite{pr2} model also has enough joints and degrees of freedom to execute the motions we have adapted.
 
-The agent operates in a kitchen-like environment, the model of which is already included in the \textit{PyCRAM}-core and therefore particularly suitable for our use case. The kitchen also features elements such as drawers that can be opened, which are part of real world interactions. Additionally, the kitchen model includes a table on which the agent's actions are ultimately executed. Other furniture is also present in this environment, but is not relevant to our use case.
+The agent operates in a kitchen-like environment, the model of which is already included in the \textit{PyCRAM}-core \cite{pycram} and therefore particularly suitable for our use case. The kitchen also features elements such as drawers that can be opened, which are part of real world interactions. Additionally, the kitchen model includes a table on which the agent's actions are ultimately executed. Other furniture is also present in this environment, but is not relevant to our use case.
 
 \begin{figure}[H]
     \includegraphics[scale=0.35]{Graphics/bulletworldexample.png}
@@ -30,8 +31,8 @@ The agent operates in a kitchen-like environment, the model of which is already 
 For the simulation, we use the objects that have also been defined in the ontology (see \hyperref[sec:ContainersAndToolsAcquisition]{Containers and Tools Acquisition}).
 The following objects are available:
 \begin{itemize}
-	\item Container: small and large bowls (defined in the ontology as \textit{SaladBowl} and \textit{PastaBowl}), pan, pot, cup, and mug.
-	\item Tools: whisk, spoon, wooden spoon, and fork.
+	\item Container: \textit{Small and Large Bowls} (defined in the ontology as \textit{SaladBowl} and \textit{PastaBowl}), \textit{Pan, Pot, Cup} and \textit{Mug}.
+	\item Tools: \textit{Whisk, Spoon, Wooden Spoon} and \textit{Fork}.
 \end{itemize}
 
 \begin{figure}[H]
@@ -43,7 +44,7 @@ The following objects are available:
 NASER NASER NASER
 In the simulation itself, there are no ingredients. When executing the motion, we assume a set of given ingredients, which ultimately play a role in selecting the parameters (see \hyperref[chap:Data_representation]{Data Representation}). Representing ingredients in a simulation proves to be challenging, in addition to the fact that modeling the creation of the mixed ingredients would also be necessary.
 \section{Control Primitives}
-The framework \nameref{sec:pycram} offers a variety of pre-implemented control primitives. These primitives can be used as building blocks to structure the entire execution of a task. These primitives are also defined as \textit{Action Designators}, and the following ones are relevant for our use case:
+The framework \nameref{sec:pycram} \cite{pycram} offers a variety of pre-implemented control primitives. These primitives can be used as building blocks to structure the entire execution of a task. These primitives are also defined as \textit{Action Designators}, and the following ones are relevant for our use case:
 
 \begin{lstlisting}
 	NavigateAction(target_locations=[pickup_pose.pose]).
@@ -78,7 +79,7 @@ The framework \nameref{sec:pycram} offers a variety of pre-implemented control p
         grasps=["top"]).parameters_from_owl().perform()
 \end{lstlisting}
 
-The last \textit{Action Designator} is a modified version of the existing \textit{Mixing Action Designator}, which has been adapted for our purposes. This designator receives as parameters a container object and a tool object (both not significant for inference), as well as a set of ingredients and a task, which are significant for inference. The performed motion results from the inference together with the applied parameters (HERE POINT OUT TO SOMETHING).
+The last \textit{Action Designator} is a modified version of the existing \textit{Mixing Action Designator}, which has been adapted for our purposes. This designator receives as parameters a container object and a tool object (both not significant for inference), as well as a set of ingredients and a task, which are significant for inference. The performed motion results from the inference together with the applied parameters.
 
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/control_primitives.jpg}
@@ -90,14 +91,14 @@ The last \textit{Action Designator} is a modified version of the existing \texti
 \section{Simulated Motions}
 \label{sec:simulated motions}
 In this section, we aim to illustrate how the motions we have implemented.
-We will discuss the respective movements as well as the parameters involved. In \nameref{sec:pycram}, each generated pose used for executing 
+We will discuss the respective movements as well as the parameters involved. In \nameref{sec:pycram} \cite{pycram}, each generated pose used for executing 
 a mixing motion can be visualised via a visual axes. Each new axis added to the visualization shows the direction of the trajectory. 
 In this section, we therefore showcase the various motions as they appear in the simulation with these axes, along with a plot of the implemented movements.
 
 
 
 \subsection{Whirlstorm Motion}
-The \textit{Whirlstorm} motion was already an implemented motion in \nameref{sec:pycram}. In our version, we have slightly modified the motion (see Chapter \nameref{chap:Motions}).
+The \textit{Whirlstorm} motion was already an implemented motion in \nameref{sec:pycram} \cite{pycram}. In our version, we have slightly modified the motion (see \ref{sec:Motions}).
 
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/whirlstorm_showcase.jpg}
@@ -105,13 +106,13 @@ The \textit{Whirlstorm} motion was already an implemented motion in \nameref{sec
     \caption{Feautured \textit{Whirlstorm Motion}}
 \end{figure}
 
-In Figure \ref{fig:whirlstormshowcase}, it can be observed that the Whirlstorm motion has two starting points. Initially, the motion starts at the edge of the container and then moves counterclockwise to the second starting point, from which the motion continues analogously.
+In this Figure, it can be observed that the \textit{Whirlstorm} motion has two starting points. Initially, the motion starts at the edge of the container and then moves counterclockwise to the second starting point, from which the motion continues analogously.
 
 \subsection{Circular Motion}
 The \textit{Circular} motion is a newly implemented mixing variation that represents a simple circular movement along the container.
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/circular_showcase.jpg}
-    \label{fig:whirlstormshowcase}
+    \label{fig:circularshowcase}
     \caption{Feautured \textit{Circular} Motion}
 \end{figure}
 \subsection{Horizontal Eliptical}
@@ -121,14 +122,14 @@ Same as above
 The \textit{Folding} motion represents a gentle variation of the mixing motion. This motion starts at the edge of the container and moves toward the center. This is then repeated three more times until the cycle restarts with a slight shift.
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/folding_showcase.jpg}
-    \label{fig:whirlstormshowcase}
+    \label{fig:foldingshowcase}
     \caption{Feautured \textit{Folding} Motion}
 \end{figure}
 
 \section{Simulation to Real-World gap}
 \label{sec: simulation to real world gap}
 
-In a kitchen setting, a robot faces many challenges when it comes to MixingMotion, especially in the real world compared to a simulation.
+In a kitchen setting, a robot faces many challenges when it comes to \textit{Mixing Motions}, especially in the real world compared to a simulation.
 Unlike simulations where movements are precise and predictable, real-world scenarios throw unexpected obstacles, different surface textures, and possible interruptions from human interactions at the robot.
 Additionally, environmental factors can affect the robot's sensors, leading to misinterpretations or inaccurate readings.
 Dealing with the complexity and unpredictability of a real kitchen environment requires sophisticated planning and control algorithms that go beyond relying solely on simulation data.
@@ -154,8 +155,8 @@ In contrast to the controlled conditions of simulation where sensor inputs are p
 
 
 \section{Challenges and Difficutlies, Summary of the Simulation}
-Overall, we are satisfied with the results of the simulation. In another chapter (see Chapter EVALUATION), the various motions are tested and evaluated with different combinations of tasks, ingredients, tools, and containers. One point we would like to address is the initially planned motions, which have a height increment, meaning the motions would not only be executed in 2 dimensions but in 3. Implementing this in the simulation proved to be challenging, so we decided against further consideration of these motions due to the effort involved.
+Overall, we are satisfied with the results of the simulation. In the following section \nameref{sec:evaluation}, the various motions are tested and evaluated with different combinations of tasks, ingredients, tools, and containers. One point we would like to address is the initially planned motions, which have a height increment, meaning the motions would not only be executed in 2 dimensions but in 3. Implementing this in the simulation proved to be challenging, so we decided against further consideration of these motions due to the effort involved.
 
 At the current state the robot in simulation either succesfully executes actions or fails to do so.
 In case of failues there is no recovery to succesfully execute a mixing task. The robot is not able critically
-reflect upon its made failures, which will
+reflect upon its made failures.
