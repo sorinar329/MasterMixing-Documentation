@@ -8,6 +8,7 @@ This knowledge base defines domain knowledge about mixing, which encompasses sev
 Using assertional knowledge such as the task to execute, the set of ingredients as input for a mixing task, 
 and additional knowledge like which container to use, the knowledge base can infer motions which should be executed via \textit{SWRL} rules.
 Our goal is not to teach a robot how to execute a specific mixing motion, but rather infer a motion and relevant parameters for this motion. 
+\newpage
 \section{The Knowledgebase}
 Our knowledgebase consists of the superclasses \textit{Ingrediet, DesginedTool, Task} and \textit{Motion}. These are the concepets which we dervied from the \nameref{chap:Data_acquisition}. The following image illustrates the \textit{Mixing} ontology hierarchy.
 \begin{figure}[H]
@@ -142,7 +143,7 @@ How each of these motions is related to a task and the set of ingredients will b
 In order to infer the right motion based on the ingredients and task input, rules have to be defined. This rules are \nameref{sec:SWRL}-rules.
 In this section we want to illustrate the inference on a high level.
 The rules can be thoguht as if conditions, which will then result in a motion, 
-for example, if we regard the combination of the task \textit{Mixing} and the ingredient type \textit{Liquid}, we infer the motion \textit{Whirlstormmotion}. 
+for example, if we regard the combination of the task \textit{Mixing} and the ingredient type \textit{Liquid}, we infer the motion \textit{Whirlstorm Motion}. 
 This can be done for every task and ingredient combination. 
 The inference can be illustrated with decision trees which will be shown in the following section for every task and ingredient type combination available. 
 
@@ -151,7 +152,7 @@ The inference can be illustrated with decision trees which will be shown in the 
 \includegraphics[scale=0.25]{Graphics/MixingDecisionTree.jpg}
 \caption{Mixing decision tree}
 \end{figure}
-\textbf{Definition:} In the context of baking or cooking, a mixing task refers to the process of combining multiple ingredients thoroughly to create a homogeneous mixture. The goal is to distribute the ingredients evenly, ensuring that each component contributes to the overall texture, flavor, and consistency of the final dish or baked good. Mixing is a fundamental step in many recipes and is essential for achieving a balanced and cohesive result (Quelle).
+\textbf{Definition:} In the context of baking or cooking, a mixing task refers to the process of combining multiple ingredients thoroughly to create a homogeneous mixture. The goal is to distribute the ingredients evenly, ensuring that each component contributes to the overall texture, flavor, and consistency of the final dish or baked good. Mixing is a fundamental step in many recipes and is essential for achieving a balanced and cohesive result.
 
 
 As can be seen from the illustration, the mixing task can primarily be mapped to the Whirlstorm motion. This is not surprising when considering the definition, as this motion results in the uniform distribution of all ingredients in the container.
@@ -162,26 +163,26 @@ As can be seen from the illustration, the mixing task can primarily be mapped to
 \textbf{Definition:}
 In the context of baking or cooking, a stirring task involves using a utensil, such as a spoon, spatula, or whisk, to agitate and circulate the ingredients within a mixture. The purpose of stirring is to achieve a uniform distribution of ingredients
 
-In comparison to \textit{Mixing}, the \textit{Stirring} task, depending on the ingredients, maps to a broader range of motions. In addition to the \textit{WhirlstormMotion}, the \textit{Circular Motion} is used here for the first time. This is particularly important when considering the \textit{Stirring} task with the ingredient type \textit{Liquid}, as one does not want the ingredients to be whirled, as would be the case with the \textit{Whirlstorm Motion}, but rather just stirred.
+In comparison to \textit{Mixing}, the \textit{Stirring} task, depending on the ingredients, maps to a broader range of motions. In addition to the \textit{Whirlstorm Motion}, the \textit{Circular Motion} is used here for the first time. This is particularly important when considering the \textit{Stirring} task with the ingredient type \textit{Liquid}, as one does not want the ingredients to be whirled, as would be the case with the \textit{Whirlstorm Motion}, but rather just stirred.
 \subsection{Beating}
 \begin{figure}[H]
     \includegraphics[scale=0.25]{Graphics/BeatingDecisionTree.jpg}
     \end{figure}
 \textbf{Definition:}
-In the context of baking and cooking, a "beating" task refers to the process of vigorously stirring or mixing ingredients to achieve a specific texture or consistency. Beating is often done to incorporate air into the mixture, create smooth and uniform blends, or alter the physical properties of certain ingredients.
+In the context of baking and cooking, a \textit{Beating} task refers to the process of vigorously stirring or mixing ingredients to achieve a specific texture or consistency. \textit{Beating} is often done to incorporate air into the mixture, create smooth and uniform blends, or alter the physical properties of certain ingredients.
 
-In addition to the Whirlstorm Motion, the Horizontal Eliptic Motion also predominates here. This can be derived from the definition as well, as this motion requires a wild mixing style, to which the Horizontal Eliptic Motion aligns.
+In addition to the \textit{Whirlstorm Motion}, the \textit{Horizontal Eliptic Motion} also predominates here. This can be derived from the definition as well, as this motion requires a wild mixing style, to which the \textit{Horizontal Eliptic Motion} aligns.
 \subsection{Whisking}
 \begin{figure}[H]
     \includegraphics[scale=0.25]{Graphics/WhiskingDecisionTree.jpg}
     \end{figure}
-\textbf{Definion:}In the context of baking and cooking, a "whisking" task involves using a kitchen utensil called a whisk to mix, blend, or beat ingredients. A whisk typically consists of wire loops or a coil attached to a handle, and it is designed to incorporate air into mixtures, break up clumps, and create a smooth and uniform texture.
+\textbf{Definion:}In the context of baking and cooking, a \textit{Whisking} task involves using a kitchen utensil called a whisk to mix, blend, or beat ingredients. A whisk typically consists of wire loops or a coil attached to a handle, and it is designed to incorporate air into mixtures, break up clumps, and create a smooth and uniform texture.
 
 \subsection{Folding}
 \begin{figure}[H]
     \includegraphics[scale=0.25]{Graphics/FoldingDecisionTree.jpg}
     \end{figure}
 \textbf{Definition:}
-In the context of baking and cooking, a "folding" task refers to a gentle mixing technique used to incorporate ingredients without deflating or destroying the air bubbles that have been created. Folding is often employed when combining a lighter mixture (such as whipped cream or beaten egg whites) with a denser one (such as a batter or a heavier mixture). The goal is to maintain the desired texture, lightness, or fluffiness in the final dish.
+In the context of baking and cooking, a \textit{Folding} task refers to a gentle mixing technique used to incorporate ingredients without deflating or destroying the air bubbles that have been created. \textit{Folding} is often employed when combining a lighter mixture (such as whipped cream or beaten egg whites) with a denser one (such as a batter or a heavier mixture). The goal is to maintain the desired texture, lightness, or fluffiness in the final dish.
 
-Theoretically, we wouldn't need to graphically represent the Folding Task since each task and ingredient combination maps to a single motion, the Folding Motion. The graphic was nevertheless included for completeness. The Folding Task requires a specific movement that does not remove the air in the mixture, and any other movement would fail.
+Theoretically, we wouldn't need to graphically represent the \textit{Folding} Task since each task and ingredient combination maps to a single motion, the \textit{Folding} Motion. The graphic was nevertheless included for completeness. The \textit{Folding} Task requires a specific movement that does not remove the air in the mixture, and any other movement would fail.
