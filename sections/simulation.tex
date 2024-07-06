@@ -52,11 +52,8 @@ The following objects are available:
     \label{fig:toolscontainersmodels}
     \caption{Used models for the simulation: \textit{Fork, WoodenSpoon, Spoon, Whisk, Mug, Cup, Pan, Pot, Small Bowl, Big Bowl}}
 \end{figure}
-NASER NASER NASER
 In the simulation environment there are no models of ingredients included. Executing motions in the simulation is done as if the motion is executed in 
 the vacuum, physical laws regarding ingredient interaction do not apply. The set of ingredients are nonetheless relevant because those ingredients have to be mixed.
-LIES DAS OBEN DURCH SORIN
-In the simulation itself, there are no ingredients. When executing the motion, we assume a set of given ingredients, which ultimately play a role in selecting the parameters (see \hyperref[chap:Data_representation]{Data Representation}). Representing ingredients in a simulation proves to be challenging, in addition to the fact that modeling the creation of the mixed ingredients would also be necessary.
 \section{Control Primitives}
 The framework \nameref{sec:pycram} \cite{pycram} offers a variety of pre-implemented control primitives. These primitives can be used as building blocks to structure the entire execution of a task. These primitives are also defined as \textit{Action Designators}, and the following ones are relevant for our use case:
 
@@ -64,9 +61,6 @@ The framework \nameref{sec:pycram} \cite{pycram} offers a variety of pre-impleme
 	NavigateAction(target_locations=[pickup_pose.pose]).
 					resolve().perform()
 \end{lstlisting}
-
-\newpage
-
 \begin{lstlisting}
 	PickUpAction(object_designator_description=tool_object,
                  arms=pickup_pose.reachable_arms,
@@ -227,47 +221,39 @@ Once all descriptions are available for the \textit{MixingActionDesignator}, it 
 \end{enumerate}
 \subsection{Simulated Motions}
 \label{sec:simulated motions}
-\textbf{VON NASER}
+
 This section will illustrate the results of our implemented motions in the \textit{MixingActionDesignator}. 
 We will contrast each motion with a plot and a picture, which contain the generated poses with their visualized axes.
 
-\textbf{ALTER STAND}
-In this section, we aim to illustrate how the motions we have implemented.
-We will discuss the respective movements as well as the parameters involved. In \nameref{sec:pycram} \cite{pycram}, each generated pose used for executing 
-a mixing motion can be visualised via a visual axes. Each new axis added to the visualization shows the direction of the trajectory. 
-In this section, we therefore showcase the various motions as they appear in the simulation with these axes, along with a plot of the implemented movements.
-
-
 \subsection*{Whirlstorm Motion}
-The \textit{Whirlstorm} motion was already an implemented motion in \nameref{sec:pycram} \cite{pycram}. In our version, we have slightly modified the motion (see \ref{sec:Motions}).
 
 \begin{figure}[H]
-    \includegraphics[scale=0.3]{Graphics/whirlstorm_showcase.jpg}
+    \includegraphics[scale=0.27]{Graphics/whirlstorm_showcase.jpg}
     \label{fig:whirlstormshowcase}
     \caption{Feautured \textit{Whirlstorm Motion}}
 \end{figure}
 
-In this Figure, it can be observed that the \textit{Whirlstorm} motion has two starting points. Initially, the motion starts at the edge of the container and then moves counterclockwise to the second starting point, from which the motion continues analogously.
+
 
 \subsection*{Circular Motion}
-The \textit{Circular} motion is a newly implemented mixing variation that represents a simple circular movement along the container.
+
 \begin{figure}[H]
-    \includegraphics[scale=0.3]{Graphics/circular_showcase.jpg}
+    \includegraphics[scale=0.27]{Graphics/circular_showcase.jpg}
     \label{fig:circularshowcase}
     \caption{Feautured \textit{Circular} Motion}
 \end{figure}
-NASER NASER NASER
+
+
 \subsection*{Horizontal Eliptical}
 \begin{figure}[H]
-    \includegraphics[scale=0.3]{Graphics/horizontal_eliptical_chart.jpg}
+    \includegraphics[scale=0.27]{Graphics/horizontal_showcase.jpg}
     \label{fig:circularshowcase}
     \caption{Feautured \textit{Horizontal Eliptical} Motion}
 \end{figure}
 
 \subsection*{Folding Motion}
-The \textit{Folding} motion represents a gentle variation of the mixing motion. This motion starts at the edge of the container and moves toward the center. This is then repeated three more times until the cycle restarts with a slight shift.
 \begin{figure}[H]
-    \includegraphics[scale=0.3]{Graphics/folding_showcase.jpg}
+    \includegraphics[scale=0.27]{Graphics/folding_showcase.jpg}
     \label{fig:foldingshowcase}
     \caption{Feautured \textit{Folding} Motion}
 \end{figure} 
@@ -305,33 +291,6 @@ or even damage to the objects or the robot itself. The variability in object sha
 and textures requires the robot to continuously adapt its grasping strategy, further emphasizing the need for precise and reliable pose estimation 
 to maintain efficiency and accuracy in the task.
 
-
-
-\textbf{SORINS TEXT}
-
-In a kitchen setting, a robot faces many challenges when it comes to \textit{Mixing Motions}, especially in the real world compared to a simulation.
-Unlike simulations where movements are precise and predictable, real-world scenarios throw unexpected obstacles, different surface textures, and possible interruptions from human interactions at the robot.
-Additionally, environmental factors can affect the robot's sensors, leading to misinterpretations or inaccurate readings.
-Dealing with the complexity and unpredictability of a real kitchen environment requires sophisticated planning and control algorithms that go beyond relying solely on simulation data.
-
-In simulation the tools have a predefined orientation, so that the robot can pick the tool up in the same way every time.
-Going into real world, this can cause a problem, because the tool might not be picked up at the handle, resulting
-a mixing task to be executed with the handle instead of the tip of the tool.
-
-When it comes to mixing various ingredients in the real world as opposed to a simulation, several factors can go awry. Firstly, the physical properties of ingredients can vary widely, such as viscosity, density, and texture, which may not be accurately represented in a simulation.
-This can lead to unexpected interactions between ingredients, resulting in inconsistent mixing patterns or clumping. Additionally, the dynamics of the mixing process may be influenced by external factors such as temperature variations, air currents, and uneven distribution of ingredients within the mixing vessel, all of which are challenging to simulate accurately.
-Moreover, the mechanical limitations of the robot, such as its speed, precision, and ability to adapt to changing conditions, can further complicate the mixing process in the real world.
-These discrepancies between simulation and reality highlight the need for robust control strategies that can adapt to the complexities of real-world mixing scenarios.
-
-From a perception standpoint, uncertainty in the real world during mixing tasks can stem from various sources.
-Jumping from simulation to real world will immediately introduce the lack of knowledge, where objects are located, what kinds of objects
-the robots is seeing, what its sizes are. The robot will be in need of a perception framework, which can detect and localize objects in a scene,
-is able to approxiamate bounds of an object.
-Another significant factor is the limited accuracy and reliability of sensors in capturing detailed information about the environment and the ingredients being mixed.
-Lighting conditions, reflections, and occlusions can obscure the robot's view, leading to incomplete or distorted perception of the environment.
-Additionally, the inherent variability in appearance and shape of ingredients can pose challenges for object recognition algorithms, resulting in misidentification or ambiguity.
-Furthermore, sensory noise and drift may affect the consistency of sensor readings over time, further complicating perception.
-In contrast to the controlled conditions of simulation where sensor inputs are pristine, real-world perception introduces a level of uncertainty that necessitates robust perception algorithms capable of handling noise, ambiguity, and environmental variability to ensure accurate understanding and representation of the mixing task.
 \section{Challenges and Difficutlies, Summary of the Simulation}
 Overall, we are satisfied with the results of the simulation. In the following section \nameref{sec:evaluation}, the various motions are tested and evaluated with different combinations of tasks, ingredients, tools, and containers. One point we would like to address is the initially planned motions, which have a height increment, meaning the motions would not only be executed in 2 dimensions but in 3. Implementing this in the simulation proved to be challenging, so we decided against further consideration of these motions due to the effort involved.
 
