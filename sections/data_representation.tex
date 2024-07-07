@@ -3,18 +3,19 @@
 \begin{figure}[H]
     \includegraphics[scale=0.25]{Graphics/structure_overview2.jpg}
 \end{figure} 
-In this chapter we will present you the mixing knowledgegraph using \textit{OWL} as basis to formally define knowledge.
+In this chapter we will present you the mixing knowledge base using \textit{OWL} as basis to formally define knowledge.
 This knowledge base defines domain knowledge about mixing, which encompasses several aspects derived from the data acquisition.
 Using assertional knowledge such as the task to execute, the set of ingredients as input for a mixing task, 
-and additional knowledge like which container to use, the knowledge base can infer motions which should be executed via \textit{SWRL} rules.
+and additional knowledge like which container to use, the knowledge base can infer motions from \textit{SWRL} rules using a reasoner capable 
+with reasoning over these rules.
 Our goal is not to teach a robot how to execute a specific mixing motion, but rather infer a motion and relevant parameters for this motion. 
 \newpage
-\section{The Knowledgebase}
-Our knowledgebase consists of the superclasses \textit{Ingrediet, DesginedTool, Task} and \textit{Motion}. These are the concepets which we dervied from the \nameref{chap:Data_acquisition}. The following image illustrates the \textit{Mixing} ontology hierarchy.
+\section{The Knowledge Base}
+Our knowledge base consists of the superclasses \textit{Ingredient, DesginedTool, Task} and \textit{Motion}. These are the concepts which we dervied from the \nameref{chap:Data_acquisition}. The following image illustrates the \textit{Mixing} ontology hierarchy.
 \begin{figure}[H]
     \includegraphics[scale=0.5]{Graphics/classHierarchy/taxonomy.png}
     \centering
-    \caption{Mixing Ontology Taxonomy}
+    \caption{The \textit{mixing} Ontology Taxonomy}
 \end{figure}
 
 \subsection{Ingredients}
@@ -22,7 +23,7 @@ Our knowledgebase consists of the superclasses \textit{Ingrediet, DesginedTool, 
 \begin{figure}[H]
     \includegraphics[scale=0.45]{Graphics/classHierarchy/ingredients_hierarchy.png}
     \centering
-    \caption{Ingredients Hierarchy in Mixing Ontology}
+    \caption{Ingredients Hierarchy in the \textit{mixing} Ontology}
 \end{figure}
 
 Ingredients are primarily divided into \textit{Dry} and \textit{Wet}, with a need for finer differentiation.
@@ -50,7 +51,7 @@ Extending the hierarchy of ingredients can be done by for example integrating \t
 \begin{figure}[H]
     \includegraphics[scale=0.45]{Graphics/classHierarchy/tools_hierarchy.png}
     \centering
-    \caption{Tools and Container Hierarchy in Mixing Ontology}
+    \caption{Tools and Container Hierarchy in the \textit{mixing} Ontology}
 \end{figure}
 
 Using the identified tools and containers from the data acquisition, we partially use \textit{SOMA} \cite{soma} to define parts of the containers and tools hierarchy.
@@ -71,22 +72,22 @@ Using \textit{SOMA-Home} has a few advantages:
 \begin{figure}[H]
     \includegraphics[scale=0.45]{Graphics/classHierarchy/task_hierarchy.png}
     \centering
-    \caption{Task Hierarchy in Mixing Ontology}
+    \caption{Task Hierarchy in the \textit{mixing} Ontology}
 \end{figure}
 
 Mixing tasks are subclasses of the \textit{Task} superclass, where \textit{Task} is a \textit{DUL} concept. 
 All variations of mixing tasks, which were acquired during our data acquisition, are included in the superclass \textit{Task}. 
-These tasks include Stirring, which mostly involves a circular motion, Beating, which is mainly used in the context of eggs and other wet ingredients, 
-Folding, which represents a gentle type of mixing, and Whisking, which is similar to beating. 
-While some of these tasks have only one motion associated with them, like the Folding task, 
-we discovered that the other tasks can have multiple motions associated with them. 
+These tasks include \textit{Stirring}, which mostly involves a circular motion, \textit{Beating}, which is mainly used in the context of eggs and other wet ingredients, 
+\textit{Folding}, which represents a gentle type of mixing, and Whisking, which is similar to beating. 
+While some of these tasks have only one motion associated with them, like the folding task, 
+we discovered that all other tasks can have multiple motions associated with them. 
 This decision is influenced by the set of ingredients on which the motion will be performed.
 
 \subsection{Motions}
 \begin{figure}[H]
     \includegraphics[scale=0.45]{Graphics/classHierarchy/motions_hierarchy.png}
     \centering
-    \caption{Motion Hierarchy in Mixing Ontology}
+    \caption{Motion Hierarchy in the \textit{mixing} Ontology}
 \end{figure}
 
 The top level class \textit{Motion} is the class of all possible motions which can be performed. MixingMotion a subclass of motion, are all mixing motions 
