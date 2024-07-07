@@ -169,15 +169,18 @@ In the following, we aim to structure the extracted information from the videos 
 
 Based on the extracted information, we conclude that for our goals, the following aspects, in addition to the task, are important and will be further considered:
 \begin{itemize}
-  \item \textbf{Ingredients}: The ingredients play a crucial role in the movement decision associated with the tasks and will be defined more precisely.
-  \item \textbf{Tools}: The tools used may not be decisive in the movement decision. Since we do not consider electric tools, every motion can be performed with any tool.
-  \item \textbf{Container}: As conducted with the tools, the container wont play a crucial in the motion decision. 
+  \item \textbf{Ingredients}: The ingredients play a crucial role deriving motions associated with the task to be executed. 
+  This is going to be explained.
+  \item \textbf{Tools}: We don't derive a motion to be executed from tools. We ignore electrical tools, every motion
+  we are going to present can be performend with any tool.
+  \item \textbf{Container}: Similarly to tools, the container won't play a crucial part which motion has to be performed, but 
+  the range of motion is limited by the container.
   \item \textbf{Motions}: The motions ultimately represent the movement of the robot for our implementation. These movements are extracted from the videos and defined in alignment with robot motions.
 \end{itemize}
 
 \subsubsection{Ingredients}
-Through the video analysis , we come to the conclusion that the nature of ingredients is important. 
-Primarily, ingredients can be divided into two main categories: \textit{Dry} and \textit{Wet} \cite{Ohene2017}. 
+Through the video analysis, we conclude that the type of ingredients is very important. 
+Primarily, we divide ingredients two main categories: \textit{Dry} and \textit{Wet} \cite{Ohene2017}. 
 This division becomes crucial, especially regarding the measurement of quantities for each type of ingredient.
 
 For our case, a somewhat finer categorization of ingredients is necessary to map the various movements sensibly to the given types. 
@@ -186,7 +189,8 @@ This corresponds to ingredients falling under the \textit{Wet} ingredients but w
 This is significant because some movements differ when the given ingredients are \textit{Semi-Liquid} or \textit{Liquid}.
 
 We will also include 2 sub-categories for the \textit{Dry} category, namely the \textit{Solid} and \textit{Powder} ingredients category. 
-This differs from the each other in that it consists of solid components, while we define the \textit{Powder} category to include powdery substances. The \textit{Solid} category encompasses foods like vegetables, fruits, and meats. 
+This differs from the each other in that it consists of solid components, while we define the \textit{Powder} category to include powdery substances. 
+The \textit{Solid} category encompasses whole foods like vegetables, fruits, and meats. 
 Through these distinctions, we can create a definition refining the ingredient categories.
 
 Our initial set of ingredients is: \textit{Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}, \textit{Egg White, Egg yolk, Butter, Whipped Cream}, \textit{Flour, Salt, Sugar, Baking Soda, Cocoa Powder},
@@ -197,7 +201,7 @@ In the chapter \nameref{chap:Data_representation} these classes will be categori
 
 \subsubsection{Containers and Tools}
 \label{sec:ContainersAndToolsAcquisition}
-Throughout the analysis of \textit{WikiHow} videos common tools and containers were identied during the exuecution of various mixing tasks.
+Throughout the video analyses common tools and containers were identied during the exuecution of various mixing tasks.
 The most dominant occuring container was a bowl, followed by a pan, cup and then lastly a mug.
 Those objects can be used to store and serve food for everyday meals. Thus these objects can be summarised 
 into a single concept - \textit{Crockery} \cite{crockery}
@@ -223,7 +227,7 @@ Containers are summarized into the concept of crockery.
 \subsubsection{Motions}
 \label{sec:Motions}
 From these videos, we extracted information about the executed motions. In this section, we will describe what the extracted motions are. 
-Additionally, an abstract description is provided of how each motion is implemented in pycram2, using formulas and plots for visualization.
+Additionally, an abstract description is provided of how each motion is implemented in \textit{PyCRAM}, using formulas and plots for visualization.
 We hold the following assumptions about each motion:
 
 \begin{itemize}
@@ -269,7 +273,6 @@ converting them into radians, and using formulas to compute the circular coordin
 The folding motion differs from circular motion; instead, it follows a linear trajectory.
 This movement consists of lifting part of the ingredients and gently folding them over the rest.
 A thorough mixing of the ingredients is possible because of this motion. Repetition of this method ensures even distribution throughout the mixture. 
-It's a methodical and delicate approach to ingredient integration.
 \newline
 \newline
 In its current implementation, the motion follows a singular line. One endpoint rests on the edge of the container, while the other is positioned at the center.
@@ -297,7 +300,7 @@ and applying the transformation to the line using this function:
 
 In this example, the folding motion is applied to four different sections of the circular container.
 The number of areas covered or the angle at which the folding line is adjusted is not critical.
-The fundamental movement remains consistent: the motion proceeds along a line and then reverses."
+The fundamental movement remains consistent: the motion proceeds along a line and then reverses.
 
 After executing the folding motion to cover various parts of the container, we apply a transformation with a different angle $\phi$.
 
@@ -309,14 +312,15 @@ After executing the folding motion to cover various parts of the container, we a
 \end{figure}
 
 \paragraph{Horizontal Elliptic Motion}
-The horizontal elliptic motion is executed on a horizontal plane and involves multiple ellipses to cover the entire container.
-This motion is commonly employed in the task of beating, where ingredients within a container are thoroughly mixed through stirring or beating.
+The horizontal elliptic motion is executed on a horizontal plane and involves multiple ellipses to cover the entire container. 
+This motion is commonly used in beating tasks, where ingredients are mixed with rapid, fast motions that resemble quick stirring or beating.
 \newline
 \newline
 Using the function to compute x,y coordinates on a circle, we use two different radii.
 One radius is a small value that is not zero, to make each ellipse narrow. The smaller that radius, the narrower the ellipse becomes. The other radius is sampled from an interval. 
 The interval is defined as \[radii = [radius, \frac{radius} {2} ]\]
-meaning the sampled radius ranges from the full radius of the container to half of that radius.
+meaning the sampled radius ranges from the full radius of the container to half of that radius. 
+Defining this interval helps us fit ellipses at the edges of the container, making them smaller.
 
 A sampled radius from this interval is taken, if the following condition is true for all resulting circle coordinates:
 \[\sqrt{(xCord - xCenter)^2 + (yCord - yCenter)^2} < radius\] 
@@ -387,7 +391,7 @@ The third and fourth look like this:
 This motion is a circular motion, where the tool is dipped into the container, causing the ingredients to be stirred up and down.
 This creates a consistent mixture. However, since dipping is involved, 
 which directly contradicts our assumption that height remains constant over the course of the motion, and eventually leaves the boundaries of the used container, 
-we don't provide an abstract implementation of this motion. This motion will have a representation in our \textit{mixing} ontology but won't be implemented in pycram2.
+we don't provide an abstract implementation of this motion. This motion will have a representation in our \textit{mixing} ontology but won't be implemented in \textit{PyCRAM}.
 
 
 \section{Data Acquisition Conclusion}
