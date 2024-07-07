@@ -1,46 +1,59 @@
 \chapter{Knowledge Graph Visualization Tool}
 \label{chap:OWLViz}
 Many existing knowledge graph visualizations are restricted to displaying certain types of relationships. 
-Most commonly, a class hierarchy of an ontology is visualized for the user. Other graph visualization tools are capable of visualizing data.
- A few of these graph visualizers are mentioned in \nameref{chap:Related_work}.
+Most commonly, a class hierarchy of an ontology is visualized for the user. Other graph visualization tools have built in features capable of 
+displaying relationships between instantiated classes or \textit{NamedIndividuals}.
+A few of these graph visualizers are mentioned in \nameref{chap:Related_work}.
 
-What we didn't find is a graph visualizer capable of displaying complex class constructs, and a few features were missing as well.
-Therefore, we decided to develop our own graph visualizer, which is capable of displaying class hierarchies with complex constructs.
+What we didn't find is a graph visualizer capable of displaying complex class expressions, therefore, we decided to develop our own graph visualizer, 
+which is capable of displaying class hierarchies with complex constructs.
 
-This chapter will present the main features of our \textit{Knowledge Graph Visualization Tool} and explain its capabilities and limitations.
+This chapter will present the main features of our \textit{Knowledge Graph Visualization Tool}, where explain explain its capabilities and limitations.
 
 \section{Main concept}
 \label{sec:MainConceps}
 
-We decided on 3 main components that the new framework should include:
+We present you our three main concepts, which are incldued in the \textit{Knowledge Graph Visualization Tool}:
 \begin{itemize}
-    \item Clear Visualization: Our first goal was to facilitate navigation through the knowledge graph by highlighting the relations and classes of the graph as clearly as possible. This could be achieved, for example, by using different colors for different classes or by highlighting a class and its associated classes to which a relation exists. Additionally, we aim to make the graph as clear as possible and reduce the number of nodes to those that are ultimately essential for visualization.
-    \item To clarify the relations between the queries, we implement a query builder that, given a class, can point to other classes through the relation, which in turn can point to further classes through another relation, as long as the user desires or there are no further relations. This should be done without having to use the SPARQL query language, making it much easier for the user. The \textit{Query Builder} outputs a filtered graph with the selected triples.
-    \item Rule Based Inference: Since a part of our work relies on inferences, we want to implement an inference query that can indicate inferred parameters based on the input of certain classes. This use case is quite specific to our scenario, but it should also be able to map to other ontologies. The output should be an action tree with the inferred parameters and a visualized graph with the associated classes that play a role in the inference.
+    \item Visualization of Class Hierarchy: Our primary goal is to visualise a class hierarchy, where class relations are visible to the 
+    user and visualise complex class expressions as a part of the corresponding class. This will be done as compact as possible. 
+    Furthermore to differentiate between classes and class expressions we aim to make such distinction via different coloring. 
+    Additionally, we aim to keep the amount of nodes and edges low, to reduce clutter in the graph, making exploring graph easier and 
+    increase performance of visualizing such graphs.  
+    \item \textit{Query Builder}: To clarify the relations between the queries, we implement a query builder that, given a class, can point to other classes through the relation, 
+    which in turn can point to further classes through another relation, as long as the user desires or there are no further relations. 
+    No \textit{SPARQL} knowledge is required query language, making it usable for the user. 
+    The \textit{Query Builder} outputs a filtered graph with the selected triples and generates a \textit{SPARQL} query.
+    \item \textit{Rule Based Inference}: Our thesis relies on running inference over \textit{mixing} 
+    we implement an inference tool running reasoning over our ontology, to find motions, analogously to \nameref{subsection:MixingActionSWRL}.
+    The result is visualized in a graph and a sequence of actions in natural language are generated, to highlight inferred knowledge.  
 \end{itemize}
 
 \section{Features}
 
 \begin{figure}[H]
+    \centering
     \includegraphics[scale=0.35]{Graphics/architecture_simplified.jpg}
     \label{fig:OWLViz_architecture}
-    \caption{Architecture chart for the Knowledge Graph Visualization Tool framework}
+    \caption{Architecture chart for the \textit{Knowledge Graph Visualization Tool} framework}
 \end{figure}
 
 \subsection{Graph Visualization}
 In this section, we present a simple example of our framework, from processing the ontology to visualization in the web application. 
-This is intended to facilitate the reader's understanding of our framework. 
-For this purpose, we create a small and simple ontology to explain the program flow in a straightforward manner. 
-Additionally, we aim to demonstrate how this ontology is processed and what the interface between the frontend and backend looks like.
-
+For this purpose, we create a small and simple ontology to explain the basic visualization of an ontolgy. 
 The visualization library \textit{vis.js} \cite{visjs} has been used to create graph visualization in web-browsers.
 
 \begin{figure}[H]
+    \centering
     \includegraphics[scale=0.4]{Graphics/simple_ontology.jpg}
     \caption{Trivial example of an ontology}
 \end{figure}
     
-The ontology created for this purpose aims to provide a simple representation of various animal species. It includes superclass categories such as \textit{Fruits, Vegetables, Meat, and Dairy Products}, as well as subclasses like \textit{Apple} and \textit{Orange}, which are subclasses of the \textit{Fruits} superclass. This ontology does not depict complicated relations; rather, the individual classes are only connected to each other through the \textit{subClassOf} relation.
+The ontology created for this purpose aims to provide a simple representation of various food products. 
+It includes superclass categories such as \textit{Fruits, Vegetables, Meat, and Dairy Products}, as well as subclasses like \textit{Apple} and \textit{Orange}, 
+which are subclasses of the \textit{Fruits} superclass. 
+This visualization is a simple visualization of a class hierarchy of food products, where each node is connected via 
+a directed edge labeled with \textit{subClassOf}.
 
 \subsection{Graph Processing}
 The core component of the graph visualizer is the visualization of a hierarchy of classes. In this hierarchy, two nodes are connected by a directed edge, 
@@ -49,7 +62,7 @@ where the source node is the child node and the target node is the parent node. 
 To create the visualization from the graph, the ontology is parsed, and a triple matching process is applied to identify 
 all classes that use \textit{subClassOf} or \textit{equivalentClass} as predicates.
 
-By default, all nodes are uniformly colored green. However, in the \textit{mixing} and \textit{FoodCutting} ontologies, 
+By default, all nodes are uniformly colored green. However, in the \textit{mixing} and \textit{FoodCutting} \cite{Kuempel2024} ontologies, 
 additional colors are used to highlight differences.
 \begin{figure}[H]
     \includegraphics[scale=0.5]{Graphics/OwlVisualizer/graphProcessing1.png}
@@ -73,7 +86,7 @@ Therefore, a more compact visualization of complex restrictions is necessary to 
 
 To achieve a compact representation of class expressions, we recursively traverse the parsed class expression, 
 searching for essential information such as the relations used and their corresponding values. 
-All blank nodes are implicitly skipped and not visualized. Additionally, meta information is excluded.
+All blank nodes are implicitly skipped and not visualized. Additionally, meta information are excluded.
 
 The visualizer can also handle nested expressions, as well as intersections and unions. Each \textbf{AND} node indicates that all connected elements belong to the intersection.
 Similarly, each \textbf{OR} node indicates that all connected elements belong to the union.
@@ -147,34 +160,35 @@ for classes and explore the class hierarchy without assuming prior familiarity w
     \caption{Focus node}
 \end{figure}
 
-Users can press Enter inside the search bar or click the search button to immediately focus on the chosen class. 
+Users can press \textbf{Enter} inside the search bar or click the search button to immediately focus on the chosen class. 
 Focusing on the class is achieved by zooming to the respective node and highlighting it. 
 This allows users to quickly identify the corresponding node along with all of its parent and child nodes.
 
 \subsection{Custom Inference - Mixing}
-
-One option for the user to execute functions on a graph is the \textit{Custom Inference Builder}. 
-It's important to note that the \textit{Custom Inference Builder} is not a generic use case and in this version, it's tailored to the \textit{Mixing} Graph (see \nameref{chap:Data_representation}). 
-In our case, we infer a motion and its corresponding parameters based on a given task and a list of ingredients. 
+To understand which motion can be inferred using the \textit{mixing} ontology, we created
+the \textit{Custom Inference} (see \nameref{chap:Data_representation}) feature. The user simply selects the task to 
+execute and the ingredients to include in the specific task. 
 \begin{figure}[H]
+    \centering
     \includegraphics[scale=0.45]{Graphics/inference_user_input.png}
-    \caption{Select fields for the inference.}
+    \caption{Select Task and Ingredients.}
 \end{figure}
-The Custom Inference Builder then generates a graph that only displays the corresponding nodes for clarity, as well as a task tree that can be followed by an agent.
-In the first step, the task and the ingredients are sent to the backend for inference, which in turn sends back the inferred motion and parameters to the frontend.
-The backend function processes the inference with the received parameters, which results in a task tree as well as a filtered graph, that contains only the classes that are used in the inference, these are then used for visualization.
-In the frontend, the data is processed using an web request. After sending the task and the list of ingredients, the response, which includes the generated graph and task tree, is returned to the frontend and processed. A \textit{JavaScript}-function then creates a graph with the nodes and edges received from the backend and generates a table with a variable number of rows based on the backend's output.
-After processing the data, the graph and the task tree are visualized based on the user input.
+The \textit{Custom Inference} feature generates a graph that contains assertional knowledge, such as the task and the ingredients. 
+Furthermore, the inferred motion along with its parameters is visualized for the user in a single graph. 
+Additionally, a sequence of steps is generated, which the robot can execute to successfully complete its task. 
+To achieve this, the form data is processed, and a reasoning process is initiated to run inference over our \textit{SWRL} rules, extract all inferred knowledge, 
+and create a visualization and a sequence of actions.
 
 \begin{figure}[H]
+    \centering
     \includegraphics[scale=0.5]{Graphics/new_inference_graph.png}
-    \caption{inferred graph and task tree.}
+    \caption{Visualize Graph and Sequence of Actions.}
     \label{fig:graph_inferred}
 \end{figure}
 \subsection{Query Builder}
 The \textit{Query Builder} is a feature that provides users with suggested triples, allowing them to explore the graph in an intuitive manner.
 No \textit{SPARQL} knowledge is required. This feature generates a visualization of the selected triples and constructs a \textit{SPARQL} query, 
-which only needs slight modification to be queryable.
+which can be modified to the users needs.
 
 \paragraph{Triple Matching}
 Triple Matching allows users to select a subject, predicate, and object to explore the graph. 
@@ -230,28 +244,20 @@ This feature will help users unfamiliar with querying ontologies by providing th
 \begin{figure}[H]
     \includegraphics[width=0.5\textwidth]{Graphics/OwlVisualizer/queryBuilder5.png}
     \centering
-    \caption{SPARQL View}
+    \caption{\textit{SPARQL} View}
 \end{figure}
 
 \section{Limiations}
 
-\paragraph{Using vis.js}
+\paragraph{Using vis.js and Visualization of NamedIndividuals}
 
-The graph visualization library \textit{vis.js} suffers from poor performance when handling large graphs, 
-a known issue acknowledged by its developers \cite{visjs}. 
-This performance limitation primarily stems from the physics simulation used in its force-directed graph layout. 
-The simulation iteratively attempts to arrange nodes to form a readable graph by separating and clustering nodes based on their connections. 
-However, this process becomes increasingly time-consuming as the number of interconnected nodes and edges grows. 
-Consequently, the more densely interconnected the graph is, the more pronounced the degradation in performance becomes.
-
-\paragraph{Data Visualizer}
-
+The graph visualization library \textit{vis.js} suffers from poor performance when handling large graphs, acknowledged by its developers \cite{visjs}. 
+This limitation primarily stems from the physics simulation used in its force-directed graph layout, 
+which attempts to arrange nodes by separating and clustering them based on their connections. 
+As the number of interconnected nodes and edges grows, this process becomes increasingly time-consuming, leading to decreased performance. 
 While capable of displaying relationships and attributes of instance data effectively, 
-this framework is not designed as a graph data visualizer. 
-It utilizes \textit{vis.js} for graph visualization, which is not optimized for handling large datasets defined as ontologies with numerous instantiated classes.
-Due to these limitations, we have opted against implementing functionality for visualizing such ontologies. 
-The performance of \textit{vis.js} deteriorates significantly with an increasing number of nodes and edges, 
-making it impractical for visualizing complex ontological structures.
+\textit{vis.js} is not optimized for handling large ontologies with numerous instantiated classes. 
+Due to these limitations, functionality for visualizing such ontologies has not been implemented.
 
 \paragraph{Inference and Reasoning}
 
@@ -259,4 +265,4 @@ Although we have developed a custom reasoner tailored specifically for the \text
 the current implementation does not support reasoning over other ontologies apart from \textit{mixing}. 
 This decision was made due to runtime concerns, particularly regarding the computational complexity of \textit{SWRL} rules. 
 Loading an ABox ontology, characterized by numerous NamedIndividuals and a complex class hierarchy, into this framework could severely impact performance.
-Such intensive computations could potentially disrupt the usability of other features within the \textit{OwlVisualizer} tool.
+Such intensive computations could potentially disrupt the usability of other features within the \textit{Knowledge Graph Visualization Tool}.
