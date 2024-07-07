@@ -34,10 +34,10 @@ This hierarchy of ingredients is modeled with a view towards the cooking domain 
 There does not exist a single hierarchy of ingredients, but rather many hierarchies modeling different aspects of ingredients.
 
 \begin{itemize}
-    \item \textit{Liquid: Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}.
-    \item \textit{Semi-Liquid: Egg White, Egg yolk, Butter, Whipped Cream}.
-    \item \textit{Powder: Flour, Salt, Sugar, Baking Soda, Cocoa Powder}.
-    \item \textit{Solid: Onions, Pork, Chicken, Minced meat, Bacon}.
+    \item \textbf{Liquid}: \textit{Milk, Oil, Water, Vinegar, Vanilla Extract, Sauces}.
+    \item \textbf{Semi-Liquid}: \textit{Egg White, Egg yolk, Butter, Whipped Cream}.
+    \item \textbf{Powder}: \textit{Flour, Salt, Sugar, Baking Soda, Cocoa Powder}.
+    \item \textbf{Solid}: \textit{Onions, Pork, Chicken, Minced meat, Bacon}.
   \end{itemize}
 
 For each specific ingredient, a respective \textit{FoodOn}\cite{dooley2018foodon} class is used. By using \textit{FoodOn}, we directly include all available subclasses of the 
@@ -96,11 +96,11 @@ we created the class \textit{CompoundMotions}, which defines a sequence of motio
 \textit{MixingMotion} is comprised of the following motions:
 
 \begin{itemize}
-    \item \textit{Circular Motion}: Simple Circular Motion
-    \item \textit{Circular Diving To Inner}: Circular Motions including diving moving to the center of a container
-    \item \textit{Folding Motion}: Motion executed as line with back and forth on multiple areas inside the container.
-    \item \textit{Horizontal Elliptical Motion}: Multiple ellipse motions around the container, which resembles mixing `wildly`
-    \item \textit{Whirlstorm Motion}: Whirlstorm or spiral like motion
+    \item \textbf{Circular Motion}: Simple Circular Motion
+    \item \textbf{Circular Diving To Inner}: Circular Motions including diving moving to the center of a container
+    \item \textbf{Folding Motion}: Motion executed as line with back and forth on multiple areas inside the container.
+    \item \textbf{Horizontal Elliptical Motion}: Multiple ellipse motions around the container, which resembles mixing `wildly`
+    \item \textbf{Whirlstorm Motion}: Whirlstorm or spiral like motion
 \end{itemize}
 
 Each motion has class restrictions with different kinds of motion parameters.
@@ -108,19 +108,19 @@ Each motion has class restrictions with different kinds of motion parameters.
 The following motion parameters are modelled in the \textit{mixing} ontology:
 
 \begin{itemize}
-    \item \textit{Radius lower Bound Relative}: The smallest possible radius relative to an object.
-    \item \textit{Radius Upper Bound Relative}: The maximum possible radius relative to an object.
-    \item \textit{Folding Rotation Shift}: An angle value of how much the folding line has to be rotated around .
-    \item \textit{Repetetive Folding Rotation Shift}: After the folding motion has been executed this parameter rotates all folding lines.
+    \item \textbf{Radius lower Bound Relative}: The smallest possible radius relative to an object.
+    \item \textbf{Radius Upper Bound Relative}: The maximum possible radius relative to an object.
+    \item \textbf{Folding Rotation Shift}: An angle value of how much the folding line has to be rotated around .
+    \item \textbf{Repetetive Folding Rotation Shift}: After the folding motion has been executed this parameter rotates all folding lines.
      to cover similar areas of a container. 
-    \item \textit{Ellipse Shift}: How much the ellipse has to be moved in meters. For example, if the ellipse shift is 0.04, then the ellipse
+    \item \textbf{Ellipse Shift}: How much the ellipse has to be moved in meters. For example, if the ellipse shift is 0.04, then the ellipse
      is shifted 4 cm in the positive or negative direction along the x or y axes.
 \end{itemize}
 
 \textit{CompoundMotion} is comprised of the following classes:
 \begin{itemize}
-    \item \textit{WhirlstormThenCircularDivingToInner}: Execute whirlstorm motion followed by circular diving to inner motion.
-    \item \textit{WhirlstormThenHorizontal}: Execute whirlstorm motion followed by horizontal elliptical motion.
+    \item \textbf{WhirlstormThenCircularDivingToInner}: Execute whirlstorm motion followed by circular diving to inner motion.
+    \item \textbf{WhirlstormThenHorizontal}: Execute whirlstorm motion followed by horizontal elliptical motion.
 \end{itemize}
 
 Each of these compound motions have an OWL expression stating which motion is executed and which motions if following:
