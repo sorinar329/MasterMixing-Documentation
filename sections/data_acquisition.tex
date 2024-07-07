@@ -4,8 +4,11 @@
   \includegraphics[scale=0.25]{Graphics/structure_overview1.jpg}
   \caption{Structure Overview: \textit{Data Acquisition}}
 \end{figure}
-Data acquisition involves understanding what mixing is, how it is performed by people, and how connections can be derived from video analyses. Essentially, it’s about discovering the various ways mixing is done, the contexts in which it occurs, and what insights we can draw from it. This includes identifying different mixing motions, determining which contexts are relevant, and which can be disregarded.
-First we have to ask ourselves for our context \textbf{What is Mixing?}
+Data acquisition is the most important step, involving an understanding of what mixing is, how it is performed by people, 
+and how the interactions of different actors in the mixing process can be derived from video analyses. 
+Essentially, it’s about discovering the various ways mixing is done, the contexts in which it occurs, and what conclusions we can derive from the data acquisition. 
+This includes identifying different mixing motions under relevant contexts and determining which motions can be regarded or disregarded.
+First, we have to ask ourselves in the context of this thesis: \textbf{What is Mixing?}
 \paragraph*{What is Mixing?}
   The definition provided by the Oxford Dictionary \cite{Oxford} is as follows:
   
@@ -20,127 +23,145 @@ First we have to ask ourselves for our context \textbf{What is Mixing?}
 
 \section{Task variations}
 Now that we have defined what \textit{Mixing} means in our context, we aim to identify the various types of \textit{Mixing} and determine which ones are important for our work. We will also specify which types of \textit{Mixing} we will not consider further, providing arguments for our decisions.
-	As our main focus is to represent the knowledge about mixing, first we had to acquire the different types and variations of mixing in order to create a complete Knowldegerepresentation. The first step in acquiring the needed data, was to acknowledge which task varations of mixing are actually important. 
-  So we had to analyze the word \textit{Mixing} and its hyponyms. 
+As our main focus is to represent the knowledge about mixing, first we had to acquire the different types and variations of mixing in order to create a complete
+knowledge representation. The first step in acquiring the needed data, was to acknowledge which task varations of mixing are actually important. 
+Therefore we had to analyze the word \textit{Mixing} and its hyponyms. 
 \subsection*{Hyponyms} 
-	Hyponyms are subordered words of a given word, for example one hyponym of \textit{Mixing} could be \textit{Beating}\cite{oxford_hyponym}.
-  To conduct this analysis, one can utilize tools from various websites, such as FrameNet\cite{FrameNet} and WordNet\cite{WordNet}. These platforms provide users with the ability to search for specific words and obtain various associations for those words, including synonyms, acronyms, or, crucial for our case, hyponyms.	
-  A full list of the considered hyponyms can be seen in table \ref{tab:hyponyms}.
+Hyponyms are subordered words of a given word, for example one hyponym of \textit{Mixing} could be \textit{Beating}\cite{oxford_hyponym}.
+To conduct this analysis, one can utilize tools from various websites, such as FrameNet\cite{FrameNet} and WordNet\cite{WordNet}. These platforms provide users with the ability to search for specific words and obtain various associations for those words, including synonyms, acronyms, or, crucial for our case, hyponyms.	
+A full list of the considered hyponyms can be seen in table \ref{tab:hyponyms}.
 \subsubsection{WikiHow Extraction}
-  For all those hyponyms, we delegated a \textit{WikiHow} extraction search (see:\nameref{sec:WikiHow}) which should show us, how many times one of these words occur, in the context of cooking.
-	To execute the search, we define a new Class \textit{MixingVerb}, which represents the verb \textit{Mixing} and its hyponyms.
-  
-  For the search, we consider each verb and a triple consisting of the verb forms. We consider three forms of the verbs: the infinitive, the past tense, and the present progressive. An example of such a search would be:
-  \begin{lstlisting}
-      MIX ("mix", "mixed", "mixing")
-  \end{lstlisting}
+For all those hyponyms, we delegated a \textit{WikiHow} extraction search (see:\nameref{sec:WikiHow}) which should show us, how many times one of these words occur, in the context of cooking.
+To execute the search, we define a new Class \textit{MixingVerb}, which represents the verb \textit{Mixing} and its hyponyms.
 
-    After we have defined the desired verbs that we ultimately want to search for, we want to adjust some search parameters. The crucial parameters involve filtering the categories; in our case, we want to focus on mixing in the cooking domain. Therefore, we filter out all articles that do not exist in the \textit{Food and Entertaining} category.
-  \subsubsection{Hyponyms Occurance}
-    For each defined verb, a search is initiated to determine how often this verb appears in the \textit{WikiHow} \cite{wikihow} articles. This is done to ascertain which verbs are ultimately relevant for our implementation and which ones we can exclude, as they are infrequently used in everyday language.
-    In the table below the results can be seen.
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{|c|c|}
-          \hline
-          \textbf{Hyponym} & \textbf{Occurance}  \\
-          \hline
-          Mix & 5300 \\
-          \hline
-          Amalgamate & 0 \\
-          \hline
-          Beat & 956 \\
-          \hline
-          Blend & 1041 \\
-          \hline
-          Coalesce & 1 \\
-          \hline
-          Combining & 3591  \\
-          \hline
-          Coommingle & 0 \\
-          \hline
-          Compound & 0 \\
-          \hline
-          Conflate & 0 \\
-          \hline
-          Folding & 821 \\
-          \hline
-          Fuse & 17 \\
-          \hline
-          Intermix & 0 \\
-          \hline
-          Join & 53 \\
-          \hline
-          Jumble & 0 \\
-          \hline
-          Lump & 7 \\
-          \hline
-          Merge & 6 \\
-          \hline
-          Pair & 352 \\
-          \hline
-          Stir & 6027 \\
-          \hline
-          Unify & 2 \\
-          \hline
-          Unite & 2 \\
-          \hline
-          Whip & 863 \\
-          \hline
-          Whisk & 2267 \\
-          \hline
-          
+For the search, we consider each verb and a triple consisting of the verb forms. We consider three forms of the verbs: the infinitive, the past tense, and the present progressive. An example of such a search would be:
+\begin{center}
+  \textbf{MIX} = ("mix", "mixed", "mixing")
+\end{center}
+
+
+After defining the set of verbs in \textit{WikiHow-Instruction-Extraction}, we configure this framework to only search for verb occurrences in the category \textit{Food and Entertaining}. 
+This category contains articles related to the execution of mixing in the cooking domain, 
+therefore we exclude any other categories from our search.
+
+\subsubsection{Hyponyms Occurance}
+For each defined verb, a search is initiated to determine how often this verb appears in the \textit{WikiHow} \cite{wikihow} articles. 
+Searching for hyponym occurences helps us, to determine relevant hyponyms, which are relevant for our implementation later on.
+In the table below the results can be seen.
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Hyponym} & \textbf{Occurance}  \\
+    \hline
+    Mix & 5300 \\
+    \hline
+    Amalgamate & 0 \\
+    \hline
+    Beat & 956 \\
+    \hline
+    Blend & 1041 \\
+    \hline
+    Coalesce & 1 \\
+    \hline
+    Combining & 3591  \\
+    \hline
+    Coommingle & 0 \\
+    \hline
+    Compound & 0 \\
+    \hline
+    Conflate & 0 \\
+    \hline
+    Folding & 821 \\
+    \hline
+    Fuse & 17 \\
+    \hline
+    Intermix & 0 \\
+    \hline
+    Join & 53 \\
+    \hline
+    Jumble & 0 \\
+    \hline
+    Lump & 7 \\
+    \hline
+    Merge & 6 \\
+    \hline
+    Pair & 352 \\
+    \hline
+    Stir & 6027 \\
+    \hline
+    Unify & 2 \\
+    \hline
+    Unite & 2 \\
+    \hline
+    Whip & 863 \\
+    \hline
+    Whisk & 2267 \\
+    \hline
     
-        \end{tabular}
-        \caption{\textit{Mix}-verb synoyms/hyponyms occurance}
-        \label{tab:hyponyms}
-      \end{table}
-      
-  \subsubsection{Further Examination and Conclusion}
-  This search is ultimately intended to provide us with information on which tasks we want to represent in the knowledge base. Therefore, we decide on certain tasks based on two conditions: frequency and executability. The first condition is easy to understand; tasks that do not occur or occur very rarely are not considered. The second condition relates to the executability of the task in the context of robot movements. Additionally, some tasks with relatively high frequency are also examined more closely, as in English, the past tense is used as an adjective under certain circumstances.
 
-Taking into account the first condition, the following tasks are not considered: \textit{Amalgamate, Coalesce, Comingle, Compound, Conflate, Fuse, Intermix, Join, Jumble, Lump, Merge, Unify, and Unite}.
+  \end{tabular}
+  \caption{\textit{Mix}-verb synoyms/hyponyms occurance}
+  \label{tab:hyponyms}
+\end{table}
+    
+\subsubsection{Further Examination and Conclusion}
+This search is ultimately intended to provide us with information on which tasks we want to represent in the knowledge base. 
+Each hyponym has to meet the following two criterias: frequency and executability. 
+The first condition is easy to understand; tasks that do not occur or occur very rarely are not considered. 
+The second condition relates to the executability of the task in the context of robot movements. 
+Additionally, some tasks with relatively high frequency are also examined more closely, as in English, the past tense is used as an adjective under certain circumstances.
 
-The second condition excludes another task: \textit{Blend. Blend} is mostly used in the context of a blending machine, which is not handled by the robot. Without this machine, the blending execution cannot be performed correctly, so this task is excluded for us.
+Under consideration of the first criteria, the following tasks are not considered: \textit{Amalgamate, Coalesce, Comingle, Compound, Conflate, Fuse, Intermix, Join, Jumble, Lump, Merge, Unify, and Unite}.
+
+The second criteria excludes another task: \textit{Blend. Blend} is mostly used in the context of a blending machine, which is not handled by the robot. Without this machine, the blending execution cannot be performed correctly, so this task is excluded for us.
 
 Upon closer examination, we will also not consider the verb \textit{Whip} because it is mostly used as an adjective for ingredients, such as whipped cream. This highlights that only the verb \textit{Whip} has relatively low frequency. The same applies to \textit{Pair}, where the past tense is used to describe a combination of different ingredients, such as wine paired with cheese.
 
 The verb \textit{Combine} is not informative regarding the executed movement of an action and is equated to the verb \textit{Mix}.
 
-Thus, the tasks we consider are: \textit{Mix, Beat, Fold, Stir, and Whisk.}
+In conclusion we consider these tasks relevant for modelling our knowledgebase:
+\begin{itemize}
+  \item \textit{Mixing Task}
+  \item \textit{Beating Task}
+  \item \textit{Folding Task}
+  \item \textit{Stirring Task}
+  \item \textit{Whisking Task}
+\end{itemize}
 
 \section{Task Analysis and Defintion}
 \label{sec:task_analysis}
-Now that we have selected the tasks, they need to be analyzed to understand the context in which they are ultimately used. 
-Our goal is for the robot to perform these tasks in a manner similar to how a human would. 
-To achieve this, in the next step, we need to closely examine these tasks. 
-It is recommended to analyze videos on \textit{WikiHow} \cite{wikihow} or other sources where these tasks are presented as activities. 
-The analysis involves observing the movements associated with each task. 
-We present these analyses in tabular form below. The examination includes the task itself, the respective ingredients being processed, the tools used for it, and the container in which the task is carried out.
-The tasks will be ennumerated, and we will provide the full table with the actual video source in the \nameref{chap:appendix}.
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{|c|p{5,5cm}|p{6,5cm}|}
-        \hline
-        \textbf{Task} &  \textbf{Ingredients} & \textbf{Description} \\
-        \hline
-        Beating &  Egg yolk & circular, swirling wildly around the bowl \\
-        \hline
-        Stirring & Beaten Egg Yolk , Parmesan and Pepper  & Circular, from the inside to the outside. \\
-        \hline
-        Whisk & Eggs  & Circular but also straight, wildly motion. \\
-        \hline
-        Mixing &  Eggs, melted butter & Circular, from the inside to the outside, also diving. \\
-        \hline
-        Folding & cooked eggs in melted butter & Gently motion from the outisde to the inside straight, then moving about 90 degree before going to the inside again. \\
-        \hline
-      \end{tabular}
-    \caption{Video analysis}
-    \label{tab:videoanalysis}
-  \end{table}
+All of these tasks need to be analyzed further to understand the context in which they are executed. 
+Our goal is for the system to execute all of our selected tasks in a manner similar to how a human would complete them.
+We conduct analyses of videos, such as those from \textit{WikiHow} or other sources demonstrating these tasks. 
+In our analysis, we will observe each movement associated with its task.
+Our results are presented in the table below \ref{tab:Results}. Our analysis includes the executed tasks, used ingredients, and a description of the motion. In the 
+\nameref{chap:appendix}, we enumerated each analyzed task and provided video references for each task.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|p{5,5cm}|p{6,5cm}|}
+    \hline
+    \textbf{Task} &  \textbf{Ingredients} & \textbf{Description} \\
+    \hline
+    Beating &  Egg yolk & circular, swirling wildly around the bowl \\
+    \hline
+    Stirring & Beaten Egg Yolk , Parmesan and Pepper  & Circular, from the inside to the outside. \\
+    \hline
+    Whisk & Eggs  & Circular but also straight, wildly motion. \\
+    \hline
+    Mixing &  Eggs, melted butter & Circular, from the inside to the outside, also diving. \\
+    \hline
+    Folding & cooked eggs in melted butter & Gently motion from the outisde to the inside straight, then moving about 90 degree before going to the inside again. \\
+    \hline
+  \end{tabular}
+\caption{Video analysis}
+\label{tab:Results}
+\end{table}
 
 
-After a thorough analysis of the videos and the information provided in them, we conclude that the executed movement is not only related to the task but also influenced by the ingredients used. However, some tasks are deterministic in the sense that the movement is performed regardless of the specific ingredients.
+After a thorough analysis of the videos and the information provided in them, we conclude that the movement performed is not only related to the task, but is also influenced by the ingredients used. However, 
+some tasks are deterministic in the sense that the movement is performed independently of the specific ingredients.
 
 In the following, we aim to structure the extracted information from the videos and present our findings.
 
