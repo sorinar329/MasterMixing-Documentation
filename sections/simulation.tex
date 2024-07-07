@@ -31,7 +31,7 @@ The agent operates in a kitchen-like environment, the model of which is already 
 For the simulation, we use the objects that have also been defined in the ontology (see \hyperref[sec:ContainersAndToolsAcquisition]{Containers and Tools Acquisition}).
 The following objects are available:
 \begin{itemize}
-	\item Container: 
+	\item \textbf{Container}: 
         \begin{itemize} 
             \item \textit{Small and Large Bowls} - Defined in the ontology as \textit{SaladBowl} and \textit{PastaBowl}
             \item \textit{Pan}
@@ -39,7 +39,7 @@ The following objects are available:
             \item \textit{Cup}
             \item \textit{Mug}
         \end{itemize}
-	\item Tools: 
+	\item \textbf{Tools}: 
         \begin{itemize}
             \item \textit{Whisk}
             \item \textit{Spoon}/\textit{Wooden Spoon}
@@ -172,7 +172,7 @@ To effectively break down the action into executable motions, certain designator
 
 \paragraph{Designator Description}
 \begin{enumerate}
-    \item \textit{Container Object Designator}:
+    \item \textbf{Container Object Designator}:
     \begin{itemize}
         \item This object designator contains information about its name and its bulletword internal represnation.
             Its bulletworld representations holds information like the current objects pose and its 3D axis aligned bounding box.
@@ -180,20 +180,20 @@ To effectively break down the action into executable motions, certain designator
             Knowing the bounds and the pose of the container is crucial, because the motion has to performed inside 
             the container within its boundaries.
     \end{itemize}
-    \item \textit{Tool Object Designator}:
+    \item \textbf{Tool Object Designator}:
     \begin{itemize}
         \item Analogous to the container this designator contains the same type of information.
         Knowing the dimensions of the tool is crucial in avoiding collision with the container.
     \end{itemize}
-    \item \textit{Arm}:
+    \item \textbf{Arm}:
     \begin{itemize}
         \item Which arm should be used to perform the mixing action
     \end{itemize}
-    \item \textit{Motions}:
+    \item \textbf{Motions}:
     \begin{itemize}
         \item A list of motions as strings to be performed. 
     \end{itemize}
-    \item \textit{Motion Parameters}:
+    \item \textbf{Motion Parameters}:
     \begin{itemize}
         \item Each motion has its own key value pairs of parameters.
         These parameters alongside the motion are resolved by the \nameref*{subsection:MixingActionSWRL}
