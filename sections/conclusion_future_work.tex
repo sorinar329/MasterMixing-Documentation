@@ -11,12 +11,16 @@ The model we use—a knowledgebase (see \nameref{chap:Data_representation}) —c
 
 Our modeled motions do not specify how a motion is executed but provide capabilities via parameters to adapt to different containers and tools. The implementation of each motion—\textbf{Circular}, \textbf{Folding}, \textbf{Horizontal Elliptical}, and \textbf{Whirlstorm}—is available in \textit{PyCram} \cite{pycram}, and any robotic system that can use \textit{CRAM} \cite{beetz10cram} can perform these motions.
 
-We also transitioned from theory to practice by utilizing our knowledgebase in simulation, where we also tested our newly implemented \textit{Mixing Action Designator}, which considers every theoretical knowledge we have acquired in the previeous sections. As a proof of concept, we tested as many scenarios as possible to demonstrate how the knowledge base we created could be applied to a robot (see \nameref{chap:Execution on the robot}). 
+We also transitioned from theory to practice and implemented and tested the \textit{Mixing Action Designator}, 
+which actively uses the \textit{mixing} ontology. Through evaluation, we tested as many scenarios as possible to demonstrate how the 
+ontology infers different motions, which the robot executed (see \nameref{chap:Execution on the robot}).
 
-In addition to this proof of concept, we developed a new way to visualize ontologies by focusing on complex class expressions, which hasn't been done before (see \nameref{chap:OWLViz}). 
+In addition to our proof of concept, we developed a different way to visualize ontologies by focusing on complex class expressions, which hasn't been done before (see \nameref{chap:OWLViz}). 
 With the \textit{Knowledge Graph Visualization Tool}, a user can query complex class expressions without needing to know how to write \textit{SPARQL} queries. 
 The \textit{Knowledge Graph Visualization Tool} generates a \textit{SPARQL} query for the user, using triple matching to get the desired graph. 
-This query can be customized by changing its contents without altering the triple matching. Another feature of the \textit{Knowledge Graph Visualization Tool} is the \textit{Custom Inference Builder}, which serves as an inference tool for our knowledge base, creating a task tree based on its input.
+This query can be customized by changing its contents without altering the triple matching. Another feature of the \textit{Knowledge Graph Visualization Tool}
+is the \textit{Custom Inference}, which reasons over the \texit{mixing} ontology, to infer motions from task and ingredients. As a result a visualized graph 
+and a sequence of actions are generated, to highlight the reasoning.  
 
 \section{Future Work}
 This proof of concept was developed in \textit{CRAM} \cite{beetz10cram} in simulation. Simulations simplify many aspects: the robot has ground truth for each available object, the ingredients to mix, the tools for mixing, and the container to mix in. To advance our work, this proof of concept should be implemented on a real robot to assess the increased challenges in real-world scenarios.
