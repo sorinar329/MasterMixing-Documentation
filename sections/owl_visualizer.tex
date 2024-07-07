@@ -15,16 +15,16 @@ This chapter will present the main features of our \textit{Knowledge Graph Visua
 
 We present you our three main concepts, which are incldued in the \textit{Knowledge Graph Visualization Tool}:
 \begin{itemize}
-    \item Visualization of Class Hierarchy: Our primary goal is to visualise a class hierarchy, where class relations are visible to the 
+    \item \textbf{Visualization of Class Hierarchy}: Our primary goal is to visualise a class hierarchy, where class relations are visible to the 
     user and visualise complex class expressions as a part of the corresponding class. This will be done as compact as possible. 
     Furthermore to differentiate between classes and class expressions we aim to make such distinction via different coloring. 
     Additionally, we aim to keep the amount of nodes and edges low, to reduce clutter in the graph, making exploring graph easier and 
     increase performance of visualizing such graphs.  
-    \item \textit{Query Builder}: To clarify the relations between the queries, we implement a query builder that, given a class, can point to other classes through the relation, 
+    \item \textbf{Query Builder}: To clarify the relations between the queries, we implement a query builder that, given a class, can point to other classes through the relation, 
     which in turn can point to further classes through another relation, as long as the user desires or there are no further relations. 
     No \textit{SPARQL} knowledge is required query language, making it usable for the user. 
     The \textit{Query Builder} outputs a filtered graph with the selected triples and generates a \textit{SPARQL} query.
-    \item \textit{Rule Based Inference}: Our thesis relies on running inference over \textit{mixing} 
+    \item \textbf{Rule Based Inference}: Our thesis relies on running inference over \textit{mixing} 
     we implement an inference tool running reasoning over our ontology, to find motions, analogously to \nameref{subsection:MixingActionSWRL}.
     The result is visualized in a graph and a sequence of actions in natural language are generated, to highlight inferred knowledge.  
 \end{itemize}
