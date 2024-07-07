@@ -18,7 +18,7 @@ In this environment, physics is simulated, which is advantageous for executing t
 
 The agent that will execute the various motions in the simulation is the \hyperref[sec:pr2]{PR2} \cite{pr2}.
 This robot model has 2 movable arms, as one hand executes the motion. In addition to the fact that the \textit{PR2} \cite{pr2} model is already available in the \textit{PyCram} \cite{pycram} framework,
-the \textit{PR2} \cite{pr2} model also has enough joints and degrees of freedom to execute the motions we have adapted.
+the \textit{PR2} \cite{pr2} model also has enough joints and degrees of freedom to execute the motions we have implemented.
 
 The agent operates in a kitchen-like environment, the model of which is already included in the \textit{PyCRAM}-core \cite{pycram} and therefore particularly suitable for our use case. The kitchen also features elements such as drawers that can be opened, which are part of real world interactions. Additionally, the kitchen model includes a table on which the agent's actions are ultimately executed. Other furniture is also present in this environment, but is not relevant to our use case.
 
@@ -87,7 +87,9 @@ The framework \nameref{sec:pycram} \cite{pycram} offers a variety of pre-impleme
         grasps=["top"]).parameters_from_owl().perform()
 \end{lstlisting}
 
-The last \textit{Action Designator} is a modified version of the existing \textit{Mixing Action Designator}, which has been adapted for our purposes. This designator receives as parameters a container object and a tool object (both not significant for inference), as well as a set of ingredients and a task, which are significant for inference. The performed motion results from the inference together with the applied parameters.
+The last part is a custom resolver (see \nameref{subsection:MixingActionSWRL:}), which returns a \textit{Mixing Action Designator} instance to perform the mixing action.
+This designator receives as parameters a container object and a tool object (both not significant for inference), as well as a set of ingredients and a task, 
+which are significant for inference. 
 
 \begin{figure}[H]
     \includegraphics[scale=0.3]{Graphics/control_primitives.jpg}
@@ -117,8 +119,9 @@ to mix.
 
 \subsection{Asserted Knowledge}
 Any robot capable of executing mixing motions need to have knowledge before executing a mixing task. 
-The robot needs to know where the container and tools are located, for picking up and for navigation to Theoretically
-respective places. It needs to know which ingredients have to be mixed, in simulation only their existence have to be known. 
+The robot needs to know where the container and tools are located, for picking up and for navigation.
+The location of mixing is important as well and should be known before executing mixing action. 
+Also, the robot needs to know which ingredients have to be mixed, in simulation only their existence have to be known. 
 It needs to know which task to execute, since we differentiate between different mixing tasks as discussed in this section. 
 
 
@@ -146,12 +149,13 @@ the other individuals are assigned. To find the proper corresponding class, to t
 we perform fuzzy string matching to find a matching class to the name. 
 
 \paragraph{Fuzzy String Matching}
-Using the levenshtein distance, syntactic similarity of two different strings is computed. A low distance score
+Using the levenshtein distance \cite{levenshtein_distance}, syntactic similarity of two different strings is computed. A low distance score
 indicates a higher similarity than a high score. However, this metric does not account for semantic similarities, 
 as the words meanings are not considered in the computation of distance.
 
 \paragraph{Inference}
-Once the relations have been assigned, using \textit{OWLReady} with builtin functions calling reasoners like \textit{Pellet} or \textit{HermIt},
+Once the relations have been assigned, using \textit{OWLReady} with builtin functions 
+calling reasoners like \textit{HermIt} \cite{shearer2008hermit} or \textit{Pellet} \cite{sirin2007pellet},
 reclassifies the motion instance using the defined \textit{SWRL} rules inside the \textit{mixing} ontology.
 Since the individual instantiated from the class \textit{Motion} has been reclassified the motion parameters can be extracted from the class.
 
