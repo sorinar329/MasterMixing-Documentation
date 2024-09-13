@@ -3,13 +3,27 @@
 There are some approaches for mixing tasks in the kitchen domain. From high level symbolic to low level motions and 
 learning approaches, these different approaches, tries to tackle the challenge of solving mixing in the kitchen environment.
 
-\textit{FoodCutting} \cite{Kuempel2024} aims to equip robotic agents with necessary information about how to 
-execute  cutting tasks in unknown environments for the household domain. From high level plans \textit{FoodCutting} \cite{Kuempel2024} breaks down 
+The concepts presented in the paper \textit{Towards a Knowledge Engineering Methodology for
+Flexible Robot Manipulation in Everyday Tasks} \cite{kuempel2024methodology} aims to equip robotic agents with necessary information about how to 
+execute  everyday tasks (with focus on cutting tasks) in unknown environments for the household domain. From high level plans the presented concept breaks down 
 the cutting task, part of some robot plan, into executable motions regarding cutting fruits and vegetables. These motions are parameterized 
 by some technique and repetitions to achieve the agents objective. 
-\textit{FoodCutting} \cite{Kuempel2024} does not require fully available knowledge
+The presented concept does not require fully available knowledge
 about the agents environment, instead the robot should be capable of recognizing certain objects for cutting 
-operations. 
+operations. In designing our knowledge representation, we follow the presented results from the paper \textit{Towards a Knowledge Engineering Methodology for Flexible Robot Manipulation in Everyday Tasks}  \cite{kuempel2024methodology} and attempt to apply the concept to the domain of mixing.
+
+Another work that served as a foundation for the general design of our knowledge base was the doctoral thesis 
+\textit{Actionable Knowledge Graphs - How Daily Activity Applications Can Benefit from Embodied Web Knowledge} \cite{elib_7861} . 
+From this work, we extracted valuable information not only for the creation of our ontology but also for the process 
+of data acquisition. Additionally, the papers \textit{Task Learning Using Actionable Knowledge Graphs} \cite{kuempel2024akgtasklearning} and 
+\textit{Translating Actionable Knowledge Graphs into Robot Action Execution} \cite{kuempel2024HHAItutorial} introduce further concepts for designing a 
+knowledge representation for the execution of robotic plans.
+
+When considering the use case from the perspective of manipulative execution, this work follows the concept presented in the paper 
+\textit{Steps Towards Generalized Manipulation Action Plans - Tackling Mixing Task} \cite{Hassouna2024AKR} and in the thesis 
+\textit{Exploring the Use of Designators for Improved Contextualization in Robotic Mixing Tasks} \cite{Van2023}. Various manipulative tasks from the mixing domain are 
+introduced there, which we use as a foundation and build upon with adapted motions. The architecture used in that work, \textit{PyCram} \cite{pycram}, 
+is also utilized in our work for the planning and execution of motions. The motions presented in the mentioned works served as the basis for the motions we used in our plans.
 
 
 \textit{BakeBot} \cite{Bollini2011BakebotBC} realised on the \textit{\nameref{sec:pr2}}  robotics platform attempts to achieve baking cookies. An implementation of locating relevant things for mixing tasks
@@ -18,8 +32,10 @@ ingredients with different characteristics into an uniform dough. These motions 
 The authors follow an bottom-up approach which is inherently motion driven rather than a
 symbolic one which attempts to break down high level tasks into executable low level motions. 
 
-\textit{Robotic roommates making pancakes} \cite{beetzrrmp} is another paper which shows how robot behave in a baking environment. This article is about two robots that bake pancakes through collaboration. 
-Although the mixing motions are not explicitly mentioned in this article, it shows an approach to actions through reasoning. This approach is similar to our work. As a result, the agent is able to reason a sequence of actions based on an input.
+\textit{Robotic roommates making pancakes} \cite{beetzrrmp} is another paper which shows how robot behave in a baking environment. 
+This article is about two robots that bake pancakes through collaboration. 
+Although the mixing motions are not explicitly mentioned in this article, it shows an approach to actions through reasoning. 
+This approach is similar to our work. As a result, the agent is able to reason a sequence of actions based on an input.
 
 Some interesting approaches pursue robot learning by tracking human movement \cite{10.1007/978-3-030-95892-3_22}. By learning these movements, they can be transferred to primitive motions and parameterized based on tracking.
 In our work, we do not pursue learning through demonstrations; however, this paper mentions parameterizing motion primitives (such as a radius), which is similarly addressed in our work.
